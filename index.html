@@ -175,15 +175,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
       text-align: center;
       text-decoration: none;
     }
-    .shakey-legs {
-      animation:shakeit infinite 2s;
-    }
-    @keyframes shakeit {
-      0% {transform:scale(1) rotateZ(0deg);}
-      20% {transform:scale(1.5) rotateZ(15deg);}	
-      30% {transform:scale(1.5) rotateZ(-15deg);}
-      100% {transform:scale(1) rotateZ(0deg);}
-    }
     .mdc-tab-bar__indicator {background:#ff5722;}
     .mdc-tab--active, .mdc-tab--active:hover {color:#ff5722;}
   </style>
@@ -265,29 +256,31 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
     <div class="mdc-dialog__surface" style="background:white!important;">
       <header class="mdc-dialog__header">
         <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
-          <nav id="shopTabs" class="mdc-tab-bar js-tabs" role="tablist">
+          <nav id="shopTabs" class="mdc-tab-bar mdc-tab-bar--indicator-a	ccent  js-tabs" role="tablist">
             <a role="tab" aria-controls="panel-1" class="mdc-tab mdc-tab--active">Spend Candy</a>
             <a role="tab" aria-controls="panel-2" class="mdc-tab">Spend Pumpkins</a>
-	    <a role="tab" aria-controls="panel-3" class="mdc-tab">Hire People</a>
-            <a role="tab" aria-controls="panel-4" class="mdc-tab">Farms</a>
+			<a role="tab" aria-controls="panel-3" class="mdc-tab">Hire People</a>
             <span class="mdc-tab-bar__indicator"></span>
           </nav>
         </div>
       </header>
       <section style="overflow-y:scroll;overflow-x:hidden;height:200px;">
         <div class="js-panels" for='shopTabs'>
-          <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="spendCandy" style="text-align:center;">
-            <button class="mdc-button" id="ipod_button"><i class="material-icons mdc-button__icon">phone_iphone</i>Get an iPhone: 1K candies</button>
-            <button class="mdc-button" style="display:none;" id="computer_button"><i class="material-icons mdc-button__icon">computer</i> Get a computer: 10K candies</button>
-            <button class="mdc-button" style="display:none;" id="car_button"><i class="material-icons mdc-button__icon">directions_car</i> Get a car: 50K candies</button>
-            <button class="mdc-button" style="display:none;" id="house_button"><i class="material-icons mdc-button__icon">home</i>Get a house: 250K candies</button>
-            <button class="mdc-button" style="display:none;" id="mansion_button"><i class="material-icons mdc-button__icon">meeting_room</i>Get a mansion: 50M candies</button>
-	    <button class="mdc-button" style="display:none;" id="skyscraper_button"><i class="material-icons mdc-button__icon">domain</i>Get a skyscraper: 500M candies</button>
-            <button class="mdc-button" style="display:none;" id="earth_button"><i class="material-icons mdc-button__icon">public</i> Get Earth: 1T candies</button>
-	    <button class="mdc-button" style="display:none;" id="solarsystem_button"><i class="material-icons mdc-button__icon">brightness_5</i>Get the Solar System: 50T candies</button>
-            <button class="mdc-button" style="display:none;" id="galaxy_button"><i class="material-icons mdc-button__icon">brightness_2</i> Get the Milky Way: 1Q candies</button>
-	    <button class="mdc-button" style="display:none;" id="galaxycluster_button"><i class="material-icons mdc-button__icon">details</i>Get a galaxy cluster: 50q candies</button>
-            <button class="mdc-button" style="display:none;" id="universe_button"><i class="material-icons mdc-button__icon">blur_on</i>Get the universe?</button>
+          <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="spendCandy">
+            <button class="mdc-button" id="ipod_button">Get an iPod: 1K candies</button>
+            <button class="mdc-button" style="display:none;" id="computer_button">Get a computer: 10K candies</button>
+            <br>
+            <button class="mdc-button" style="display:none;" id="car_button">Get a car: 50K candies</button>
+            <button class="mdc-button" style="display:none;" id="house_button">Get a house: 250K candies</button>
+            <br>
+            <button class="mdc-button" style="display:none;" id="mansion_button">Get a mansion: 50M candies</button>
+			<button class="mdc-button" style="display:none;" id="skyscraper_button">Get a skyscraper: 500M candies</button>
+			<br>
+            <button class="mdc-button" style="display:none;" id="earth_button">Get Earth: 1T candies</button>
+			<button class="mdc-button" style="display:none;" id="solarsystem_button">Get the Solar System: 50T candies</button>
+            <button class="mdc-button" style="display:none;" id="galaxy_button">Get the Milky Way: 1Q candies</button>
+			<button class="mdc-button" style="display:none;" id="galaxycluster_button">Get a galaxy cluster: 50q candies</button>
+            <button class="mdc-button" style="display:none;" id="universe_button">Get the universe?</button>
           </div>
           <div class="js-panel" role="tabpanel" aria-hidden="true" id="spendCandyCanes">
             <h2 style="color:black!important;text-align:center;">Candy Deals</h2>
@@ -321,7 +314,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 </li>
                 <li class="mdc-grid-tile">
                   <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="prmt_button" style="height:200px;">Promotion (TOT-ers x2): 2500 Pumpkins</button>
+                    <button class="mdc-button mdc-button--raised" id="prmt_button" style="height:200px;">Promotion (Jobs x2): 2500 Pumpkins</button>
                   </div>
                 </li>
                 <li class="mdc-grid-tile">
@@ -332,16 +325,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
               </ul>
             </div>
           </div>
-          <div class="js-panel" role="tabpanel" aria-hidden="false" id="hirePeople">
-	    <button class="mdc-button" id="job_button"><i class="material-icons mdc-button__icon">person</i> Hire a trick or treater: 100 candies</button>
-	    <button class="mdc-button" id="farmer_button"><i class="material-icons mdc-button__icon">nature_people</i>Hire a farmer: 5 Pumpkins</button>
-          </div>
-          <div class="js-panel" role="tabpanel" aria-hidden="false" id="farms-tab">
-            <div id="farms" class="mdc-typography--body1" style="padding-left:15px;color:black;">
-              <p id="farms-num">Farms:0</p>
-              <button class="mdc-button" id="col-frm">Collect 0 pumpkinsx</button>
-            </div><br>
-            <button class="mdc-button" id="farm_button">Get a farm: 4M Candies</button>
+		  <div class="js-panel" role="tabpanel" aria-hidden="false" id="hirePeople">
+			<button class="mdc-button" id="job_button">Hire a trick or treater: 100 candies</button>
+			<button class="mdc-button" id="farmer_button">Hire a farmer: 5 Pumpkins</button>
           </div>
       </section>
       <footer class="mdc-dialog__footer">
@@ -368,9 +354,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             <span class="mdc-toolbar__title" id="welcome">Welcome</span>
           </section>
           <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-           	<button class="mdc-button" data-mdc-auto-init="MDCRipple" id="giftButton">
-	  <img src="images/gift.png" height="28px" width="28px" style="vertical-align:inherit;">
-        </button>
 	   <button class="mdc-button" data-mdc-auto-init="MDCRipple" id="shopButton">
               <i class="material-icons mdc-button__icon">store</i>Shop
             </button>
@@ -407,7 +390,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
         </div>
       </header>
       <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;" class="mdc-temporary-drawer__content">
-        <button class="mdc-button" id="farm">Farms</button>
+	    <button class="mdc-button" data-mdc-auto-init="MDCRipple" id="giftButton">
+			<img src="images/gift.png" height="28px" width="28px" style="vertical-align:inherit;padding-left:0;margin-left:-10px;margin-top:-4px;">Gift!
+        </button>
         <p id="jobs">Jobs: 0</p>
         <p id="farmers">Farmers: 0</p>
         <p id="multiplier">Multiplier: 1</p>
@@ -419,7 +404,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
 		
       <button class="mdc-button" id="new-game">New Game</button>
       <button class="mdc-button" id="more_stuff">More stuff by 2K inc!</button>
-      <p>Trick or Treat: Go trick or treating! Made by #2Kinc. We are awesome.<br>Copyright &copy; 2018 By 2K inc.</p>
+        <p>Trick or Treat: Go trick or treating! Made by #2Kinc. We are awesome.
+          <br>Copyright &copy; 2018 By 2K inc.</p>
       <p>K = thousand</p>
       <p>M = million</p>
       <p>B = billion</p>
@@ -431,16 +417,16 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
       <p>O = octillion</p>
       <p>N = nonillion</p>
       <p>D = decillion</p>
-      <p>uD = undecillion</p>
-      <p>dD = duodecillion</p>
-      <p>tD = tredecillion</p>
-      <p>qD = quattuordecillion</p>
-      <p>QD = quindecillion</p>
-      <p>sD = sedecillion</p>
-      <p>SD = septendecillion</p>
-      <p>oD = octodecillion</p>
-      <p>nD = novendecillion</p>
-      <p>V = vigintillion</p>
+	  <p>uD = undecillion</p>
+	  <p>dD = duodecillion</p>
+	  <p>tD = tredecillion</p>
+	  <p>qD = quattuordecillion</p>
+	  <p>QD = quindecillion</p>
+	  <p>sD = sedecillion</p>
+	  <p>SD = septendecillion</p>
+	  <p>oD = octodecillion</p>
+	  <p>nD = novendecillion</p>
+	  <p>V = vigintillion</p>
       </nav>
     </nav>
   </aside>
