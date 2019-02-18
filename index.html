@@ -21,459 +21,121 @@ $$$$$$$$$$$$N. `!!!. !!!!!!!!!!!!! ~!!!!!!!!!!!!!!!!~  !!~ .e$$$$$$$$$$$
 $$$$$$$$$$$$$$$bu  `  '!!!!!!!!!!~  !!!!!!!!!!!!!~` .uuue$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$e.  ````   .eu.     ```   .e$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
-
 <!-- H A P P Y  H A L L O W E E N-->
 <!--D U C K S  A R E  A W E S O M E-->
-
 <!doctype html>
 <html>
+    <head>
+        <title>Trick or treat!^_^</title>
+        <link href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto" rel="stylesheet">
+        <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+        <style>
+            body {
+                --mdc-theme-primary:#ff5722;background: url(images/background.png)no-repeat left bottom fixed #ff5722;
+                text-align: center;
+                background-position-y: 100px;
+                background-size: 90%;
+                width: 504px!important;
+                height: 487px!important;
+                color: white!important;
+            }
 
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--k-->
-  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-  <title>Trick or Treat! ^_^</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="theme-color" content="#E64A19">
-  <style>
-      #splash {
-      z-index: 9;
-      height: 100%!important;
-      width: 100%!important;
-      animation-name: splashanim;
-      animation-duration:1s;
-      position: absolute;
-      top: 0;
-      left: -100%;
-    }
-    @keyframes splashanim {
-      0% {
-		left:0;
-        background: url(images/2KSplashLogo.png) center;
-        background-size: cover;
-      }
-      85% {
-        background: url(images/2KSplashLogo.png) center;
-        background-size: cover;
-      }
-      99% {
-        display: none;
-        left: 0;
-        background-position: center;
-      }
-      100% {
-        left: -100%;
-        background-position: center;
-      }
-    }
-    body {
-      font-family: "Roboto", sans-serif;
-      color: white!important;
-      width: 504px!important;
-      height: 487px!important;
-      --mdc-theme-primary: #ff5722;
-      --mdc-theme-secondary: #3f51b5;
-      --mdc-theme-background: #ff5722;
-      background: url(images/Halloween-House-Transparent-Background.png)
-      #ff5722 no-repeat left bottom fixed;
-      padding-right: 16px;
-      background-size:90%;
-	  background-position-y:100px;
-    }
-    #game {
-      padding: 16px;
-      padding-top: 48px;
-    }
-    #main-game {
-      color: black!important;
-    }
-    #log {
-      height: 100px;
-      overflow: auto;
-    }
-    #totbutton {
-      background: transparent!important;
-      color: white!important;
-    }
-    .dialog {
-      font-family: "Roboto", sans-serif;
-      border: none;
-      background: #ffffff;
-    }
-    .dialog_button {
-      outline: none;
-      background: none;
-      border: none;
-      transition: ease-in-out 300ms;
-      font-size: 200%;
-    }
-    .dialog_button:hover {
-      background: rgba(0, 0, 0, 0.3);
-    }
-    .dialog_button:active {
-      background: rgba(0, 0, 0, 0.5);
-    }
-    .mdc-button {
-      color: black!important;
-    }
-    .mdc-dialog__footer__button {
-      color: #4caf50!important;
-    }
-    #drawer-background {
-      background: url(images/Halloween-Bat-PNG-Image.png) center no-repeat;
-      background-size:contain;
-    }
-    #gift-timer {
-      font-size: 125%;
-      cursor: default;
-      text-transform: none;
-      border: 2px #505050d5 solid;
-      height: 100px;
-      width: 200px;
-    }
-    .big-gift-text {
-      font-size: 20px;
-      margin: 5px;
-    }
-    #spendCandy>button {
-      display: inline-block;
-    }
-    #shopButton {
-      color: white!important;
-    }
-    .mdc-grid-tile {
-      --mdc-grid-list-tile-width: 100px;
-      height: 150px;
-    }
-    .js-panel {
-      display: none;
-    }
-    .js-panel.is-active {
-      display: block;
-    }
-    .mdc-grid-tile__primary>.mdc-button {
-      width: 100px;
-      height: 150px;
-      font-size: 85%;
-    }
-    .mdc-grid-tile__secondary {
-      padding: 0!important;
-    }
-    #shop {
-      justify-content: center;
-    }
-    code {
-      font-size: 1rem;
-      background: #d1d1d1;
-      border-radius: 1px;
-    }
-    .stuff {
-      width: 100%;
-      height: 150px;
-      line-height: 4.5em;
-      text-align: center;
-      text-decoration: none;
-    }
-    .mdc-tab-bar__indicator {background:#ff5722;}
-    .mdc-tab--active, .mdc-tab--active:hover {color:#ff5722;}
-  </style>
-</head>
+            #splash {
+                background: url(images/2KSplashLogo.png)no-repeat center;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                padding: 0;
+                margin: 0;
+                z-index: 10000;
+                left: 0;
+                top: 0;
+                animation: splash 1s;
+                animation-fill-mode: forwards;
+            }
 
-<body>
-  <div id="splash"></div>
-  <aside id="nameDialog" class="mdc-dialog">
-    <div class="mdc-dialog__surface" style="background:white!important;color:black!important;">
-      <header class="mdc-dialog__header">
-        <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
-          Your name?
-        </h2>
-      </header>
-      <section id="my-mdc-dialog-description" class="mdc-dialog__body">
-        <div class="mdc-text-field mdc-text-field--upgraded">
-          <label class="mdc-text-field__label" for="name">Name?</label>
-          <input type="text" id="name" class="mdc-text-field__input" data-mdc-auto-init="MDCTextfield">
-          <div class="mdc-text-field__bottom-line"></div>
-        </div>
-      </section>
-      <footer class="mdc-dialog__footer">
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">OK</button>
-      </footer>
-    </div>
-    <div class="mdc-dialog__backdrop"></div>
-  </aside>
-  <div class="mdc-snackbar" aria-live="assertive" aria-atomic="true" aria-hidden="true">
-    <div class="mdc-snackbar__text"></div>
-    <div class="mdc-snackbar__action-wrapper">
-      <button type="button" class="mdc-snackbar__action-button"></button>
-    </div>
-  </div>
-  <aside id="updateDialog" class="mdc-dialog">
-    <div class="mdc-dialog__surface updateDialogSurface" style="color:black!important;background:white!important;">
-      <header class="mdc-dialog__header">
-        <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
-          New update!
-        </h2>
-      </header>
-      <section class="mdc-dialog__body">
-          1.8.6! Look down:<br>
-	    Updates: UI change! I think it looks a lot better, please give feedback.<br>
-            Fixes: Lots of minor and major bug fixes. Darn those bugs!<br>
-            Tip: If you want to continuously press a button, press the desired button and hold <code>Enter</code>.<br>
-            If you want to help Trick or Treat, please share it with a friend and/or download some other AWESOME 2K inc. extensions. Thank you!<br>
-      </section>
-      <footer class="mdc-dialog__footer">
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept acceptUpdate">Let's Go!</button>
-      </footer>
-    </div>
-    <div class="mdc-dialog__backdrop"></div>
-  </aside>
-  <aside id="giftDialog" class="mdc-dialog">
-    <div class="mdc-dialog__surface updateDialogSurface" style="color:black!important;background:white!important;">
-      <header class="mdc-dialog__header">
-        <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
-          Your Gift!
-        </h2>
-      </header>
-      <section class="mdc-dialog__body">
-		<button class="mdc-button" id="gift-timer" style="color:black!important;"></button>
-      </section>
-      <footer class="mdc-dialog__footer">
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept acceptUpdate">Let's Go!</button>
-      </footer>
-    </div>
-    <div class="mdc-dialog__backdrop"></div>
-  </aside>
-  <aside id="shop" class="mdc-dialog" role="alertdialog" aria-labelledby="my-mdc-dialog-label" aria-describedby="my-mdc-dialog-description">
-    <div class="mdc-dialog__surface" style="background:white!important;">
-      <header class="mdc-dialog__header">
-        <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
-          <nav id="shopTabs" class="mdc-tab-bar mdc-tab-bar--indicator-a	ccent  js-tabs" role="tablist">
-            <a role="tab" aria-controls="panel-1" class="mdc-tab mdc-tab--active">Spend Candy</a>
-            <a role="tab" aria-controls="panel-2" class="mdc-tab">Spend Pumpkins</a>
-			<a role="tab" aria-controls="panel-3" class="mdc-tab">Hire People</a>
-            <span class="mdc-tab-bar__indicator"></span>
-          </nav>
-        </div>
-      </header>
-      <section style="overflow-y:scroll;overflow-x:hidden;height:200px;">
-        <div class="js-panels" for='shopTabs'>
-          <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="spendCandy">
-            <button class="mdc-button" id="ipod_button">Get an iPod: 1K candies</button>
-            <button class="mdc-button" style="display:none;" id="computer_button">Get a computer: 10K candies</button>
-            <br>
-            <button class="mdc-button" style="display:none;" id="car_button">Get a car: 50K candies</button>
-            <button class="mdc-button" style="display:none;" id="house_button">Get a house: 250K candies</button>
-            <br>
-            <button class="mdc-button" style="display:none;" id="mansion_button">Get a mansion: 50M candies</button>
-			<button class="mdc-button" style="display:none;" id="skyscraper_button">Get a skyscraper: 500M candies</button>
-			<br>
-            <button class="mdc-button" style="display:none;" id="earth_button">Get Earth: 1T candies</button>
-			<button class="mdc-button" style="display:none;" id="solarsystem_button">Get the Solar System: 50T candies</button>
-            <button class="mdc-button" style="display:none;" id="galaxy_button">Get the Milky Way: 1Q candies</button>
-			<button class="mdc-button" style="display:none;" id="galaxycluster_button">Get a galaxy cluster: 50q candies</button>
-            <button class="mdc-button" style="display:none;" id="universe_button">Get the universe?</button>
-          </div>
-          <div class="js-panel" role="tabpanel" aria-hidden="true" id="spendCandyCanes">
-            <h2 style="color:black!important;text-align:center;">Candy Deals</h2>
-            <div class="mdc-grid-list">
-              <ul class="mdc-grid-list__tiles" style="justify-content:center;">
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="onek_button">1K Candies: 1 Pumpkin</button>
-                  </div>
-                </li>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="onem_button">1M Candies: 10 Pumpkins</button>
-                  </div>
-                </li>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="oneb_button">1B Candies: 100 Pumpkins</button>
-                  </div>
-                </li>
-              </ul>
+            @keyframes splash {
+                0% {
+                    display: block;
+                    left: 0;
+                }
+
+                50% {
+                    display: block;
+                    left: 0;
+                }
+
+                100% {
+                    display: none;
+                    left: -100%;
+                }
+            }
+
+            #box {
+                border: none;
+                background: white;
+                top: 130px;
+                position: absolute;
+                left: 20%;
+                width: 325px;
+                height: 325px;
+				color:black!important;
+				display:block!important;
+            }
+
+            #status {
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content" id="statsDialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface">
+                    <h2 class="mdc-dialog__title" id="my-dialog-title">Stats</h2>
+                    <div class="mdc-dialog__content" id="my-dialog-content">Dialog body text goes here.</div>
+                    <footer class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                            <span class="mdc-button__label">Okay</span>
+                        </button>
+                    </footer>
+                </div>
             </div>
-            <div class="mdc-grid-list">
-              <ul class="mdc-grid-list__tiles" style="justify-content:center;">
-                <h2 style="color:black!important;text-align:center;">Boosts</h2>
-                <div style="width:500px;"></div>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="lp_button" style="height:200px;">Lucky Penny (Multiplier x2): 1250 Pumpkins</button>
-                  </div>
-                </li>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="prmt_button" style="height:200px;">Promotion (Jobs x2): 2500 Pumpkins</button>
-                  </div>
-                </li>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="uccb_button" style="height:200px;">Ultimate Candy Corn (Candy x2): 5000 Pumpkins</button>
-                  </div>
-                </li>
-              </ul>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+        <header class="mdc-toolbar mdc-toolbar--waterfall mdc-toolbar--fixed mdc-toolbar--flexible-space-maximized" style="color:white!important;z-index:3;padding-right:16px!important;">
+            <div class="mdc-toolbar__row">
+                <section class="mdc-toolbar__section mdc-toolbar__section--align-start" style="color:white;">
+                    <a href="#" class="material-icons mdc-ripple-surface--accent menu mdc-toolbar__menu-icon" style="color:white!important;">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <span class="mdc-toolbar__title" id="welcome">Welcome</span>
+                </section>
+                <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+                    <button class="mdc-button mdc-ripple-surface--accent" data-mdc-auto-init="MDCButton" id="shopButton" style="color:white;">
+                        <i class="material-icons mdc-button__icon" data-mdc-auto-init="MDCButton">store</i>Shop
+                    </button>
+                </section>
             </div>
-          </div>
-		  <div class="js-panel" role="tabpanel" aria-hidden="false" id="hirePeople">
-			<button class="mdc-button" id="job_button">Hire a trick or treater: 100 candies</button>
-			<button class="mdc-button" id="farmer_button">Hire a farmer: 5 Pumpkins</button>
-          </div>
-      </section>
-      <footer class="mdc-dialog__footer">
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Done</button>
-      </footer>
-    </div>
-    <div class="mdc-dialog__backdrop"></div>
-  </aside>
-  <div class="mdc-snackbar" aria-live="assertive" aria-atomic="true" aria-hidden="true">
-    <div class="mdc-snackbar__text"></div>
-    <div class="mdc-snackbar__action-wrapper">
-      <button type="button" class="mdc-snackbar__action-button"></button>
-    </div>
-  </div>
-  <div id="game">
-      <br><br><br><br><br>
-    <div id="main-game">
-      <header class="mdc-toolbar mdc-toolbar--waterfall mdc-toolbar--fixed" style="color:white!important;z-index:3;padding-right:16px!important;">
-        <div class="mdc-toolbar__row">
-          <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-            <a href="#" class="material-icons menu mdc-toolbar__menu-icon" style="color:white!important;">
-              <i class="material-icons">menu</i>
-            </a>
-            <span class="mdc-toolbar__title" id="welcome">Welcome</span>
-          </section>
-          <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-	   <button class="mdc-button" data-mdc-auto-init="MDCRipple" id="shopButton">
-              <i class="material-icons mdc-button__icon">store</i>Shop
-            </button>
-          </section>
+            <div class="mdc-toolbar__row">
+                <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                    <span class="mdc-toolbar__title">Resources</span>
+                </section>
+                <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-toolbar__title" style="z-index:4!important;">
+                    <img src="images/CandyIcon.png" height="30px" width="30px">
+                    <span id="hmc">0</span>
+                    <img src="images/PumpkinIcon.png" height="30px" width="30px">
+                    <span id="hmcc">0</span>
+                </section>
+            </div>
+        </header>
+        <div id="splash"></div>
+        <div id="status"></div>
+        <div>
+            <table>
+                <tbody id="box" class="mdc-card"></tbody>
+            </table>
         </div>
-        <div class="mdc-toolbar__row">
-          <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-            <span class="mdc-toolbar__title">Resources</span>
-          </section>
-          <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-toolbar__title" style="z-index:4!important;">
-            <img src="images/CandyIcon.png" height="30px" width="30px">
-            <span id="hmc">0</span>
-            <img src="images/PumpkinIcon.png" height="30px" width="30px">
-            <span id="hmcc">0</span>
-          </section>
-        </div>
-      </header>
-  <button class="mdc-fab" id="costumeswitch_button" aria-label="Favorite" style="position:fixed;right:25px;bottom:25px;">
-    <img src="https://image.flaticon.com/icons/png/512/761/761229.png" style="vertical-align:inherit;" height="28px">
-  </button>
-      <h2 id="candy" class="mdc-typography--body1" style="font-size:150%;color:white!important;"></h2>
-      <h2 id="error" class="mdc-typography--body1" style="font-size:150%;color:white!important;"></h2>
-      <br>
-	  <div style="text-align:center;"><button class="mdc-button mdc-button--unelevated mdc-ripple-surface--secondary" style="text-align:center;color:white!important;width:225px;height:225px;border-radius:100%;" id="totbutton" data-mdc-auto-init="MDCRipple">
-        <img src="images/pumpkin-smirk.png" width="200px" height="200px">
-      </button></div>
-    </div>
-  </div>
-  <aside class="mdc-temporary-drawer mdc-typography">
-    <nav class="mdc-temporary-drawer__drawer">
-      <header class="mdc-temporary-drawer__header">
-        <div class="mdc-temporary-drawer__header-content mdc-typography--display1" id="drawer-background">
-          Stats
-        </div>
-      </header>
-      <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;" class="mdc-temporary-drawer__content">
-	    <button class="mdc-button" data-mdc-auto-init="MDCRipple" id="giftButton">
-			<img src="images/gift.png" height="28px" width="28px" style="vertical-align:inherit;padding-left:0;margin-left:-10px;margin-top:-4px;">Gift!
-        </button>
-        <p id="jobs">Jobs: 0</p>
-        <p id="farmers">Farmers: 0</p>
-        <p id="multiplier">Multiplier: 1</p>
-        <p id="cps"></p>
-        <h3 class="mdc-typography--subheading2">Inventory</h2>
-          <p class="mdc-typography" id="log">
-        </h3>
-        <p id="name-side"></p>
-		
-      <button class="mdc-button" id="new-game">New Game</button>
-      <button class="mdc-button" id="more_stuff">More stuff by 2K inc!</button>
-        <p>Trick or Treat: Go trick or treating! Made by #2Kinc. We are awesome.
-          <br>Copyright &copy; 2018 By 2K inc.</p>
-	  <p>K = thousand</p>
-	  <p>M = million</p>
-	  <p>B = billion</p>
-	  <p>T = trillion</p>
-	  <p>q = quadrillion</p>
-	  <p>Q = Quintillion</p>
-	  <p>s = sextillion</p>
-	  <p>S = septillion</p>
-	  <p>O = octillion</p>
-	  <p>N = nonillion</p>
-	  <p>D = decillion</p>
-	  <p>uD = undecillion</p>
-	  <p>dD = duodecillion</p>
-	  <p>tD = tredecillion</p>
-	  <p>qD = quattuordecillion</p>
-	  <p>QD = quindecillion</p>
-	  <p>sD = sedecillion</p>
-	  <p>SD = septendecillion</p>
-	  <p>oD = octodecillion</p>
-	  <p>nD = novendecillion</p>
-	  <p>V = vigintillion</p>
-      </nav>
-    </nav>
-  </aside>
-	<aside class="mdc-drawer">
-           <div class="mdc-drawer__content">
-      <header class="mdc-temporary-drawer__header">
-        <div class="mdc-temporary-drawer__header-content mdc-typography--display1" id="drawer-background">
-          Stats
-        </div>
-      </header>
-      <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;" class="mdc-temporary-drawer__content">
-	    <button class="mdc-button" data-mdc-auto-init="MDCRipple" id="giftButton">
-			<img src="images/gift.png" height="28px" width="28px" style="vertical-align:inherit;padding-left:0;margin-left:-10px;margin-top:-4px;">Gift!
-        </button>
-        <p id="jobs">Jobs: 0</p>
-        <p id="farmers">Farmers: 0</p>
-        <p id="multiplier">Multiplier: 1</p>
-        <p id="cps"></p>
-        <h3 class="mdc-typography--subheading2">Inventory</h2>
-          <p class="mdc-typography" id="log">
-        </h3>
-        <p id="name-side"></p>
-		
-      <button class="mdc-button" id="new-game">New Game</button>
-      <button class="mdc-button" id="more_stuff">More stuff by 2K inc!</button>
-        <p>Trick or Treat: Go trick or treating! Made by #2Kinc. We are awesome.
-          <br>Copyright &copy; 2018 By 2K inc.</p>
-	  <p>K = thousand</p>
-	  <p>M = million</p>
-	  <p>B = billion</p>
-	  <p>T = trillion</p>
-	  <p>q = quadrillion</p>
-	  <p>Q = Quintillion</p>
-	  <p>s = sextillion</p>
-	  <p>S = septillion</p>
-	  <p>O = octillion</p>
-	  <p>N = nonillion</p>
-	  <p>D = decillion</p>
-	  <p>uD = undecillion</p>
-	  <p>dD = duodecillion</p>
-	  <p>tD = tredecillion</p>
-	  <p>qD = quattuordecillion</p>
-	  <p>QD = quindecillion</p>
-	  <p>sD = sedecillion</p>
-	  <p>SD = septendecillion</p>
-	  <p>oD = octodecillion</p>
-	  <p>nD = novendecillion</p>
-	  <p>V = vigintillion</p>
-  </div>
-</aside>
-  <div style="display:none;width:1000%;height:1000%;right:50;top:50;background:black;" id="beat_game">
-    <h1 class="mdc-typography--display2" style="color:white;">Your life purpose is done.</h1>
-  </div>
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <script src="popup.js"></script>
-</body>
-
+        <script src="material.js"></script>
+        <script src="index.js"></script>
+    </body>
 </html>
