@@ -2,10 +2,10 @@ $=(d)=>{return document.querySelector(d)};
 c=(d, l)=>{return document.querySelector('#c'+d+'_'+l)}
 new mdc.ripple.MDCRipple($('#shopButton'));
 new mdc.ripple.MDCRipple($('.menu')).unbounded=true;
-if (localStorage.getItem('tot')!=='') {
+if (localStorage.getItem('tot')!==null||localStorage.getItem('tot')!=='') {
 	this.tot=JSON.parse(localStorage.getItem('tot'));
 } else {
-	this.tot = {
+		this.tot = {
 		candy:0,
 		pumpkins:100, 
 		x:0,
@@ -34,25 +34,25 @@ draw=()=>{
 			l.id='c'+x+'_'+y;
 			l.style.height='10px';
 			l.style.width='10px';
-			l.innerHTML='d';
+			l.innerHTML=',';
 			l.style.fontSize='90%';
 			l.style.textAlign='center';
 			$('#y'+y).appendChild(l);
 			
 		}
 	}
-	for (var x = 0; x < 21; x++) {
-		for (var y = 0; y < 17; y++) {
+	for (var x = 0-tot.shift.x; x < 21-tot.shift.x; x++) {
+		for (var y = 0-tot.shift.y+1; y < 17-tot.shift.y+1; y++) {
 			var value = noise.simplex2(x / 100, y / 100);
 			//console.log((x-tot.shift.x) + ',' + (y-tot.shift.y+1) + ',' + value);
 			if (value < 0) {
 				value = Math.abs(value);
 			}
-			if (value < 0.4) {
-				new tile({x:(x-tot.shift.x),y:y-tot.shift.y+1}, ' ') 
+			if (value < 0.2) {
+				new tile({x:x,y:y}, ',') 
 			}
-			if (value > 0.4&&value<0.6) {
-				new tile({x:(x-tot.shift.x),y:y-tot.shift.y+1}, 'H') 
+			if (value > 0.5&&value<0.55||value > 0.2&&value<0.25||value>0.425&&value<0.433||value>0.575&&value<0.483||value>0.7&&value<0.8||value>0.85&&value<0.95||value>0.3&&value<0.4) {
+				new tile({x:x,y:y}, 'H') 
 			}
 			
 		}
@@ -63,10 +63,10 @@ draw=()=>{
 noise.seed(tot.seed);
 draw();
 move=(d)=> {
-	if (d=='s'){tot.y--;if (tot.y < 1-tot.shift.y) {tot.shift.y++;}draw();}
-	if (d=='w'){tot.x--;if (tot.x < tot.shift.x) {tot.shift.x++;}draw();}
-	if (d=='n'){tot.y++;if (tot.y > tot.shift.y-1) {tot.shift.y--;}draw();}
-	if (d=='e'){tot.x++;if (tot.x > tot.shift.x) {tot.shift.x--;}draw();}
+	if (d=='s'){tot.y--;tot.shift.y++;draw();}
+	if (d=='w'){tot.x--;tot.shift.x++;draw();}
+	if (d=='n'){tot.y++;tot.shift.y--;draw();}
+	if (d=='e'){tot.x++;tot.shift.x--;draw();}
 	localStorage.setItem('tot', JSON.stringify(tot));
 }
 document.onkeydown=(e)=>{	
