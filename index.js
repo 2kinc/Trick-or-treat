@@ -6,7 +6,7 @@ var c = (d,l)=>{
 }
 new mdc.ripple.MDCRipple($('#shopButton'));
 new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
-if (localStorage.getItem('tot') !== null && localStorage.getItem('tot') !== '') {
+if (localStorage.getItem('tot') !== null) {
     this.tot = JSON.parse(localStorage.getItem('tot'));
 } else {
     this.tot = {
@@ -20,13 +20,14 @@ if (localStorage.getItem('tot') !== null && localStorage.getItem('tot') !== '') 
         },
         yawtth: [],
         seed: Math.floor(Math.random() * 64334),
-        cl: ''
+        cl: '',
+	mult:1
     }
 }
 var ih = false;
 var im = false;
 var ig = false;
-var ttt=()=>{tot.candy++;$('#hmc').innerHTML=tot.candy;localStorage.setItem('tot',tot);}
+var ttt=()=>{tot.candy+=Math.floor(Math.random()*tot.mult+1);$('#hmc').innerHTML=tot.candy;localStorage.setItem('tot',tot);}
 var doaction=()=>{if (ih) {tot.yawtth.push({x: tot.x,y: tot.y});ttt();}draw()};
 var tile = function(co, ct) {
     this.x = co.x;
@@ -155,8 +156,18 @@ var move = (d)=>{
     }
     localStorage.setItem('tot', JSON.stringify(tot));
 }
+$('#cs-btn').addEventListener('click', ()=>{
+    if (tot.candy>=100) {
+        tot.candy-=100;
+        $('#hmc').innerHTML = tot.candy;
+        tot.mult++;
+	draw();
+    } else {
+        $('status').innerHTML = 'Do not have enough candy'
+    }
+});
 document.onkeydown = (e)=>{
-	e.key=e.key.toLowerCase();
+    e.key=e.key.toLowerCase();
     if (e.key == 'w') {
         move('n')
     }
