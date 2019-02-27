@@ -79,44 +79,84 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 left: 20%;
                 width: 300px;
                 height: 300px;
-				color:black!important;
-				display:block!important;
-				max-width:300px;
-				max-height:300px;
-				min-width:300px;
-				min-height:300px;
-				text-align:center;
+                color: black!important;
+                display: block!important;
+                max-width: 300px;
+                max-height: 300px;
+                min-width: 300px;
+                min-height: 300px;
+                text-align: center;
             }
+
             #status {
-				width: 300px;
-				height: 30px;
-				bottom: 8%;
-				position: absolute;
-				left: 20%;
-				text-align:start;
-				color:black;
-				font-size:150%;
-				padding-left:1%;
-            } #status-btn {
-				position:absolute;
-				bottom:8%;
-				width:100px;
-				font-size:60%;
-				right:5px;
-				padding-top:2px;
-				padding-bottom:2px;
-			}
+                width: 300px;
+                height: 30px;
+                bottom: 8%;
+                position: absolute;
+                left: 20%;
+                text-align: start;
+                color: black;
+                font-size: 150%;
+                padding-left: 1%;
+            }
+
+            #status-btn {
+                position: absolute;
+                bottom: 8%;
+                width: 100px;
+                font-size: 60%;
+                right: 5px;
+                padding-top: 2px;
+                padding-bottom: 2px;
+            }
         </style>
     </head>
     <body>
-        <div class="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content" id="statsDialog">
+        <div class="mdc-dialog" id="shop-dialog">
             <div class="mdc-dialog__container">
                 <div class="mdc-dialog__surface">
-                    <h2 class="mdc-dialog__title" id="my-dialog-title">Stats</h2>
-                    <div class="mdc-dialog__content" id="my-dialog-content">Dialog body text goes here.</div>
+                    <h2 class="mdc-dialog__title" id="my-dialog-title">Shop</h2>
+                    <div class="mdc-tab-bar" role="tablist">
+                        <div class="mdc-tab-scroller">
+                            <div class="mdc-tab-scroller__scroll-area">
+                                <div class="mdc-tab-scroller__scroll-content">
+                                    <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                                        <span class="mdc-tab__content">
+                                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                                            <span class="mdc-tab__text-label">Favorites</span>
+                                        </span>
+                                        <span class="mdc-tab-indicator">
+                                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                        </span>
+                                        <span class="mdc-tab__ripple"></span>
+                                    </button>
+                                    <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                                        <span class="mdc-tab__content">
+                                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                                            <span class="mdc-tab__text-label">d</span>
+                                        </span>
+                                        <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                                            <span class="mdc-tab-indicator__content"></span>
+                                        </span>
+                                        <span class="mdc-tab__ripple"></span>
+                                    </button>
+                                    <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                                        <span class="mdc-tab__content">
+                                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                                            <span class="mdc-tab__text-label">f</span>
+                                        </span>
+                                        <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                                            <span class="mdc-tab-indicator__content"></span>
+                                        </span>
+                                        <span class="mdc-tab__ripple"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <footer class="mdc-dialog__actions">
-                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
-                            <span class="mdc-button__label">Okay</span>
+                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+                            <span class="mdc-button__label">Done</span>
                         </button>
                     </footer>
                 </div>
@@ -133,7 +173,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 </section>
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
                     <button class="mdc-button mdc-ripple-surface--accent" data-mdc-auto-init="MDCButton" id="shopButton" style="color:white;">
-                        <i class="material-icons mdc-button__icon" data-mdc-auto-init="MDCButton">store</i>Shop
+                        <i class="material-icons mdc-button__icon" data-mdc-auto-init="MDCButton">store</i>
+                        Shop
+                    
+                    
                     </button>
                 </section>
             </div>
@@ -155,9 +198,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 <tbody id="box" class="mdc-card"></tbody>
             </table>
         </div>
-		<div id="status" class="mdc-card mdc-typography--headline5">d</div>
+        <button class="mdc-fab" id="cs-btn" style="position:fixed;right:25px;bottom:25px;background:#3f51b5;">
+            <img src="https://image.flaticon.com/icons/png/512/761/761229.png" style="vertical-align:inherit;" height="28px">
+        </button>
+        <div id="status" class="mdc-card mdc-typography--headline5">d</div>
         <script src="material.js"></script>
-		<script src="perlin.js"></script>
-        <script src="index.js"></script>		
+        <script src="perlin.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>

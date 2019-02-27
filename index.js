@@ -5,13 +5,17 @@ var c = (d,l)=>{
     return document.querySelector('#c' + d + '_' + l)
 }
 new mdc.ripple.MDCRipple($('#shopButton'));
+var sdialog = new mdc.dialog.MDCDialog(document.querySelector('#shop-dialog'))
+$('#shopButton').addEventListener('click', ()=>{
+	sdialog.open();
+});
 new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
 if (localStorage.getItem('tot') !== null && localStorage.getItem('tot') !== '') {
     this.tot = JSON.parse(localStorage.getItem('tot'));
 } else {
     this.tot = {
         candy: 0,
-        pumpkins: 100,
+        pump: 100,
         x: 0,
         y: 0,
         shift: {
@@ -20,13 +24,14 @@ if (localStorage.getItem('tot') !== null && localStorage.getItem('tot') !== '') 
         },
         yawtth: [],
         seed: Math.floor(Math.random() * 64334),
-        cl: ''
+        cl: '',
+		multi:1
     }
 }
 var ih = false;
 var im = false;
 var ig = false;
-var ttt=()=>{tot.candy++;$('#hmc').innerHTML=tot.candy;localStorage.setItem('tot',tot);}
+var ttt=()=>{tot.candy+=Math.floor(Math.random()*2+1)*tot.multi;$('#hmc').innerHTML=tot.candy;localStorage.setItem('tot',tot);}
 var doaction=()=>{if (ih) {tot.yawtth.push({x: tot.x,y: tot.y});ttt();}draw()};
 var tile = function(co, ct) {
     this.x = co.x;
@@ -49,7 +54,6 @@ var draw=()=>{
             l.style.fontSize = '90%';
             l.style.textAlign = 'center';
             $('#y' + y).appendChild(l);
-
         }
     }
     for (var x = 0 - tot.shift.x; x < 21 - tot.shift.x; x++) {
@@ -132,6 +136,15 @@ var draw=()=>{
 }
 noise.seed(tot.seed);
 draw();
+$('#cs-btn').addEventListener('click', ()=>{
+	if (tot.candy>=100) {
+		tot.candy-=100;
+		$('#hmc').innerHTML = tot.candy;
+		tot.yawtth=[];
+		tot.multi++;
+		draw();
+	} else {$('#status').innerHTML="Not enough candy."}
+});
 var move = (d)=>{
     if (d == 's') {
         tot.y--;
@@ -175,7 +188,7 @@ document.onkeydown = (e)=>{
 }
 ;
 $('#hmc').innerHTML = tot.candy;
-$('#hmp').innerHTML = tot.pumpkins;
+$('#hmp').innerHTML = tot.pump;
 window.cls = ()=>{
     localStorage.setItem('tot', JSON.stringify(tot));
 }
