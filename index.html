@@ -109,6 +109,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 padding-top: 2px;
                 padding-bottom: 2px;
             }
+            .js-panel {display:none;color:black;}
+            .is-active {display:block}
         </style>
     </head>
     <body>
@@ -117,42 +119,63 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 <div class="mdc-dialog__surface">
                     <h2 class="mdc-dialog__title" id="my-dialog-title">Shop</h2>
                     <div class="mdc-tab-bar" role="tablist">
-                        <div class="mdc-tab-scroller">
-                            <div class="mdc-tab-scroller__scroll-area">
-                                <div class="mdc-tab-scroller__scroll-content">
-                                    <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
-                                        <span class="mdc-tab__content">
-                                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
-                                            <span class="mdc-tab__text-label">Favorites</span>
-                                        </span>
-                                        <span class="mdc-tab-indicator">
-                                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                        </span>
-                                        <span class="mdc-tab__ripple"></span>
-                                    </button>
-                                    <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
-                                        <span class="mdc-tab__content">
-                                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
-                                            <span class="mdc-tab__text-label">d</span>
-                                        </span>
-                                        <span class="mdc-tab-indicator mdc-tab-indicator--active">
-                                            <span class="mdc-tab-indicator__content"></span>
-                                        </span>
-                                        <span class="mdc-tab__ripple"></span>
-                                    </button>
-                                    <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
-                                        <span class="mdc-tab__content">
-                                            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
-                                            <span class="mdc-tab__text-label">f</span>
-                                        </span>
-                                        <span class="mdc-tab-indicator mdc-tab-indicator--active">
-                                            <span class="mdc-tab-indicator__content"></span>
-                                        </span>
-                                        <span class="mdc-tab__ripple"></span>
-                                    </button>
-                                </div>
-                            </div>
+                      <div class="mdc-tab-scroller">
+                        <div class="mdc-tab-scroller__scroll-area">
+                          <div class="mdc-tab-scroller__scroll-content">
+                            <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                              <span class="mdc-tab__content">
+                                <span class="mdc-tab__text-label">Upgrades</span>
+                              </span>
+                              <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                              </span>
+                              <span class="mdc-tab__ripple"></span>
+                            </button>
+                            <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                              <span class="mdc-tab__content">
+                                <span class="mdc-tab__text-label">Boosts</span>
+                              </span>
+                              <span class="mdc-tab-indicator">
+                                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                              </span>
+                              <span class="mdc-tab__ripple"></span>
+                            </button>
+                            <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                              <span class="mdc-tab__content">
+                                <span class="mdc-tab__text-label">Hire</span>
+                              </span>
+                              <span class="mdc-tab-indicator">
+                                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                              </span>
+                              <span class="mdc-tab__ripple"></span>
+                            </button>
+                          </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="upgrades">d</div>
+                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts"><div class="mdc-grid-list">
+              <ul class="mdc-grid-list__tiles" style="justify-content:center;">
+                <div style="width:500px;"></div>
+                <li class="mdc-grid-tile">
+                  <div class="mdc-grid-tile__primary">
+                    <button class="mdc-button mdc-button--raised" id="lp_button" style="height:200px;">Lucky Penny (Multiplier x2): 1250 Pumpkins</button>
+                  </div>
+                </li>
+                <li class="mdc-grid-tile">
+                  <div class="mdc-grid-tile__primary">
+                    <button class="mdc-button mdc-button--raised" id="prmt_button" style="height:200px;">Promotion (Jobs x2): 2500 Pumpkins</button>
+                  </div>
+                </li>
+                <li class="mdc-grid-tile">
+                  <div class="mdc-grid-tile__primary">
+                    <button class="mdc-button mdc-button--raised" id="uccb_button" style="height:200px;">Ultimate Candy Corn (Candy x2): 5000 Pumpkins</button>
+                  </div>
+                </li>
+              </ul>
+            </div></div>
+                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="hire">
+                      <button class="mdc-button" id="toters-btn">Hire a Trick or Treater!</button>
                     </div>
                     <footer class="mdc-dialog__actions">
                         <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">

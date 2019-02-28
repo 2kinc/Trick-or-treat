@@ -5,6 +5,7 @@ var c = (d,l)=>{
     return document.querySelector('#c' + d + '_' + l)
 }
 new mdc.ripple.MDCRipple($('#shopButton'));
+new mdc.tabBar.MDCTabBar($('.mdc-tab-bar'));
 var sdialog = new mdc.dialog.MDCDialog(document.querySelector('#shop-dialog'))
 $('#shopButton').addEventListener('click', ()=>{
 	sdialog.open();
@@ -15,7 +16,10 @@ if (localStorage.getItem('tot') !== null) {
 } else {
     this.tot = {
         candy: 0,
-        pump: 100,
+        max_candy:100,
+        pump: 10,
+        max_pump: 10,
+        tot_ers:0,
         x: 0,
         y: 0,
         shift: {
@@ -28,10 +32,52 @@ if (localStorage.getItem('tot') !== null) {
 	      mult:1
     }
 }
+document.querySelectorAll('.mdc-tab')[0].addEventListener('click', function() {$('#upgrades').classList.add("is-active");$('#boosts').classList.remove("is-active");$('#hire').classList.remove("is-active");});
+document.querySelectorAll('.mdc-tab')[1].addEventListener('click', function() {$('#upgrades').classList.remove("is-active");$('#boosts').classList.add("is-active");$('#hire').classList.remove("is-active");});
+document.querySelectorAll('.mdc-tab')[2].addEventListener('click', function() {$('#upgrades').classList.remove("is-active");$('#boosts').classList.remove("is-active");$('#hire').classList.add("is-active");});
+setInterval(function() {tot.candy+=Math.floor(Math.random()*tot.mult+1)*tot.tot_ers;$('#hmc').innerHTML=beautify(tot.candy);localStorage.setItem(JSON.stringify('tot'),tot);})
+var beautify = function (number) {
+    var range = [
+        { start: 3, end: 6, suffix: "K" },
+        { start: 6, end: 9, suffix: "M" },
+        { start: 9, end: 12, suffix: "B" },
+        { start: 12, end: 15, suffix: "T" },
+        { start: 15, end: 18, suffix: "q" },
+        { start: 18, end: 21, suffix: "Q" },
+        { start: 21, end: 24, suffix: "s" },
+        { start: 24, end: 27, suffix: "S" },
+        { start: 27, end: 30, suffix: "O" },
+        { start: 30, end: 33, suffix: "N" },
+        { start: 33, end: 36, suffix: "D" },
+		    { start: 36, end: 39, suffix: "uD" },
+		    { start: 39, end: 42, suffix: "D" },
+		    { start: 42, end: 45, suffix: "tD" },
+		    { start: 45, end: 48, suffix: "qD" },
+		    { start: 48, end: 51, suffix: "QD" },
+		    { start: 51, end: 54, suffix: "sD" },
+		    { start: 54, end: 57, suffix: "SD" },
+		    { start: 57, end: 60, suffix: "oD" },
+		    { start: 60, end: 63, suffix: "nD" },
+		    { start: 63, end: 66, suffix: "V" }
+    ];
+
+    var r = range.filter(v => {
+        var a = Math.log10(number);
+        return a >= v.start && a < v.end;
+    });
+
+    if (r && r.length) {
+        var y = number / Math.pow(10, r[0].start);
+        y = Math.floor(y * 100) / 100;
+        y = y.toFixed(2);
+        return y + r[0].suffix;
+    }
+    else return number;
+};
 var ih = false;
 var im = false;
 var ig = false;
-var ttt=()=>{tot.candy+=Math.floor(Math.random()*tot.mult+1);$('#hmc').innerHTML=tot.candy;localStorage.setItem('tot',tot);}
+var ttt=()=>{tot.candy+=Math.floor(Math.random()*tot.mult+1);$('#hmc').innerHTML=beautify(tot.candy);localStorage.setItem('tot',tot);}
 var doaction=()=>{if (ih) {tot.yawtth.push({x: tot.x,y: tot.y});ttt();}draw()};
 var tile = function(co, ct) {
     this.x = co.x;
@@ -139,9 +185,9 @@ draw();
 $('#cs-btn').addEventListener('click', ()=>{
 	if (tot.candy>=100) {
 		tot.candy-=100;
-		$('#hmc').innerHTML = tot.candy;
+		$('#hmc').innerHTML = beautify(tot.candy);
 		tot.yawtth=[];
-		tot.multi++;
+		tot.mult++;
 		draw();
 	} else {$('#status').innerHTML="Not enough candy."}
 });
@@ -168,16 +214,6 @@ var move = (d)=>{
     }
     localStorage.setItem('tot', JSON.stringify(tot));
 }
-$('#cs-btn').addEventListener('click', ()=>{
-    if (tot.candy>=100) {
-        tot.candy-=100;
-        $('#hmc').innerHTML = tot.candy;
-        tot.mult++;
-	draw();
-    } else {
-        $('status').innerHTML = 'Do not have enough candy'
-    }
-});
 document.onkeydown = (e)=>{
     e.key=e.key.toLowerCase();
     if (e.key == 'w') {
