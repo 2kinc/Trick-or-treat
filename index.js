@@ -23,7 +23,7 @@ if (localStorage.getItem('tot') !== null) {
             y: 9
         },
         yawtth: [],
-        seed: Math.floor(Math.random() * 64334),
+        seed: Math.random(),
         cl: '',
 	      mult:1
     }
