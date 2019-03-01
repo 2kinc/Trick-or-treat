@@ -50,7 +50,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 z-index: 10000;
                 left: 0;
                 top: 0;
-                animation: splash 1s;
+                animation: splash 2s;
                 animation-fill-mode: forwards;
             }
 
@@ -116,6 +116,51 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
         </style>
     </head>
     <body>
+      <aside class="mdc-drawer mdc-drawer--modal" style="top:0;">
+  <div class="mdc-drawer__content">
+    <header class="mdc-temporary-drawer__header">
+        <div class="mdc-typography--headline5"style="color:black;padding-top:5px;">
+          Stats
+        </div>
+      </header>
+    <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;font-family:'Roboto', sans-serif" class="mdc-temporary-drawer__content">
+    	    <button class="mdc-button" data-mdc-auto-init="MDCRipple" id="giftButton">
+    			<img src="images/gift.png" height="28px" width="28px" style="vertical-align:inherit;padding-left:0;margin-left:-10px;margin-top:-4px;">Gift!
+            </button>
+            <p id="jobs">TOT-ers:</p>
+            <p id="farmers">Farmers:</p>
+            <p id="multiplier">Multiplier:</p>
+            <p id="cps">Candy Per Second:</p>
+              <p id="name-side">Name: Kavin</p>
+          <button class="mdc-button" id="new-game">New Game</button>
+            <p>Trick or Treat: Go trick or treating! Made by #2Kinc. We are awesome.
+              <br>Copyright © 2018 By 2K inc.</p>
+          <p>K = thousand</p>
+          <p>M = million</p>
+          <p>B = billion</p>
+          <p>T = trillion</p>
+          <p>q = quadrillion</p>
+          <p>Q = Quintillion</p>
+          <p>s = sextillion</p>
+          <p>S = septillion</p>
+          <p>O = octillion</p>
+          <p>N = nonillion</p>
+          <p>D = decillion</p>
+    	  <p>uD = undecillion</p>
+    	  <p>dD = duodecillion</p>
+    	  <p>tD = tredecillion</p>
+    	  <p>qD = quattuordecillion</p>
+    	  <p>QD = quindecillion</p>
+    	  <p>sD = sedecillion</p>
+    	  <p>SD = septendecillion</p>
+    	  <p>oD = octodecillion</p>
+    	  <p>nD = novendecillion</p>
+    	  <p>V = vigintillion</p>
+          </nav>
+  </div>
+</aside>
+
+<div class="mdc-drawer-scrim"></div>
         <div class="mdc-dialog" id="shop-dialog">
             <div class="mdc-dialog__container">
                 <div class="mdc-dialog__surface">
@@ -157,13 +202,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     </div>
                     <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="upgrades">
                       <button class="mdc-button rnd-btn" id="phone-btn">Phone (Max TOT-ers is 40) 500 candies</button>
-                      <button class="mdc-button rnd-btn" id="compu-btn">Computer (Max TOT-ers is 300) 5K candies</button><hr>
-                      <button class="mdc-button rnd-btn" id="hse-btn">House (Max candy is 100K) 70K candies</button>
-                      <button class="mdc-button rnd-btn" id="mnsn-btn">Mansion (Max candy is 100B) 1M candies</button>
-                      <button class="mdc-button rnd-btn" id="wrhse-btn">Warehouse (Max candy is 1Q) 10B candies</button>
+                      <button class="mdc-button rnd-btn" id="compu-btn">Computer (Max TOT-ers is 300) 5K candies</button>
+                      <button class="mdc-button rnd-btn" id="compu-btn">AI (No max TOT-ers) 100K candies</button><hr>
+                      <button class="mdc-button rnd-btn" id="hse-btn">House (Max candy is 1M) 70K candies</button>
+                      <button class="mdc-button rnd-btn" id="mnsn-btn">Mansion (M`ax candy is 100B) 1M candies</button>
+                      <button class="mdc-button rnd-btn" id="wrhse-btn">Warehouse (Max candy is 70Q) 10B candies</button>
                       <button class="mdc-button rnd-btn" id="sksc-btn">Sky Scraper (Max candy is 10O) 70Q</button>
-                      <button class="mdc-button rnd-btn" id="ptlstg-btn">Portal Storage (No max candy) 1D</button>
-                      <br><div class="mdc-checkbox" style="z-index: 10000;">
+                      <button class="mdc-button rnd-btn" id="ptlstg-btn">Portal Storage (No max candy) 10O</button>
+                      <br>
+                      <div class="mdc-checkbox" style="z-index: 10000;">
                         <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/>
                         <div class="mdc-checkbox__background">
                           <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -173,7 +220,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                         </div>
                         <label for="checkbox-1" style="position: absolute;left: 35px;top: 19px;">Be adventurous</label>
                       </div>
-
                     </div>
                     <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts">
                       <button class="mdc-button mdc-button--raised rsd-btn" id="lp_button">Lucky Penny (Multiplier x2): 1250 Pumpkins</button>
@@ -195,7 +241,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
         <header class="mdc-toolbar mdc-toolbar--waterfall mdc-toolbar--fixed mdc-toolbar--flexible-space-maximized" style="color:white!important;z-index:3;padding-right:16px!important;">
             <div class="mdc-toolbar__row">
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-start" style="color:white;">
-                    <a href="#" class="material-icons mdc-ripple-surface--accent menu mdc-toolbar__menu-icon" style="color:white!important;">
+                    <a class="material-icons mdc-ripple-surface--accent menu mdc-toolbar__menu-icon" style="color:white!important;">
                         <i class="material-icons">menu</i>
                     </a>
                     <span class="mdc-toolbar__title" id="welcome">Welcome</span>
@@ -232,7 +278,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
     position: absolute;
     left: 37.5%;
     color: white;
-" class="mdc-button">Trick or treat!</button>
+" class="mdc-button mdc-ripple-surface--accent">Trick or treat!</button>
         </div>
         <button class="mdc-fab" id="cs-btn" style="position:fixed;right:25px;bottom:25px;background:#3f51b5;">
             <img src="https://image.flaticon.com/icons/png/512/761/761229.png" style="vertical-align:inherit;" height="28px">
