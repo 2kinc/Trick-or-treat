@@ -20,6 +20,7 @@ if (localStorage.getItem('tot') !== null) {
         pump: 10,
         max_pump: 10,
         tot_ers:0,
+        max_tot_ers:10,
         x: 0,
         y: 0,
         shift: {
@@ -32,10 +33,11 @@ if (localStorage.getItem('tot') !== null) {
 	      mult:1
     }
 }
-document.querySelectorAll('.mdc-tab')[0].addEventListener('click', function() {$('#upgrades').classList.add("is-active");$('#boosts').classList.remove("is-active");$('#hire').classList.remove("is-active");});
-document.querySelectorAll('.mdc-tab')[1].addEventListener('click', function() {$('#upgrades').classList.remove("is-active");$('#boosts').classList.add("is-active");$('#hire').classList.remove("is-active");});
-document.querySelectorAll('.mdc-tab')[2].addEventListener('click', function() {$('#upgrades').classList.remove("is-active");$('#boosts').classList.remove("is-active");$('#hire').classList.add("is-active");});
-setInterval(function() {tot.candy+=Math.floor(Math.random()*tot.mult+1)*tot.tot_ers;$('#hmc').innerHTML=beautify(tot.candy);localStorage.setItem(JSON.stringify('tot'),tot);})
+document.querySelector('#toters-btn').addEventListener('click', ()=>{if (tot.candy >= 100) {tot.candy-=100;$('#hmc').innerHTML=beautify(tot.candy);tot.tot_ers++} else {$('#status').innerHTML='You do not have enough money'}});
+document.querySelectorAll('.mdc-tab')[0].addEventListener('click', ()=> {$('#upgrades').classList.add("is-active");$('#boosts').classList.remove("is-active");$('#hire').classList.remove("is-active");});
+document.querySelectorAll('.mdc-tab')[1].addEventListener('click', ()=> {$('#upgrades').classList.remove("is-active");$('#boosts').classList.add("is-active");$('#hire').classList.remove("is-active");});
+document.querySelectorAll('.mdc-tab')[2].addEventListener('click', ()=> {$('#upgrades').classList.remove("is-active");$('#boosts').classList.remove("is-active");$('#hire').classList.add("is-active");});
+setInterval(function() {tot.candy+=Math.floor(Math.random()*tot.mult+1)*tot.tot_ers;$('#hmc').innerHTML=beautify(tot.candy);localStorage.setItem(JSON.stringify('tot'),tot);}, 1000);
 var beautify = function (number) {
     var range = [
         { start: 3, end: 6, suffix: "K" },

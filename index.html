@@ -109,8 +109,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 padding-top: 2px;
                 padding-bottom: 2px;
             }
-            .js-panel {display:none;color:black;}
+            .js-panel {display:none;color:black;height:200px;}
             .is-active {display:block}
+            .rsd-btn {width:100px;height:200px;top:5px;}
+            .rnd-btn {width:90px;height:90px;border-radius:50%;font-size:88%;}
         </style>
     </head>
     <body>
@@ -153,27 +155,31 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                         </div>
                       </div>
                     </div>
-                    <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="upgrades">d</div>
-                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts"><div class="mdc-grid-list">
-              <ul class="mdc-grid-list__tiles" style="justify-content:center;">
-                <div style="width:500px;"></div>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="lp_button" style="height:200px;">Lucky Penny (Multiplier x2): 1250 Pumpkins</button>
-                  </div>
-                </li>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="prmt_button" style="height:200px;">Promotion (Jobs x2): 2500 Pumpkins</button>
-                  </div>
-                </li>
-                <li class="mdc-grid-tile">
-                  <div class="mdc-grid-tile__primary">
-                    <button class="mdc-button mdc-button--raised" id="uccb_button" style="height:200px;">Ultimate Candy Corn (Candy x2): 5000 Pumpkins</button>
-                  </div>
-                </li>
-              </ul>
-            </div></div>
+                    <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="upgrades">
+                      <button class="mdc-button rnd-btn" id="phone-btn">Phone (Max TOT-ers is 40) 500 candies</button>
+                      <button class="mdc-button rnd-btn" id="compu-btn">Computer (Max TOT-ers is 300) 5K candies</button><hr>
+                      <button class="mdc-button rnd-btn" id="hse-btn">House (Max candy is 100K) 70K candies</button>
+                      <button class="mdc-button rnd-btn" id="mnsn-btn">Mansion (Max candy is 100B) 1M candies</button>
+                      <button class="mdc-button rnd-btn" id="wrhse-btn">Warehouse (Max candy is 1Q) 10B candies</button>
+                      <button class="mdc-button rnd-btn" id="sksc-btn">Sky Scraper (Max candy is 10O) 70Q</button>
+                      <button class="mdc-button rnd-btn" id="ptlstg-btn">Portal Storage (No max candy) 1D</button>
+                      <br><div class="mdc-checkbox">
+                        <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                          <div class="mdc-checkbox__mixedmark"></div>
+                        </div>
+                        <label for="checkbox-1" style="position: absolute;left: 35px;top: 19px;">Checkbox 1</label>
+                      </div>
+
+                    </div>
+                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts">
+                      <button class="mdc-button mdc-button--raised rsd-btn" id="lp_button">Lucky Penny (Multiplier x2): 1250 Pumpkins</button>
+                      <button class="mdc-button mdc-button--raised rsd-btn" id="prmt_button">Promotion (Jobs x2): 2500 Pumpkins</button>
+                      <button class="mdc-button mdc-button--raised rsd-btn" id="uccb_button">Ultimate Candy Corn (Candy x2): 5000 Pumpkins</button>
+                    </div>
                     <div class="js-panel" role="tabpanel" aria-hidden="false" id="hire">
                       <button class="mdc-button" id="toters-btn">Hire a Trick or Treater!</button>
                     </div>
@@ -213,10 +219,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
         </header>
         <div id="splash"></div>
-        <div style="text-align:center;">
-            <table>
-                <tbody id="box" class="mdc-card"></tbody>
-            </table>
+        <div id="adven-div">
+          <div style="text-align:center;">
+              <table>
+                  <tbody id="box" class="mdc-card"></tbody>
+              </table>
+          </div>
+        </div>
+        <div id="reg-div">
+          
         </div>
         <button class="mdc-fab" id="cs-btn" style="position:fixed;right:25px;bottom:25px;background:#3f51b5;">
             <img src="https://image.flaticon.com/icons/png/512/761/761229.png" style="vertical-align:inherit;" height="28px">
