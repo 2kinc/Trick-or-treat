@@ -163,7 +163,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                       <button class="mdc-button rnd-btn" id="wrhse-btn">Warehouse (Max candy is 1Q) 10B candies</button>
                       <button class="mdc-button rnd-btn" id="sksc-btn">Sky Scraper (Max candy is 10O) 70Q</button>
                       <button class="mdc-button rnd-btn" id="ptlstg-btn">Portal Storage (No max candy) 1D</button>
-                      <br><div class="mdc-checkbox">
+                      <br><div class="mdc-checkbox" style="z-index: 10000;">
                         <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/>
                         <div class="mdc-checkbox__background">
                           <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                           </svg>
                           <div class="mdc-checkbox__mixedmark"></div>
                         </div>
-                        <label for="checkbox-1" style="position: absolute;left: 35px;top: 19px;">Checkbox 1</label>
+                        <label for="checkbox-1" style="position: absolute;left: 35px;top: 19px;">Be adventurous</label>
                       </div>
 
                     </div>
@@ -219,7 +219,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
         </header>
         <div id="splash"></div>
-        <div id="adven-div">
+        <div id="adven-div" style="display:none;">
           <div style="text-align:center;">
               <table>
                   <tbody id="box" class="mdc-card"></tbody>
@@ -227,12 +227,17 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
           </div>
         </div>
         <div id="reg-div">
-          
+          <button id="tot-btn" style="
+    top: 23%;
+    position: absolute;
+    left: 37.5%;
+    color: white;
+" class="mdc-button">Trick or treat!</button>
         </div>
         <button class="mdc-fab" id="cs-btn" style="position:fixed;right:25px;bottom:25px;background:#3f51b5;">
             <img src="https://image.flaticon.com/icons/png/512/761/761229.png" style="vertical-align:inherit;" height="28px">
         </button>
-        <div id="status" class="mdc-card mdc-typography--headline5">d</div>
+        <div id="status" class="mdc-card mdc-typography--headline5"></div>
         <script src="material.js"></script>
         <script src="perlin.js"></script>
         <script src="index.js"></script>
