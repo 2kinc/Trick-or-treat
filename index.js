@@ -2,7 +2,7 @@ var $ = (d)=>{
     return document.querySelector(d)
 }
 var c = (d,l)=>{
-    return document.querySelector('#c' + d + '_' + l)
+    return $('#c' + d + '_' + l)
 }
 new mdc.ripple.MDCRipple($('#shopButton'));
 new mdc.tabBar.MDCTabBar($('.mdc-tab-bar'));
@@ -11,7 +11,7 @@ var drawer = new mdc.drawer.MDCDrawer($('.mdc-drawer'));
 $('.menu').addEventListener('click', ()=> {
   drawer.open = true;
 });
-var sdialog = new mdc.dialog.MDCDialog(document.querySelector('#shop-dialog'))
+var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'))
 $('#shopButton').addEventListener('click', ()=>{
     sdialog.open();
 }
@@ -26,7 +26,7 @@ if (localStorage.getItem('tot') !== null) {
         pump: 10,
         max_pump: 10,
         tot_ers: 0,
-        max_tot_ers: 10,
+        max_tot_ers: 50,
         x: 0,
         y: 0,
         shift: {
@@ -39,16 +39,31 @@ if (localStorage.getItem('tot') !== null) {
         mult: 1,
         idAdven: false,
         costumes: 1,
-        maxCostumes: 200
+        maxCostumes: 200,
+        farmers:0,
+        maxFarmers:100
     }
 }
-document.querySelector('#toters-btn').addEventListener('click', ()=>{
-    if (tot.candy >= 100) {
+$('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers;
+$('#max-jobs').innerHTML = 'Max TOT-ers:'+tot.max_tot_ers;
+$('#farmers').innerHTML = 'Farmers: '+tot.farmers;
+$('#multiplier').innerHTML = 'Multiplier: '+tot.mult;
+$('#max-mult').innerHTML = 'Max Multiplier: '+tot.maxCostumes;
+$('#max-farmers').innerHTML = 'Max Farmers: '+tot.maxFarmers;
+$('#new-game').addEventListener('click', ()=> {
+  localStorage.clear();
+  location.reload();
+});
+$('#toters-btn').addEventListener('click', ()=>{
+    if (tot.candy >= 100 && tot.tot_ers+1 < tot.max_tot_ers) {
         tot.candy -= 100;
         $('#hmc').innerHTML = beautify(tot.candy);
-        tot.tot_ers++
+        tot.tot_ers++;
+        $('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers++;
+    } else if (tot.tot_ers+1 > tot.max_tot_ers) {
+        $('#status').innerHTML = 'Reached the max amount of TOT-ers';
     } else {
-        $('#status').innerHTML = 'You do not have enough money'
+        $('#status').innerHTML = 'You do not have enough money.'
     }
 }
 );
@@ -295,7 +310,7 @@ var draw = ()=>{
         ig = false;
         new mdc.ripple.MDCRipple($('#status-btn'));
     }
-    if (document.body.contains(document.querySelector('#status-btn'))) {
+    if (document.body.contains($('#status-btn'))) {
         $('#status-btn').addEventListener('click', doaction)
     }
     localStorage.setItem('tot', JSON.stringify(tot));
