@@ -134,30 +134,30 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             }
             .pumplit {
                   background: url(images/pumpkinlitup.png) center center / contain no-repeat!important;
-                  transition:300ms linear;
+                  transition:300ms ease 20ms;
             }
         </style>
     </head>
     <body>
+      <aside class="mdc-drawer mdc-drawer--modal" id="name-dialog" style="top:0;">
+          <div class="mdc-drawer__content">
+
+          </div>
+      </aside>
         <aside class="mdc-drawer mdc-drawer--modal" style="top:0;">
             <div class="mdc-drawer__content">
-                <header class="mdc-temporary-drawer__header">
-                    <div class="mdc-typography--headline5" style="color:black;padding-top:5px;">Stats
-        </div>
-                </header>
+                <div style="top:0;height:10px;padding-top:10px;width:100%;color:black;" class="mdc-typography--headline5">Stats</div>
                 <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;font-family:'Roboto', sans-serif" class="mdc-temporary-drawer__content">
-                    <p id="jobs">TOT-ers:</p>
+                    <br><p id="jobs">TOT-ers:</p>
                     <p id="max-jobs">Max TOT-ers:</p>
                     <p id="farmers">Farmers:</p>
                     <p id="max-farmers">Max Farmers</p>
                     <p id="multiplier">Multiplier:</p>
                     <p id="max-mult">Max multiplier</p>
                     <p id="cps">Candy Per Second:</p>
-                    <p id="name-side">Name:</p>
-                    <p>
-                        Trick or Treat: Go trick or treating! Made by #2Kinc. We are awesome.
-              <br>Copyright © 2019 By 2K inc.
-                    </p>
+                    <p id="name">Name:</p>
+                    <button class="mdc-button" id="new-game">New Game</button>
+                    <p>Trick or Treat: Go trick or treating! Made by 2K inc. We are awesome.<br> Copyright © 2019 By 2K inc.</p>
                     <p>K = thousand</p>
                     <p>M = million</p>
                     <p>B = billion</p>
@@ -179,7 +179,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     <p>oD = octodecillion</p>
                     <p>nD = novendecillion</p>
                     <p>V = vigintillion</p>
-                    <button class="mdc-button" id="new-game">New Game</button>
                 </nav>
             </div>
         </aside>
@@ -299,7 +298,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
         </div>
         <div id="reg-div">
-            <button id="tot-btn" style="transition:100ms linear;top: 23%;position: absolute;color:white;background:url(images/pumpkinnotlit.png) center center / contain no-repeat;height: 200px;width: 200px;left:30%;" class="mdc-button mdc-ripple-surface--accent rnd-btn mdc-ripple-upgraded"></button>
+            <button id="tot-btn" style="transition:100ms ease 50ms;top: 23%;position: absolute;color:white;background:url(images/pumpkinnotlit.png) center center / contain no-repeat;height: 200px;width: 200px;left:30%;" class="mdc-button mdc-ripple-surface--accent rnd-btn mdc-ripple-upgraded"></button>
         </div>
         <button class="mdc-fab" id="cs-btn" style="position:fixed;right:25px;bottom:25px;background:#3f51b5;">
             <img src="https://image.flaticon.com/icons/png/512/761/761229.png" style="vertical-align:inherit;" height="28px">

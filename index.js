@@ -14,8 +14,8 @@ $('.menu').addEventListener('click', ()=> {
 var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'))
 $('#shopButton').addEventListener('click', ()=>{
     sdialog.open();
-}
-);
+});
+var ndialog = new mdc.dialog.MDCDialog($('#name-dialog'));
 new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
 if (localStorage.getItem('tot') !== null) {
     this.tot = JSON.parse(localStorage.getItem('tot'));
@@ -40,7 +40,8 @@ if (localStorage.getItem('tot') !== null) {
         costumes: 1,
         maxCostumes: 200,
         farmers:0,
-        maxFarmers:100
+        maxFarmers:100,
+        name:'Guest ' + Math.floor(Math.random()*10000+1000)
     }
 }
 var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)",];;
@@ -50,6 +51,7 @@ $('#farmers').innerHTML = 'Farmers: '+tot.farmers;
 $('#multiplier').innerHTML = 'Multiplier: '+tot.costumes;
 $('#max-mult').innerHTML = 'Max multiplier: '+tot.maxCostumes;
 $('#max-farmers').innerHTML = 'Max Farmers: '+tot.maxFarmers;
+$('#name').innerHTML = 'Name: ' + tot.name;
 $('#new-game').addEventListener('click', ()=> {
   localStorage.clear();
   location.reload();
@@ -382,7 +384,7 @@ var draw = ()=>{
 })()
 $('#checkbox-1').addEventListener('click', Everything);
 $('#cs-btn').addEventListener('click', ()=>{
-    if (tot.candy >= 100 && tot.costumes+1<tot.maxCostumes) {
+    if (tot.candy >= 100 && tot.costumes+1>tot.maxCostumes) {
         tot.candy -= 100;
         $('#hmc').innerHTML = beautify(tot.candy);
         tot.yawtth = [];
