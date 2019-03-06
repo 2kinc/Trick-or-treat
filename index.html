@@ -78,20 +78,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 position: absolute;
                 left: 20%;
                 width: 300px;
-                height: 300px;
+                height: 324px;
                 color: black!important;
                 display: block!important;
-                max-width: 300px;
+                max-width: 324px;
                 max-height: 300px;
                 min-width: 300px;
-                min-height: 300px;
+                min-height: 324px;
                 text-align: center;
             }
 
             #status {
                 width: 300px;
                 height: 30px;
-                bottom: 8%;
+                bottom: 6%;
                 position: absolute;
                 left: 20%;
                 text-align: start;
@@ -136,28 +136,46 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                   background: url(images/pumpkinlitup.png) center center / contain no-repeat!important;
                   transition:300ms ease 20ms;
             }
+            .mdc-floating-label--float-above {
+              color:var(--mdc-theme-primary)!important;
+            }
         </style>
     </head>
     <body>
-      <aside class="mdc-drawer mdc-drawer--modal" id="name-dialog" style="top:0;">
-          <div class="mdc-drawer__content">
-
+        <div class="mdc-dialog" id="name-dialog">
+          <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+              <h2 class="mdc-dialog__title" id="my-dialog-title">Name yourself!</h2>
+              <div class="mdc-dialog__content" id="my-dialog-content">
+                <div class="mdc-text-field">
+                  <input type="text" id="nmtxt" class="mdc-text-field__input">
+                  <label class="mdc-floating-label" for="my-text-field">Name</label>
+                  <div class="mdc-line-ripple"></div>
+                </div>
+              </div>
+              <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" id="nmntrbtn" data-mdc-dialog-action="no">
+                  <span class="mdc-button__label">LETS GO!</span>
+                </button>
+              </footer>
+            </div>
           </div>
-      </aside>
+          <div class="mdc-dialog__scrim"></div>
+        </div>
         <aside class="mdc-drawer mdc-drawer--modal" style="top:0;">
             <div class="mdc-drawer__content">
                 <div style="top:0;height:10px;padding-top:10px;width:100%;color:black;" class="mdc-typography--headline5">Stats</div>
                 <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;font-family:'Roboto', sans-serif" class="mdc-temporary-drawer__content">
-                    <br><p id="jobs">TOT-ers:</p>
+                    <br><p id="name" style="font-size:125%;">Name:</p>
+                    <p id="jobs">TOT-ers:</p>
                     <p id="max-jobs">Max TOT-ers:</p>
                     <p id="farmers">Farmers:</p>
                     <p id="max-farmers">Max Farmers</p>
                     <p id="multiplier">Multiplier:</p>
                     <p id="max-mult">Max multiplier</p>
                     <p id="cps">Candy Per Second:</p>
-                    <p id="name">Name:</p>
                     <button class="mdc-button" id="new-game">New Game</button>
-                    <p>Trick or Treat: Go trick or treating! Made by 2K inc. We are awesome.<br> Copyright © 2019 By 2K inc.</p>
+                    <p>Trick or Treat: Go trick or treating! Made by 2K inc. We are awesome.<br> Copyright &copy; 2019 By 2K inc.</p>
                     <p>K = thousand</p>
                     <p>M = million</p>
                     <p>B = billion</p>
@@ -267,7 +285,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     <a class="material-icons mdc-ripple-surface--accent menu mdc-toolbar__menu-icon" style="color:white!important;">
                         <i class="material-icons">menu</i>
                     </a>
-                    <span class="mdc-toolbar__title" id="welcome">Welcome</span>
+                    <span class="mdc-toolbar__title" id="welcome">Trick or treat!</span>
                 </section>
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
                     <button class="mdc-button mdc-ripple-surface--accent" data-mdc-auto-init="MDCButton" id="shopButton" style="color:white;">

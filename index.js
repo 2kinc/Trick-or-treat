@@ -11,38 +11,42 @@ var drawer = new mdc.drawer.MDCDrawer($('.mdc-drawer'));
 $('.menu').addEventListener('click', ()=> {
   drawer.open = true;
 });
-var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'))
+var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'));;
+new mdc.textField.MDCTextField($('.mdc-text-field'));
 $('#shopButton').addEventListener('click', ()=>{
     sdialog.open();
 });
 var ndialog = new mdc.dialog.MDCDialog($('#name-dialog'));
 new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
-if (localStorage.getItem('tot') !== null) {
-    this.tot = JSON.parse(localStorage.getItem('tot'));
-} else {
-    this.tot = {
-        candy: 0,
-        max_candy: 70000,
-        pump: 10,
-        max_pump: 10,
-        tot_ers: 0,
-        max_tot_ers: 50,
-        x: 0,
-        y: 0,
-        shift: {
-            x: 10,
-            y: 9
-        },
-        yawtth: [],
-        seed: Math.random(),
-        cl: '',
-        idAdven: false,
-        costumes: 1,
-        maxCostumes: 200,
-        farmers:0,
-        maxFarmers:100,
-        name:'Guest ' + Math.floor(Math.random()*10000+1000)
-    }
+this.tot = JSON.parse(localStorage.getItem('tot')) || {
+  candy: 0,
+  max_candy: 70000,
+  pump: 10,
+  max_pump: 10,
+  tot_ers: 0,
+  max_tot_ers: 50,
+  firsttime: true,
+  x: 0,
+  y: 0,
+  shift: {x:10,y:9},
+  yawtth: [],
+  seed: Math.random(),
+  cl: '',
+  idAdven: false,
+  costumes: 1,
+  maxCostumes: 200,
+  farmers:0,
+  maxFarmers:100,
+  name:'Guest '+Math.floor(Math.random()*10000+1000)
+}
+if (tot.firsttime) {
+  ndialog.open();
+  $('#nmntrbtn').addEventListener('click', () => {
+    tot.name = $('#nmtxt').value;
+    $('#name').innerHTML = 'Name: '+tot.name;
+  });
+  document.onkeydown=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
+  tot.firsttime = false;
 }
 var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)",];;
 $('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers;
@@ -52,6 +56,7 @@ $('#multiplier').innerHTML = 'Multiplier: '+tot.costumes;
 $('#max-mult').innerHTML = 'Max multiplier: '+tot.maxCostumes;
 $('#max-farmers').innerHTML = 'Max Farmers: '+tot.maxFarmers;
 $('#name').innerHTML = 'Name: ' + tot.name;
+$('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
 $('#new-game').addEventListener('click', ()=> {
   localStorage.clear();
   location.reload();
@@ -62,6 +67,7 @@ $('#toters-btn').addEventListener('click', ()=>{
         $('#hmc').innerHTML = beautify(tot.candy);
         tot.tot_ers++;
         $('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers++;
+        $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
     } else if (tot.tot_ers+1 > tot.max_tot_ers) {
         $('#status').innerHTML = 'Reached the max amount of TOT-ers';
     } else {
@@ -231,7 +237,7 @@ var draw = ()=>{
         r.id = 'y' + y;
         box.appendChild(r);
         for (x = 0 - tot.shift.x; x < 21 - tot.shift.x; x++) {
-            l = document.createElement('td')
+            l = document.createElement('td');
             l.id = 'c' + x + '_' + y;
             l.style.height = '10px';
             l.style.width = '10px';
@@ -384,21 +390,35 @@ var draw = ()=>{
 })()
 $('#checkbox-1').addEventListener('click', Everything);
 $('#cs-btn').addEventListener('click', ()=>{
-    if (tot.candy >= 100 && tot.costumes+1>tot.maxCostumes) {
-        tot.candy -= 100;
-        $('#hmc').innerHTML = beautify(tot.candy);
-        tot.yawtth = [];
-        tot.costumes++;
-        if ($('#checkbox-1').checked) {
-          draw();
-        }
-    } else if (tot.costumes+1<tot.maxCostumes) {
+    if (tot.candy >= 100 && tot.costumes+1<tot.maxCostumes) {
+      tot.candy -= 100;
+      $('#hmc').innerHTML = beautify(tot.candy);
+      tot.yawtth = [];
+      tot.costumes++;
+      $('#multiplier').innerHTML = 'Multiplier: ' + tot.costumes;
+      $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
+      if ($('#checkbox-1').checked) {
+        draw();
+      }
+    } else if (tot.costumes+1>tot.maxCostumes) {
       $('#status').innerHTML = "Max amount of costumes!"
     } else {
-        $('#status').innerHTML = "Not enough candy."
+      $('#status').innerHTML = "Not enough candy."
     }
+});
+var upgrade = (what, hwmch, tf, cost) => {
+  if (tot.candy >= cost) {
+    tot.candy -= cost
+    $('#status').inerHTML = 'You got a' + what + '!';
+    if (tf == 'toters') {
+      tot.max_tot_ers = hwmch;
+    } else if (tf == 'strg') {
+      tot.max_candy = hwmch;
+    }
+  } else {
+    $('#status').innerHTML = 'Not enough candy.';
+  }
 }
-);
 $('#hmc').innerHTML = tot.candy;
 $('#hmp').innerHTML = tot.pump;
 window.cls = ()=>{
