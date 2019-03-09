@@ -1,3 +1,5 @@
+
+
 <!-- From: t...@novell.com (Todd D. Hale) (Thanks, bro)
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$PR$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $ Pumpkin $$$$$$$$$$$$$$$$$$$$$$"    @$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -27,6 +29,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
 <html>
     <head>
         <title>Trick or treat!^_^</title>
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.googleapis.com https://apis.google.com; object-src 'self'; connect-src 'self' https://k-inc-232222.firebaseio.com https://www.googleapis.com wss://*.firebaseio.com/;">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto" rel="stylesheet">
         <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
         <style>
@@ -144,6 +147,29 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
         </style>
     </head>
     <body>
+      <div class="mdc-dialog" id="ldrbrd-dialog">
+        <div class="mdc-dialog__container">
+          <div class="mdc-dialog__surface">
+            <h2 class="mdc-dialog__title" id="my-dialog-title">Leaderboard</h2>
+            <div class="mdc-dialog__content" id="my-dialog-content">
+              <ul class="mdc-list" id="ldrbrd-list" style="width:500px;">
+                <li class="mdc-list-item">
+                  <span class="mdc-list-item__text" style="width:25%">Name</span>
+                  <span class="mdc-list-item__text" style="width:25%">Candy</span>
+                  <span class="mdc-list-item__text" style="width:25%">Pumpkins</span>
+                  <span class="mdc-list-item__text" style="width:25%">CPS</span>
+                </li>
+              </ul>
+            </div>
+            <footer class="mdc-dialog__actions">
+              <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+                <span class="mdc-button__label">Done</span>
+              </button>
+            </footer>
+          </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+      </div>
         <div class="mdc-dialog" id="name-dialog">
           <div class="mdc-dialog__container">
             <div class="mdc-dialog__surface">
@@ -176,6 +202,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     <p id="multiplier">Multiplier:</p>
                     <p id="max-mult">Max multiplier</p>
                     <p id="cps">Candy Per Second:</p>
+                    <button class="mdc-button" id="ldrbrd-btn">Leaderboard</button>
                     <button class="mdc-button" id="new-game">New Game</button>
                     <p>Trick or Treat: Go trick or treating! Made by 2K inc. We are awesome.<br> Copyright &copy; 2019 By 2K inc.</p>
                     <p>K = thousand</p>
@@ -326,6 +353,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
         <div id="status" class="mdc-card mdc-typography--headline5"></div>
         <script src="material.js"></script>
         <script src="perlin.js"></script>
+        <script src="firebase.js"></script>
         <script src="index.js"></script>
     </body>
 </html>
