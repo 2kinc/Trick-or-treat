@@ -14,16 +14,6 @@ var app = firebase.initializeApp(config);
 var database = app.database().ref().child('tot');
 var auth = app.auth();
 var storage = app.storage();
-database.on('child_added', function(snapshot) {
-    var d = snapshot.val();
-    $('#ldrbrd-list').innerHTML +=
-    `<li class="mdc-list-item">
-      <span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
-      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
-      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
-      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span>
-    <li>`
-});
 $('#sign-in-btn').addEventListener('click', ()=>{
   auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   tot.name = auth.currentUser.displayName;
@@ -132,6 +122,17 @@ setInterval(function() {
   if (auth.currentUser != null) {
     database.child(auth.currentUser.uid).set({candy:tot.candy, pumpkins:tot.pump, cps:tot.costumes*tot.tot_ers, name:auth.currentUser.displayName})
   }
+  $('#ldrbrd-list').innerHTML='';
+  database.orderByChild('candy').on('child_added', function(snapshot) {
+        var d = snapshot.val();
+        var e = document.createElement('li');
+        e.innerHTML =`<span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span>`;
+        e.classList.add('mdc-list-item');
+        $('#ldrbrd-list').insertBefore(e, $('#ldrbrd-list').firstChild);
+    })
 }, 1000);
 var beautify = function(number) {
     var range = [{
