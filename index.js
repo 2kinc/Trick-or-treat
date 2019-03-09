@@ -18,11 +18,15 @@ database.on('child_added', function(snapshot) {
     var d = snapshot.val();
     $('#ldrbrd-list').innerHTML +=
     `<li class="mdc-list-item">
-    <span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
-    <span class="mdc-list-item__text" style="width:25%">`+d.candy+`</span>
-    <span class="mdc-list-item__text" style="width:25%">`+d.pumpkins+`</span>
-    <span class="mdc-list-item__text" style="width:25%">`+d.cps+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span>
     <li>`
+});
+$('#sign-in-btn').addEventListener('click', ()=>{
+  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  tot.name = auth.currentUser.displayName;
 });
 //mdc stuff
 new mdc.ripple.MDCRipple($('#shopButton'));
@@ -437,19 +441,30 @@ $('#cs-btn').addEventListener('click', ()=>{
       $('#status').innerHTML = "Not enough candy."
     }
 });
-var upgrade = (what, hwmch, tf, cost) => {
-  if (tot.candy >= cost) {
-    tot.candy -= cost
-    $('#status').inerHTML = 'You got a' + what + '!';
-    if (tf == 'toters') {
-      tot.max_tot_ers = hwmch;
-    } else if (tf == 'strg') {
-      tot.max_candy = hwmch;
+var upgrade = (what, hwmch, tf, cost, btn) => {
+  console.log(btn);
+  $(btn).addEventListener('click', ()=>{
+    if (tot.candy >= cost) {
+      tot.candy -= cost
+      $('#status').inerHTML = 'You got' + what + '!';
+      if (tf == 'toters') {
+        tot.max_tot_ers = hwmch;
+      } else if (tf == 'strg') {
+        tot.max_candy = hwmch;
+      }
+    } else {
+      $('#status').innerHTML = 'Not enough candy.';
     }
-  } else {
-    $('#status').innerHTML = 'Not enough candy.';
-  }
+  })
 }
+upgrade('a phone', 100, 'toters', 500, '#phone-btn');
+upgrade('ai', Infinity, 'toters', 99000, '#ai-btn');
+upgrade('a computer', 957, 'toters', 5000, '#compu-btn');
+upgrade('a house', 1000000, 'strg', 70000, '#hse-btn');
+upgrade('a mansion', 100000000000 , 'strg', 1000000, '#mnsn-btn');
+upgrade('a warehouse', 70000000000000000000, 'strg', 100000000000, '#wrhse-btn');
+upgrade('a sky scraper', 10000000000000000000000000000, 'strg', 70000000000000000000, '#sksc-btn');
+upgrade('portal storage', Infinity, 'strg',10000000000000000000000000000, '#ptlstg-btn');
 $('#hmc').innerHTML = tot.candy;
 $('#hmp').innerHTML = tot.pump;
 if (auth.currentUser!==null) {
