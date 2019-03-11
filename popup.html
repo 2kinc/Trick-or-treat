@@ -144,6 +144,13 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             .mdc-floating-label--float-above {
               color:var(--mdc-theme-primary)!important;
             }
+            .first-place {
+              background:#ff5722;
+              color:white;
+            }
+            .mdc-list-item {
+              left: -25px;
+            }
         </style>
     </head>
     <body>
@@ -152,14 +159,14 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
           <div class="mdc-dialog__surface">
             <h2 class="mdc-dialog__title" id="my-dialog-title">Leaderboard</h2>
             <div class="mdc-dialog__content" id="my-dialog-content" style="overflow:hidden;">
-              <ul class="mdc-list" id="ldrbrd-list" style="width:500px;">
+              <ol class="mdc-list" id="ldrbrd-list" style="padding-left:0;width:500px;color:black!important;">
                 <li class="mdc-list-item">
                   <span class="mdc-list-item__text" style="width:25%">Name</span>
                   <span class="mdc-list-item__text" style="width:25%">Candy</span>
                   <span class="mdc-list-item__text" style="width:25%">Pumpkins</span>
                   <span class="mdc-list-item__text" style="width:25%">CPS</span>
                 </li>
-              </ul>
+              </ol>
               <button class="mdc-button" id="sign-in-btn">Sign In To Be On THE Leaderboard!</button>
             </div>
             <footer class="mdc-dialog__actions">
@@ -206,27 +213,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     <button class="mdc-button" id="ldrbrd-btn">Leaderboard</button>
                     <button class="mdc-button" id="new-game">New Game</button>
                     <p>Trick or Treat: Go trick or treating! Made by 2K inc. We are awesome.<br> Copyright &copy; 2019 By 2K inc.</p>
-                    <p>K = thousand</p>
-                    <p>M = million</p>
-                    <p>B = billion</p>
-                    <p>T = trillion</p>
-                    <p>q = quadrillion</p>
-                    <p>Q = Quintillion</p>
-                    <p>s = sextillion</p>
-                    <p>S = septillion</p>
-                    <p>O = octillion</p>
-                    <p>N = nonillion</p>
-                    <p>D = decillion</p>
-                    <p>uD = undecillion</p>
-                    <p>dD = duodecillion</p>
-                    <p>tD = tredecillion</p>
-                    <p>qD = quattuordecillion</p>
-                    <p>QD = quindecillion</p>
-                    <p>sD = sedecillion</p>
-                    <p>SD = septendecillion</p>
-                    <p>oD = octodecillion</p>
-                    <p>nD = novendecillion</p>
-                    <p>V = vigintillion</p>
+                    <a href="http://www.thealmightyguru.com/Pointless/BigNumbers.html" target="_blank">All your number needs</a>
                 </nav>
             </div>
         </aside>
@@ -299,6 +286,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     </div>
                     <div class="js-panel" role="tabpanel" aria-hidden="false" id="hire">
                         <button class="mdc-button" id="toters-btn">Hire a Trick or Treater!</button>
+                        <p class="mdc-typography--headline5">Farmers</p>
+                        <button class="mdc-button" id="frm-btn">Hire a farmer!</button>
                     </div>
                     <footer class="mdc-dialog__actions">
                         <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">

@@ -1,139 +1,3 @@
-var $ = (d)=>{
-    return document.querySelector(d)
-}
-//firebase stuff
-var config = {
-    apiKey: "AIzaSyADD6YWKrzibRMwJNi1FwUR0jcR0GitZPI",
-    authDomain: "k-inc-232222.firebaseapp.com",
-    databaseURL: "https://k-inc-232222.firebaseio.com",
-    projectId: "k-inc-232222",
-    storageBucket: "",
-    messagingSenderId: "827804821456"
-};
-var app = firebase.initializeApp(config);
-var database = app.database().ref().child('tot');
-var auth = app.auth();
-var storage = app.storage();
-$('#sign-in-btn').addEventListener('click', ()=>{
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  tot.name = auth.currentUser.displayName;
-});
-//mdc stuff
-new mdc.ripple.MDCRipple($('#shopButton'));
-new mdc.tabBar.MDCTabBar($('.mdc-tab-bar'));
-new mdc.ripple.MDCRipple($('#tot-btn'));
-var drawer = new mdc.drawer.MDCDrawer($('.mdc-drawer'));
-$('.menu').addEventListener('click', ()=> {
-  drawer.open = true;
-});
-var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'));
-new mdc.textField.MDCTextField($('.mdc-text-field'));
-$('#shopButton').addEventListener('click', ()=>{
-    sdialog.open();
-});
-var ldialog = new mdc.dialog.MDCDialog($('#ldrbrd-dialog'));
-$('#ldrbrd-btn').addEventListener('click', ()=>{
-    ldialog.open();
-});
-var ndialog = new mdc.dialog.MDCDialog($('#name-dialog'));
-new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
-this.tot = JSON.parse(localStorage.getItem('tot')) || {
-  candy: 0,
-  max_candy: 70000,
-  pump: 10,
-  max_pump: 10,
-  tot_ers: 0,
-  max_tot_ers: 50,
-  firsttime: true,
-  x: 0,
-  y: 0,
-  shift: {x:10,y:9},
-  yawtth: [],
-  seed: Math.random(),
-  cl: '',
-  idAdven: false,
-  costumes: 1,
-  maxCostumes: 200,
-  farmers:0,
-  maxFarmers:100,
-  name:'Guest '+Math.floor(Math.random()*10000+1000)
-}
-if (tot.firsttime) {
-  ndialog.open();
-  $('#nmntrbtn').addEventListener('click', () => {
-    tot.name = $('#nmtxt').value;
-    $('#name').innerHTML = 'Name: '+tot.name;
-  });
-  document.onkeydown=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
-  tot.firsttime = false;
-}
-var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)",];;
-$('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers;
-$('#max-jobs').innerHTML = 'Max TOT-ers:'+tot.max_tot_ers;
-$('#farmers').innerHTML = 'Farmers: '+tot.farmers;
-$('#multiplier').innerHTML = 'Multiplier: '+tot.costumes;
-$('#max-mult').innerHTML = 'Max multiplier: '+tot.maxCostumes;
-$('#max-farmers').innerHTML = 'Max Farmers: '+tot.maxFarmers;
-$('#name').innerHTML = 'Name: ' + tot.name;
-$('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
-$('#new-game').addEventListener('click', ()=> {
-  localStorage.clear();
-  location.reload();
-});
-$('#toters-btn').addEventListener('click', ()=>{
-    if (tot.candy >= 100 && tot.tot_ers+1 < tot.max_tot_ers) {
-        tot.candy -= 100;
-        $('#hmc').innerHTML = beautify(tot.candy);
-        tot.tot_ers++;
-        $('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers++;
-        $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
-    } else if (tot.tot_ers+1 > tot.max_tot_ers) {
-        $('#status').innerHTML = 'Reached the max amount of TOT-ers';
-    } else {
-        $('#status').innerHTML = 'You do not have enough money.'
-    }
-}
-);
-document.querySelectorAll('.mdc-tab')[0].addEventListener('click', ()=>{
-    $('#upgrades').classList.add("is-active");
-    $('#boosts').classList.remove("is-active");
-    $('#hire').classList.remove("is-active");
-}
-);
-document.querySelectorAll('.mdc-tab')[1].addEventListener('click', ()=>{
-    $('#upgrades').classList.remove("is-active");
-    $('#boosts').classList.add("is-active");
-    $('#hire').classList.remove("is-active");
-}
-);
-document.querySelectorAll('.mdc-tab')[2].addEventListener('click', ()=>{
-    $('#upgrades').classList.remove("is-active");
-    $('#boosts').classList.remove("is-active");
-    $('#hire').classList.add("is-active");
-}
-);
-setInterval(function() {
-  add = Math.floor(Math.random() * tot.costumes + 1)*tot.tot_ers;
-  if (tot.candy+add <= tot.max_candy) {
-    tot.candy+=add;
-  } else {tot.candy=tot.max_candy}
-  $('#hmc').innerHTML = beautify(tot.candy);
-  localStorage.setItem('tot', JSON.stringify(tot));
-  if (auth.currentUser != null) {
-    database.child(auth.currentUser.uid).set({candy:tot.candy, pumpkins:tot.pump, cps:tot.costumes*tot.tot_ers, name:auth.currentUser.displayName})
-  }
-  $('#ldrbrd-list').innerHTML='';
-  database.orderByChild('candy').on('child_added', function(snapshot) {
-        var d = snapshot.val();
-        var e = document.createElement('li');
-        e.innerHTML =`<span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span>`;
-        e.classList.add('mdc-list-item');
-        $('#ldrbrd-list').insertBefore(e, $('#ldrbrd-list').firstChild);
-    })
-}, 1000);
 var beautify = function(number) {
     var range = [{
         start: 3,
@@ -186,7 +50,7 @@ var beautify = function(number) {
     }, {
         start: 39,
         end: 42,
-        suffix: "D"
+        suffix: "dD"
     }, {
         start: 42,
         end: 45,
@@ -219,6 +83,71 @@ var beautify = function(number) {
         start: 63,
         end: 66,
         suffix: "V"
+    },
+    {
+        start: 66,
+        end: 69,
+        suffix: "uV"
+    },
+    {
+        start: 69,
+        end: 72,
+        suffix: "dV"
+    },
+    {
+        start: 72,
+        end: 75,
+        suffix: "tV"
+    },
+    {
+        start: 75,
+        end: 78,
+        suffix: "qV"
+    },
+    {
+        start: 78,
+        end: 81,
+        suffix: "QV"
+    },
+    {
+        start: 81,
+        end: 84,
+        suffix: "sV"
+    },
+    {
+        start: 84,
+        end: 87,
+        suffix: "SV"
+    },
+    {
+        start: 87,
+        end: 90,
+        suffix: "oV"
+    },
+    {
+        start: 90,
+        end: 93,
+        suffix: "nV"
+    },
+    {
+        start: 93,
+        end: 96,
+        suffix: "T"
+    },
+    {
+        start: 96,
+        end: 99,
+        suffix: "uT"
+    },
+    {
+        start: 99,
+        end: 102,
+        suffix: "dT"
+    },
+    {
+        start: 102,
+        end: 105,
+        suffix: "tT"
     }];
 
     var r = range.filter(v=>{
@@ -235,6 +164,171 @@ var beautify = function(number) {
     } else
         return number;
 };
+var $ = (d)=>{
+    return document.querySelector(d)
+}
+var save = () => {localStorage.setItem('tot', JSON.stringify(tot))}
+//firebase stuff
+var config = {
+    apiKey: "AIzaSyADD6YWKrzibRMwJNi1FwUR0jcR0GitZPI",
+    authDomain: "k-inc-232222.firebaseapp.com",
+    databaseURL: "https://k-inc-232222.firebaseio.com",
+    projectId: "k-inc-232222",
+    storageBucket: "",
+    messagingSenderId: "827804821456"
+};
+var app = firebase.initializeApp(config);
+var database = app.database().ref().child('tot');
+var auth = app.auth();
+var storage = app.storage();
+$('#sign-in-btn').addEventListener('click', ()=>{
+  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  tot.name = auth.currentUser.displayName;
+});
+//mdc stuff
+new mdc.ripple.MDCRipple($('#shopButton'));
+new mdc.tabBar.MDCTabBar($('.mdc-tab-bar'));
+new mdc.ripple.MDCRipple($('#tot-btn'));
+var drawer = new mdc.drawer.MDCDrawer($('.mdc-drawer'));
+$('.menu').addEventListener('click', ()=> {
+  drawer.open = true;
+});
+var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'));
+new mdc.textField.MDCTextField($('.mdc-text-field'));
+$('#shopButton').addEventListener('click', ()=>{
+    sdialog.open();
+});
+var ldialog = new mdc.dialog.MDCDialog($('#ldrbrd-dialog'));
+$('#ldrbrd-btn').addEventListener('click', ()=>{
+    ldialog.open();
+});
+var ndialog = new mdc.dialog.MDCDialog($('#name-dialog'));
+new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
+this.tot = JSON.parse(localStorage.getItem('tot'),           function (key, value) {
+            return value === "Infinity"  ? Infinity : value;
+          }) || {
+  candy: 0,
+  max_candy: 70000,
+  pump: 10,
+  max_pump: 10,
+  tot_ers: 0,
+  max_tot_ers: 50,
+  firsttime: true,
+  x: 0,
+  y: 0,
+  shift: {x:10,y:9},
+  yawtth: [],
+  seed: Math.random(),
+  cl: '',
+  idAdven: false,
+  costumes: 1,
+  maxCostumes: 200,
+  farmers:0,
+  maxFarmers:100,
+  name:'Guest '+Math.floor(Math.random()*10000+1000)
+}
+if (tot.firsttime) {
+  ndialog.open();
+  $('#nmntrbtn').addEventListener('click', () => {
+    tot.name = $('#nmtxt').value;
+    $('#name').innerHTML = 'Name: '+tot.name;
+  });
+  document.onkeydown=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
+  tot.firsttime = false;
+}
+var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)",];;
+$('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers;
+$('#max-jobs').innerHTML = 'Max TOT-ers:'+tot.max_tot_ers;
+$('#farmers').innerHTML = 'Farmers: '+tot.farmers;
+$('#multiplier').innerHTML = 'Multiplier: '+tot.costumes;
+$('#max-mult').innerHTML = 'Max multiplier: '+tot.maxCostumes;
+$('#max-farmers').innerHTML = 'Max Farmers: '+tot.maxFarmers;
+$('#name').innerHTML = 'Name: ' + tot.name;
+$('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
+$('#new-game').addEventListener('click', ()=> {
+  localStorage.clear();
+  location.reload();
+});
+$('#toters-btn').addEventListener('click', ()=>{
+    if (tot.candy >= 100 && tot.tot_ers < tot.max_tot_ers) {
+        tot.candy -= 100;
+        $('#hmc').innerHTML = beautify(tot.candy);
+        tot.tot_ers++;
+        $('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers++;
+        $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
+    } else if (tot.tot_ers >= tot.max_tot_ers && tot.max_tot_ers != 'Infinity') {
+        $('#status').innerHTML = 'Reached the max amount of TOT-ers';
+        tot.tot_ers = tot.max_tot_ers;
+    } else {
+        $('#status').innerHTML = 'You do not have enough money.'
+    }
+    localStorage.setItem('tot', JSON.stringify(tot));
+}
+);
+$('#frm-btn').addEventListener('click', ()=>{
+    if (tot.pump >= 5 && tot.farmers < tot.maxFarmers) {
+        tot.pump -= 5;
+        $('#hmp').innerHTML = beautify(tot.pump);
+        tot.farmers++;
+        $('#jobs').innerHTML = 'TOT-ers: '+tot.tot_ers++;
+        $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
+    } else if (tot.farmers >= tot.maxFarmers) {
+        $('#status').innerHTML = 'Max amount of farmers';
+        tot.farmers = tot.maxFarmers;
+    } else {
+        $('#status').innerHTML = 'You do not have enough money.'
+    }
+    localStorage.setItem('tot', JSON.stringify(tot));
+});
+document.querySelectorAll('.mdc-tab')[0].addEventListener('click', ()=>{
+    $('#upgrades').classList.add("is-active");
+    $('#boosts').classList.remove("is-active");
+    $('#hire').classList.remove("is-active");
+}
+);
+document.querySelectorAll('.mdc-tab')[1].addEventListener('click', ()=>{
+    $('#upgrades').classList.remove("is-active");
+    $('#boosts').classList.add("is-active");
+    $('#hire').classList.remove("is-active");
+}
+);
+document.querySelectorAll('.mdc-tab')[2].addEventListener('click', ()=>{
+    $('#upgrades').classList.remove("is-active");
+    $('#boosts').classList.remove("is-active");
+    $('#hire').classList.add("is-active");
+}
+);
+setInterval(() => {
+  add = Math.floor(Math.random() * tot.costumes + 1)*tot.tot_ers;
+  if (tot.candy+add <= tot.max_candy) {
+    tot.candy+=add;
+  } else {tot.candy=tot.max_candy}
+  $('#hmc').innerHTML = beautify(tot.candy);
+  localStorage.setItem('tot', JSON.stringify(tot));
+  if (auth.currentUser != null) {
+    database.child(auth.currentUser.uid).set({candy:tot.candy, pumpkins:tot.pump, cps:tot.costumes*tot.tot_ers, name:auth.currentUser.displayName})
+  }
+  $('#ldrbrd-list').innerHTML=``;
+  database.orderByChild('candy').on('child_added', function(snapshot) {
+        var d = snapshot.val();
+        var e = document.createElement('li');
+        e.innerHTML =`<span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span>`;
+        e.classList.add('mdc-list-item');
+        $('#ldrbrd-list').prepend(e);
+    })
+    $('#ldrbrd-list').firstChild.classList.add('first-place');
+}, 1000);
+setInterval(() => {
+  add = Math.floor(Math.floor(Math.random()*2+1)*tot.farmers/4);
+  if (tot.pump+add <= tot.max_pump) {
+    tot.pump+=add;
+  } else {tot.pump=tot.max_pump}
+  $('#hmp').innerHTML = beautify(tot.pump);
+  localStorage.setItem('tot', JSON.stringify(tot));
+}, 7500);
 var c = (d,l)=>{
     return $('#c' + d + '_' + l)
 }
@@ -368,6 +462,7 @@ var draw = ()=>{
         $('#status').innerHTML='Lets go safe for now.'
         $('#reg-div').style.display = 'block';
         $('#adven-div').style.display = 'none';
+        document.onkeyup=()=>{};
         $('#tot-btn').addEventListener('click', () => {$('#tot-btn').classList.add('pumplit');ttt();setTimeout(() => {$('#tot-btn').classList.remove('pumplit')}, 400)});
         tot.isAdven=false;
     }
@@ -402,7 +497,7 @@ var draw = ()=>{
             }
             localStorage.setItem('tot', JSON.stringify(tot));
         }
-        document.onkeydown = (e)=>{
+        document.onkeyup = (e)=>{
             e.key = e.key.toLowerCase();
             if (e.key == 'w') {
                 move('n')
@@ -436,7 +531,8 @@ $('#cs-btn').addEventListener('click', ()=>{
       if ($('#checkbox-1').checked) {
         draw();
       }
-    } else if (tot.costumes+1>tot.maxCostumes) {
+    } else if (tot.costumes>=tot.maxCostumes) {
+      tot.costumes = tot.maxCostumes;
       $('#status').innerHTML = "Max amount of costumes!"
     } else {
       $('#status').innerHTML = "Not enough candy."
@@ -452,20 +548,22 @@ var upgrade = (what, hwmch, tf, cost, btn) => {
         tot.max_tot_ers = hwmch;
       } else if (tf == 'strg') {
         tot.max_candy = hwmch;
+        tot.max_pump = hwmch/10000;
       }
     } else {
       $('#status').innerHTML = 'Not enough candy.';
     }
+    localStorage.setItem('tot', JSON.stringify(tot));
   })
 }
 upgrade('a phone', 100, 'toters', 500, '#phone-btn');
-upgrade('ai', Infinity, 'toters', 99000, '#ai-btn');
+upgrade('ai', 'Infinity', 'toters', 99000, '#ai-btn');
 upgrade('a computer', 957, 'toters', 5000, '#compu-btn');
 upgrade('a house', 1000000, 'strg', 70000, '#hse-btn');
 upgrade('a mansion', 100000000000 , 'strg', 1000000, '#mnsn-btn');
 upgrade('a warehouse', 70000000000000000000, 'strg', 100000000000, '#wrhse-btn');
 upgrade('a sky scraper', 10000000000000000000000000000, 'strg', 70000000000000000000, '#sksc-btn');
-upgrade('portal storage', Infinity, 'strg',10000000000000000000000000000, '#ptlstg-btn');
+upgrade('portal storage', 'Infinity', 'strg',10000000000000000000000000000, '#ptlstg-btn');
 $('#hmc').innerHTML = tot.candy;
 $('#hmp').innerHTML = tot.pump;
 if (auth.currentUser!==null) {
