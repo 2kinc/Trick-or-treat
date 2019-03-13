@@ -1,3 +1,4 @@
+
 var beautify = function(number) {
     var range = [{
         start: 3,
@@ -462,7 +463,8 @@ var draw = ()=>{
         $('#status').innerHTML='Lets go safe for now.'
         $('#reg-div').style.display = 'block';
         $('#adven-div').style.display = 'none';
-        document.onkeyup=()=>{};
+        document.onkeyup=null;
+        document.onkeydown=(e)=>{if (e.key == ' ') {$('#tot-btn').classList.add('pumplit');ttt();setTimeout(() => {$('#tot-btn').classList.remove('pumplit')}, 400)}};
         $('#tot-btn').addEventListener('click', () => {$('#tot-btn').classList.add('pumplit');ttt();setTimeout(() => {$('#tot-btn').classList.remove('pumplit')}, 400)});
         tot.isAdven=false;
     }
@@ -557,18 +559,28 @@ var upgrade = (what, hwmch, tf, cost, btn) => {
   })
 }
 upgrade('a phone', 100, 'toters', 500, '#phone-btn');
-upgrade('ai', 'Infinity', 'toters', 99000, '#ai-btn');
+upgrade('ai', Infinity, 'toters', 99000, '#ai-btn');
 upgrade('a computer', 957, 'toters', 5000, '#compu-btn');
 upgrade('a house', 1000000, 'strg', 70000, '#hse-btn');
 upgrade('a mansion', 100000000000 , 'strg', 1000000, '#mnsn-btn');
 upgrade('a warehouse', 70000000000000000000, 'strg', 100000000000, '#wrhse-btn');
 upgrade('a sky scraper', 10000000000000000000000000000, 'strg', 70000000000000000000, '#sksc-btn');
-upgrade('portal storage', 'Infinity', 'strg',10000000000000000000000000000, '#ptlstg-btn');
+upgrade('portal storage', Infinity, 'strg',10000000000000000000000000000, '#ptlstg-btn');
 $('#hmc').innerHTML = tot.candy;
 $('#hmp').innerHTML = tot.pump;
 if (auth.currentUser!==null) {
   database.child(auth.currentUser.uid).set({candy:tot.candy, pumpkins:tot.pump, cps:tot.costumes*tot.tot_ers})
 }
-window.cls = ()=>{
+window.onunload = ()=>{
+  tot.costumes = (tot.costumes != Infinity) ? (tot.costumes) : 'Infinity';
+  tot.farmers = (tot.farmers != Infinity) ? (tot.farmers) : 'Infinity';
+  tot.tot_ers = (tot.tot_ers != Infinity) ? (tot.tot_ers) : 'Infinity';
+  tot.max_tot_ers = (tot.max_tot_ers != Infinity) ? (tot.max_tot_ers) : 'Infinity';
+  tot.maxCostumes = (tot.maxCostumes != Infinity) ? (tot.maxCostumes) : 'Infinity';
+  tot.maxFarmers = (tot.maxFarmers != Infinity) ? (tot.costumes) : 'Infinity';
+  tot.candy = (tot.candy != Infinity) ? (tot.candy) : 'Infinity';
+  tot.pump = (tot.pump != Infinity) ? (tot.pump) : 'Infinity';
+  tot.max_pump = (tot.max_pump != Infinity) ? (tot.max_pump) : 'Infinity';
+  tot.max_candy = (tot.max_candy != Infinity) ? (tot.max_candy) : 'Infinity';
     localStorage.setItem('tot', JSON.stringify(tot));
 }
