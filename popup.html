@@ -151,13 +151,37 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             .mdc-list-item {
               left: -25px;
             }
+            #btgame {
+              display:none;
+              width:100%;
+              position:absolute;
+              height:100%;
+              background:black;
+              z-index:100000000000000;
+              padding:0;
+              margin:0;
+              left:0;
+              top:0;
+            }
         </style>
     </head>
     <body>
+      <div class="mdc-dialog" id="adven-dialog">
+        <div class="mdc-dialog__container">
+          <div class="mdc-dialog__surface">
+            <h2 class="mdc-dialog__title" id="adven-title">Adventure</h2>
+            <p id="adven-desc" style="color:black;font-family:'Roboto',sans-serif;padding:16px;text-align:left;">DIE POTATO DIE</p>
+            <footer class="mdc-dialog__actions">
+              <button class="mdc-button" id="adven-op1">OP 1</button><button class="mdc-button" id="adven-op2">OP 2</button>
+            </footer>
+          </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+      </div>
       <div class="mdc-dialog" id="ldrbrd-dialog">
         <div class="mdc-dialog__container">
           <div class="mdc-dialog__surface">
-            <h2 class="mdc-dialog__title" id="my-dialog-title">Leaderboard</h2>
+            <h2 class="mdc-dialog__title">Leaderboard</h2>
             <div class="mdc-dialog__content" id="my-dialog-content" style="overflow:hidden;">
               <ol class="mdc-list" id="ldrbrd-list" style="padding-left:0;width:500px;color:black!important;">
                 <li class="mdc-list-item">
@@ -203,6 +227,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 <div style="top:0;height:10px;padding-top:10px;width:100%;color:black;" class="mdc-typography--headline5">Stats</div>
                 <nav id="icon-with-text-demo" style="padding:16px; background:white; color:#616161;font-family:'Roboto', sans-serif" class="mdc-temporary-drawer__content">
                     <br><p id="name" style="font-size:125%;">Name:</p>
+                    <p id="mx-candy">Max Candy:</p>
+                    <p id="mx-pump">Max Pumpkins:</p>
                     <p id="jobs">TOT-ers:</p>
                     <p id="max-jobs">Max TOT-ers:</p>
                     <p id="farmers">Farmers:</p>
@@ -327,6 +353,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
         </header>
         <div id="splash"></div>
+        <div id="btgame"></div>
         <div id="adven-div" style="display:none;">
             <div style="text-align:center;">
                 <table>

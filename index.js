@@ -1,174 +1,8 @@
-
-var beautify = function(number) {
-    var range = [{
-        start: 3,
-        end: 6,
-        suffix: "K"
-    }, {
-        start: 6,
-        end: 9,
-        suffix: "M"
-    }, {
-        start: 9,
-        end: 12,
-        suffix: "B"
-    }, {
-        start: 12,
-        end: 15,
-        suffix: "T"
-    }, {
-        start: 15,
-        end: 18,
-        suffix: "q"
-    }, {
-        start: 18,
-        end: 21,
-        suffix: "Q"
-    }, {
-        start: 21,
-        end: 24,
-        suffix: "s"
-    }, {
-        start: 24,
-        end: 27,
-        suffix: "S"
-    }, {
-        start: 27,
-        end: 30,
-        suffix: "O"
-    }, {
-        start: 30,
-        end: 33,
-        suffix: "N"
-    }, {
-        start: 33,
-        end: 36,
-        suffix: "D"
-    }, {
-        start: 36,
-        end: 39,
-        suffix: "uD"
-    }, {
-        start: 39,
-        end: 42,
-        suffix: "dD"
-    }, {
-        start: 42,
-        end: 45,
-        suffix: "tD"
-    }, {
-        start: 45,
-        end: 48,
-        suffix: "qD"
-    }, {
-        start: 48,
-        end: 51,
-        suffix: "QD"
-    }, {
-        start: 51,
-        end: 54,
-        suffix: "sD"
-    }, {
-        start: 54,
-        end: 57,
-        suffix: "SD"
-    }, {
-        start: 57,
-        end: 60,
-        suffix: "oD"
-    }, {
-        start: 60,
-        end: 63,
-        suffix: "nD"
-    }, {
-        start: 63,
-        end: 66,
-        suffix: "V"
-    },
-    {
-        start: 66,
-        end: 69,
-        suffix: "uV"
-    },
-    {
-        start: 69,
-        end: 72,
-        suffix: "dV"
-    },
-    {
-        start: 72,
-        end: 75,
-        suffix: "tV"
-    },
-    {
-        start: 75,
-        end: 78,
-        suffix: "qV"
-    },
-    {
-        start: 78,
-        end: 81,
-        suffix: "QV"
-    },
-    {
-        start: 81,
-        end: 84,
-        suffix: "sV"
-    },
-    {
-        start: 84,
-        end: 87,
-        suffix: "SV"
-    },
-    {
-        start: 87,
-        end: 90,
-        suffix: "oV"
-    },
-    {
-        start: 90,
-        end: 93,
-        suffix: "nV"
-    },
-    {
-        start: 93,
-        end: 96,
-        suffix: "T"
-    },
-    {
-        start: 96,
-        end: 99,
-        suffix: "uT"
-    },
-    {
-        start: 99,
-        end: 102,
-        suffix: "dT"
-    },
-    {
-        start: 102,
-        end: 105,
-        suffix: "tT"
-    }];
-
-    var r = range.filter(v=>{
-        var a = Math.log10(number);
-        return a >= v.start && a < v.end;
-    }
-    );
-
-    if (r && r.length) {
-        var y = number / Math.pow(10, r[0].start);
-        y = Math.floor(y * 100) / 100;
-        y = y.toFixed(2);
-        return y + r[0].suffix;
-    } else
-        return number;
-};
+var beautify=function(t){var f=[{start:3,end:6,suffix:"K"},{start:6,end:9,suffix:"M"},{start:9,end:12,suffix:"B"},{start:12,end:15,suffix:"T"},{start:15,end:18,suffix:"q"},{start:18,end:21,suffix:"Q"},{start:21,end:24,suffix:"s"},{start:24,end:27,suffix:"S"},{start:27,end:30,suffix:"O"},{start:30,end:33,suffix:"N"},{start:33,end:36,suffix:"D"},{start:36,end:39,suffix:"uD"},{start:39,end:42,suffix:"dD"},{start:42,end:45,suffix:"tD"},{start:45,end:48,suffix:"qD"},{start:48,end:51,suffix:"QD"},{start:51,end:54,suffix:"sD"},{start:54,end:57,suffix:"SD"},{start:57,end:60,suffix:"oD"},{start:60,end:63,suffix:"nD"},{start:63,end:66,suffix:"V"},{start:66,end:69,suffix:"uV"},{start:69,end:72,suffix:"dV"},{start:72,end:75,suffix:"tV"},{start:75,end:78,suffix:"qV"},{start:78,end:81,suffix:"QV"},{start:81,end:84,suffix:"sV"},{start:84,end:87,suffix:"SV"},{start:87,end:90,suffix:"oV"},{start:90,end:93,suffix:"nV"},{start:93,end:96,suffix:"T"},{start:96,end:99,suffix:"uT"},{start:99,end:102,suffix:"dT"},{start:102,end:105,suffix:"tT"},{start:105,end:108,suffix:"qT"}].filter(f=>{var s=Math.log10(t);return s>=f.start&&s<f.end});if(f&&f.length){var s=t/Math.pow(10,f[0].start);return(s=(s=Math.floor(100*s)/100).toFixed(2))+f[0].suffix}return t};
 var $ = (d)=>{
     return document.querySelector(d)
 }
-var save = () => {localStorage.setItem('tot', JSON.stringify(tot))}
+var save = () => localStorage.setItem('tot', JSON.stringify(tot))
 //firebase stuff
 var config = {
     apiKey: "AIzaSyADD6YWKrzibRMwJNi1FwUR0jcR0GitZPI",
@@ -191,23 +25,25 @@ new mdc.ripple.MDCRipple($('#shopButton'));
 new mdc.tabBar.MDCTabBar($('.mdc-tab-bar'));
 new mdc.ripple.MDCRipple($('#tot-btn'));
 var drawer = new mdc.drawer.MDCDrawer($('.mdc-drawer'));
-$('.menu').addEventListener('click', ()=> {
-  drawer.open = true;
-});
+$('.menu').addEventListener('click', ()=>drawer.open = true);
 var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'));
 new mdc.textField.MDCTextField($('.mdc-text-field'));
-$('#shopButton').addEventListener('click', ()=>{
-    sdialog.open();
-});
+$('#shopButton').addEventListener('click', ()=>sdialog.open());
 var ldialog = new mdc.dialog.MDCDialog($('#ldrbrd-dialog'));
-$('#ldrbrd-btn').addEventListener('click', ()=>{
-    ldialog.open();
-});
+$('#ldrbrd-btn').addEventListener('click', ()=>ldialog.open());
 var ndialog = new mdc.dialog.MDCDialog($('#name-dialog'));
 new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
-this.tot = JSON.parse(localStorage.getItem('tot'),           function (key, value) {
-            return value === "Infinity"  ? Infinity : value;
-          }) || {
+var adialog = new mdc.dialog.MDCDialog($('#adven-dialog'));
+//normal stuff
+function adventure(what) {
+  adialog.open();
+  if (what == 'graveyard') {
+    this.adven = 'graveyard';
+    $('#adven-title').innerHTML = 'Graveyard';
+    $('#adven-desc').innerHTML = 'The graveyard gives a soft greenish light, with fog surrounding it. There seems to be a '
+  }
+}
+this.tot = JSON.parse(localStorage.getItem('tot')) || {
   candy: 0,
   max_candy: 70000,
   pump: 10,
@@ -226,7 +62,11 @@ this.tot = JSON.parse(localStorage.getItem('tot'),           function (key, valu
   maxCostumes: 200,
   farmers:0,
   maxFarmers:100,
-  name:'Guest '+Math.floor(Math.random()*10000+1000)
+  name:'Guest '+Math.floor(Math.random()*10000+1000),
+  btgame:false
+}
+if (tot.btgame == true) {
+  tot.btgame == false;
 }
 if (tot.firsttime) {
   ndialog.open();
@@ -234,7 +74,7 @@ if (tot.firsttime) {
     tot.name = $('#nmtxt').value;
     $('#name').innerHTML = 'Name: '+tot.name;
   });
-  document.onkeydown=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
+  document.onkeyup=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
   tot.firsttime = false;
 }
 var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)",];;
@@ -246,8 +86,33 @@ $('#max-mult').innerHTML = 'Max multiplier: '+tot.maxCostumes;
 $('#max-farmers').innerHTML = 'Max Farmers: '+tot.maxFarmers;
 $('#name').innerHTML = 'Name: ' + tot.name;
 $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes*tot.tot_ers;
+$('#mx-pump').innerHTML = 'Max Pumpkins: ' + tot.max_pump;
+$('#mx-candy').innerHTML = 'Max Candy: ' + tot.max_candy;
 $('#new-game').addEventListener('click', ()=> {
   localStorage.clear();
+  tot = {
+    candy: 0,
+    max_candy: 70000,
+    pump: 10,
+    max_pump: 10,
+    tot_ers: 0,
+    max_tot_ers: 50,
+    firsttime: true,
+    x: 0,
+    y: 0,
+    shift: {x:10,y:9},
+    yawtth: [],
+    seed: Math.random(),
+    cl: '',
+    idAdven: false,
+    costumes: 1,
+    maxCostumes: 200,
+    farmers:0,
+    maxFarmers:100,
+    name:'Guest '+Math.floor(Math.random()*10000+1000),
+    btgame:false
+  }
+  clearInterval(cint);clearInterval(pint);
   location.reload();
 });
 $('#toters-btn').addEventListener('click', ()=>{
@@ -299,13 +164,12 @@ document.querySelectorAll('.mdc-tab')[2].addEventListener('click', ()=>{
     $('#hire').classList.add("is-active");
 }
 );
-setInterval(() => {
+var cint = setInterval(() => {
   add = Math.floor(Math.random() * tot.costumes + 1)*tot.tot_ers;
   if (tot.candy+add <= tot.max_candy) {
     tot.candy+=add;
   } else {tot.candy=tot.max_candy}
   $('#hmc').innerHTML = beautify(tot.candy);
-  localStorage.setItem('tot', JSON.stringify(tot));
   if (auth.currentUser != null) {
     database.child(auth.currentUser.uid).set({candy:tot.candy, pumpkins:tot.pump, cps:tot.costumes*tot.tot_ers, name:auth.currentUser.displayName})
   }
@@ -313,16 +177,43 @@ setInterval(() => {
   database.orderByChild('candy').on('child_added', function(snapshot) {
         var d = snapshot.val();
         var e = document.createElement('li');
-        e.innerHTML =`<span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
+        $('#ldrbrd-list').prepend(e);
+        e.outerHTML =`<li class="mdc-list-item"><span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
                   <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
                   <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span>`;
-        e.classList.add('mdc-list-item');
-        $('#ldrbrd-list').prepend(e);
+                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span></li>`;
     })
     $('#ldrbrd-list').firstChild.classList.add('first-place');
+    if (tot.candy == Infinity) {
+      tot.btgame = true;
+      $('#btgame').style.display = "block";
+      localStorage.clear();
+      tot = {
+        candy: 0,
+        max_candy: 70000,
+        pump: 10,
+        max_pump: 10,
+        tot_ers: 0,
+        max_tot_ers: 50,
+        firsttime: true,
+        x: 0,
+        y: 0,
+        shift: {x:10,y:9},
+        yawtth: [],
+        seed: Math.random(),
+        cl: '',
+        idAdven: false,
+        costumes: 1,
+        maxCostumes: 200,
+        farmers:0,
+        maxFarmers:100,
+        name:'Guest '+Math.floor(Math.random()*10000+1000),
+        btgame:false
+      }
+      clearInterval(cint);clearInterval(pint);
+    }
 }, 1000);
-setInterval(() => {
+var pint = setInterval(() => {
   add = Math.floor(Math.floor(Math.random()*2+1)*tot.farmers/4);
   if (tot.pump+add <= tot.max_pump) {
     tot.pump+=add;
@@ -334,12 +225,17 @@ var c = (d,l)=>{
     return $('#c' + d + '_' + l)
 }
 var ttt = (m)=>{
-    add = (m =='mansion') ? Math.floor(Math.random() * tot.costumes * 3000 + 1) : Math.floor(Math.random() * tot.costumes + 1);
+    add = (m =='mansion') ? Math.floor(Math.random() * tot.costumes ** 2 + 1) : Math.floor(Math.random() * tot.costumes + 1);
     if (tot.candy+add <= tot.max_candy) {
       tot.candy+=add;
     } else {tot.candy = tot.max_candy;}
     $('#hmc').innerHTML = beautify(tot.candy);
     $('#status').innerHTML = candies[Math.floor(Math.random()*candies.length)];
+    if (tot.candy == Infinity) {
+      tot.btgame = true;
+      $('#btgame').style.display = "block";
+      localStorage.clear();
+    }
     localStorage.setItem(JSON.stringify('tot'), tot);
 }
 if (tot.isAdven) {
@@ -545,12 +441,15 @@ var upgrade = (what, hwmch, tf, cost, btn) => {
   $(btn).addEventListener('click', ()=>{
     if (tot.candy >= cost) {
       tot.candy -= cost
-      $('#status').inerHTML = 'You got' + what + '!';
+      $('#status').innerHTML = 'You got ' + what + '!';
       if (tf == 'toters') {
         tot.max_tot_ers = hwmch;
+        $('#max-jobs').innerHTML = 'Max TOT-ers: ' + tot.max_tot_ers;
       } else if (tf == 'strg') {
         tot.max_candy = hwmch;
         tot.max_pump = hwmch/10000;
+        $('#mx-pump').innerHTML = 'Max Pumpkins: ' + tot.max_pump;
+        $('#mx-candy').innerHTML = 'Max Candy: ' + tot.max_candy;
       }
     } else {
       $('#status').innerHTML = 'Not enough candy.';
