@@ -16,8 +16,10 @@ var app = firebase.initializeApp(config);
 var database = app.database().ref().child('tot');
 var auth = app.auth();
 var storage = app.storage();
+var sign;
 $('#sign-in-btn').addEventListener('click', ()=>{
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  sign = auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  database.child(sign.i.user.uid).once('value').then((snapshot)=>{tot=snapshot.val()});
   tot.name = auth.currentUser.displayName;
 });
 //mdc stuff
@@ -74,7 +76,7 @@ if (tot.firsttime) {
     tot.name = $('#nmtxt').value;
     $('#name').innerHTML = 'Name: '+tot.name;
   });
-  document.onkeyup=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
+  document.onkeydown=(e)=>{if(e.key.toLowerCase()=='enter'){tot.name=$('#nmtxt').value;$('#name').innerHTML='Name: '+tot.name;ndialog.close();}}
   tot.firsttime = false;
 }
 var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)",];;
@@ -171,47 +173,49 @@ var cint = setInterval(() => {
   } else {tot.candy=tot.max_candy}
   $('#hmc').innerHTML = beautify(tot.candy);
   if (auth.currentUser != null) {
-    database.child(auth.currentUser.uid).set({candy:tot.candy, pumpkins:tot.pump, cps:tot.costumes*tot.tot_ers, name:auth.currentUser.displayName})
+    database.child(auth.currentUser.uid).set(tot);
+    tot.name = auth.currentUser.displayName;
   }
   $('#ldrbrd-list').innerHTML=``;
-  database.orderByChild('candy').on('child_added', function(snapshot) {
-        var d = snapshot.val();
-        var e = document.createElement('li');
-        $('#ldrbrd-list').prepend(e);
-        e.outerHTML =`<li class="mdc-list-item"><span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pumpkins)+`</span>
-                  <span class="mdc-list-item__text" style="width:25%">`+beautify(d.cps)+`</span></li>`;
-    })
-    $('#ldrbrd-list').firstChild.classList.add('first-place');
-    if (tot.candy == Infinity) {
-      tot.btgame = true;
-      $('#btgame').style.display = "block";
-      localStorage.clear();
-      tot = {
-        candy: 0,
-        max_candy: 70000,
-        pump: 10,
-        max_pump: 10,
-        tot_ers: 0,
-        max_tot_ers: 50,
-        firsttime: true,
-        x: 0,
-        y: 0,
-        shift: {x:10,y:9},
-        yawtth: [],
-        seed: Math.random(),
-        cl: '',
-        idAdven: false,
-        costumes: 1,
-        maxCostumes: 200,
-        farmers:0,
-        maxFarmers:100,
-        name:'Guest '+Math.floor(Math.random()*10000+1000),
-        btgame:false
-      }
-      clearInterval(cint);clearInterval(pint);
+  database.orderByChild('candy').on('child_added',(snapshot)=>{
+    var d = snapshot.val();
+    var e = document.createElement('li');
+    $('#ldrbrd-list').prepend(e);
+    e.outerHTML =`
+      <li class="mdc-list-item"><span class="mdc-list-item__text" style="width:25%">`+d.name+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.candy)+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.pump)+`</span>
+      <span class="mdc-list-item__text" style="width:25%">`+beautify(d.tot_ers*d.costumes)+`</span></li>`;
+  })
+  $('#ldrbrd-list').firstElementChild.classList.add('first-place');
+  if (tot.candy == Infinity) {
+    tot.btgame = true;
+    $('#btgame').style.display = "block";
+    localStorage.clear();
+    tot = {
+      candy: 0,
+      max_candy: 70000,
+      pump: 10,
+      max_pump: 10,
+      tot_ers: 0,
+      max_tot_ers: 50,
+      firsttime: true,
+      x: 0,
+      y: 0,
+      shift: {x:10,y:9},
+      yawtth: [],
+      seed: Math.random(),
+      cl: '',
+      idAdven: false,
+      costumes: 1,
+      maxCostumes: 200,
+      farmers:0,
+      maxFarmers:100,
+      name:'Guest '+Math.floor(Math.random()*10000+1000),
+      btgame:false
     }
+    clearInterval(cint);clearInterval(pint);
+  }
 }, 1000);
 var pint = setInterval(() => {
   add = Math.floor(Math.floor(Math.random()*2+1)*tot.farmers/4);
