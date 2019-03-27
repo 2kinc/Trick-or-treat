@@ -126,7 +126,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
 
             .rsd-btn {
                 width: 100px;
-                height: 200px;
+                height: 125px;
                 top: 5px;
             }
 
@@ -294,21 +294,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                         <button class="mdc-button rnd-btn" id="sksc-btn">Sky Scraper (Max candy is 10O) 70Q</button>
                         <button class="mdc-button rnd-btn" id="ptlstg-btn">Portal Storage (No max candy) 10O</button>
                         <br>
-                        <div class="mdc-checkbox" style="z-index: 10000;">
-                            <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/>
+                    </div>
+                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts">
+                        <button class="mdc-button mdc-button--raised rsd-btn" id="bc-btn">Better Tailor (Max Costumes x2): 1250 Pumpkins</button>
+                        <button class="mdc-button mdc-button--raised rsd-btn" id="ce-btn">Clone Everyone (TOT_ers x2): 2500 Pumpkins</button>
+                        <button class="mdc-button mdc-button--raised rsd-btn" id="ucc-btn">Ultimate Candy Corn!! (Candy x2): 5000 Pumpkins</button>
+                        <br>
+                        <div class="mdc-checkbox" style="color:black;">
+                            <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1">
                             <div class="mdc-checkbox__background">
                                 <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
                                 </svg>
                                 <div class="mdc-checkbox__mixedmark"></div>
                             </div>
                             <label for="checkbox-1" style="position: absolute;left: 35px;top: 19px;">Be adventurous</label>
                         </div>
-                    </div>
-                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts">
-                        <button class="mdc-button mdc-button--raised rsd-btn" id="lp_button">Lucky Penny (Multiplier x2): 1250 Pumpkins</button>
-                        <button class="mdc-button mdc-button--raised rsd-btn" id="prmt_button">Promotion (Jobs x2): 2500 Pumpkins</button>
-                        <button class="mdc-button mdc-button--raised rsd-btn" id="uccb_button">Ultimate Candy Corn (Candy x2): 5000 Pumpkins</button>
                     </div>
                     <div class="js-panel" role="tabpanel" aria-hidden="false" id="hire">
                         <button class="mdc-button" id="toters-btn">Hire a Trick or Treater!</button>
@@ -316,9 +317,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                         <button class="mdc-button" id="frm-btn">Hire a farmer!</button>
                     </div>
                     <footer class="mdc-dialog__actions">
-                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-                            <span class="mdc-button__label">Done</span>
-                        </button>
+                      <div class="mdc-select" id="increment" style="left:5px;bottom:10px;position: absolute;">
+                        <i class="mdc-select__dropdown-icon"></i>
+                        <select class="mdc-select__native-control" id="incr-v">
+                          <option value="one">1</option>
+                          <option value="ten">10</option>
+                          <option value="hundred">100</option>
+                          <option value="thousand">1000</option>
+                        </select>
+                        <label class="mdc-floating-label mdc-floating-label--float-above">Increment</label>
+                        <div class="mdc-line-ripple" style="transform-origin: 40.7875px center;"></div>
+                      </div>
+                      <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+                          <span class="mdc-button__label">Done</span>
+                      </button>
                     </footer>
                 </div>
             </div>
