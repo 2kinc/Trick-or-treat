@@ -193,12 +193,21 @@ new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
 var adialog = new mdc.dialog.MDCDialog($('#adven-dialog'));
 new mdc.select.MDCSelect($('#increment'));
 //normal stuff
+function adv_display(title,text,op1,op2) {
+  $('#adven-desc').innerHTML = text;
+  $('#adven-op1').innerHTML = op1;
+  $('#adven-op2').innerHTML = op2;
+}
 function adventure(what) {
     adialog.open();
     if (what == 'graveyard') {
         this.adven = 'graveyard';
         $('#adven-title').innerHTML = 'Graveyard';
-        $('#adven-desc').innerHTML = 'The graveyard gives a soft greenish light, with fog surrounding it. There seems to be a '
+        adv_display(The graveyard gives a soft greenish light, with fog surrounding it.','Go in.','GET OUT!')
+        $('#adven-op1').addEventListener('click',()=>{
+          adv_display('A zombie','Go in.','GET OUT!')
+        });
+        $('#adven-op2').addEventListener('click',()=>adialog.close());
     }
 }
 this.tot = JSON.parse(localStorage.getItem('tot')) || {
@@ -246,7 +255,7 @@ if (tot.firsttime) {
     tot.firsttime = false;
 }
 var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)", ];
-;$('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers;
+$('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers;
 $('#max-jobs').innerHTML = 'Max TOT-ers:' + tot.max_tot_ers;
 $('#farmers').innerHTML = 'Farmers: ' + tot.farmers;
 $('#multiplier').innerHTML = 'Multiplier: ' + tot.costumes;
@@ -452,6 +461,9 @@ var doaction = ()=>{
         });
         ttt('mansion');
     }
+    if (ig) {
+      new adventure('graveyard')
+    }
     draw();
 }
 var draw = ()=>{
@@ -495,7 +507,7 @@ var draw = ()=>{
                     y: y
                 },'M');
             }
-            if (value > 0.9999999) {
+            if (value > 0.9995) {
                 new tile({
                     x: x,
                     y: y
