@@ -203,7 +203,7 @@ function adventure(what) {
     if (what == 'graveyard') {
         this.adven = 'graveyard';
         $('#adven-title').innerHTML = 'Graveyard';
-        adv_display(The graveyard gives a soft greenish light, with fog surrounding it.','Go in.','GET OUT!')
+        adv_display('The graveyard gives a soft greenish light, with fog surrounding it.','Go in.','GET OUT!')
         $('#adven-op1').addEventListener('click',()=>{
           adv_display('A zombie','Go in.','GET OUT!')
         });
