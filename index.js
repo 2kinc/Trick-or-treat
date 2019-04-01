@@ -193,21 +193,43 @@ new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
 var adialog = new mdc.dialog.MDCDialog($('#adven-dialog'));
 new mdc.select.MDCSelect($('#increment'));
 //normal stuff
-function adv_display(title,text,op1,op2) {
-  $('#adven-desc').innerHTML = text;
-  $('#adven-op1').innerHTML = op1;
-  $('#adven-op2').innerHTML = op2;
+function adv_display(text, op1, op2) {
+    $('#adven-desc').innerHTML = text;
+    $('#adven-op1').innerHTML = op1;
+    $('#adven-op2').innerHTML = op2;
 }
 function adventure(what) {
     adialog.open();
     if (what == 'graveyard') {
         this.adven = 'graveyard';
+        var d;
         $('#adven-title').innerHTML = 'Graveyard';
-        adv_display('The graveyard gives a soft greenish light, with fog surrounding it.','Go in.','GET OUT!')
-        $('#adven-op1').addEventListener('click',()=>{
-          adv_display('A zombie','Go in.','GET OUT!')
+        adv_display('The graveyard gives a soft greenish light, with fog surrounding it.', 'Go in.', 'GET OUT!')
+        $('#adven-op1').addEventListener('click', ()=>{
+            adv_display('An undead guy senses you from underneath and gets out of its grave, leaving a gap behind it.', 'Throw some candy at it.', 'RUN AWAY!');
+            $('#adven-op1').addEventListener('click', ()=>{
+                tot.candy -= Math.floor(Math.random() * 70 + 20);
+                if (Math.random() >= 0.8) {
+                    adv_display('The guy lays on the ground, dazed. The open grave stands before you.', 'Go in there.', 'RUN AWAY!');
+                    $('#adven-op1').addEventListener('click', ()=>{
+                      adv_display('A ghost stands there. Says he will grant you triple the amount of candy you have.', 'Take the chance.', 'The ghost is a killer.');
+                      if (Math.random >= 0.5) {
+                        tot.candy*=3;
+                        tot.max_candy*=3;
+                        $('#hmc').innerHTML=tot.candy;
+                        adialog.close();
+                      }
+                    });
+                    $('#adven-op2').addEventListener('click', ()=>adialog.close());
+                } else {
+                    adv_display('The guy attacks back, pushing you out of the graveyard.', '', '');
+                    tot.candy/=5;
+                    setTimeout(adialog.close, 2000)
+                }
+            });
+            $('#adven-op2').addEventListener('click', ()=>adialog.close());
         });
-        $('#adven-op2').addEventListener('click',()=>adialog.close());
+        $('#adven-op2').addEventListener('click', ()=>adialog.close());
     }
 }
 this.tot = JSON.parse(localStorage.getItem('tot')) || {
@@ -369,7 +391,8 @@ var cint = setInterval(()=>{
       <span class="mdc-list-item__text" style="width:25%">` + beautify(d.candy) + `</span>
       <span class="mdc-list-item__text" style="width:25%">` + beautify(d.pump) + `</span>
       <span class="mdc-list-item__text" style="width:25%">` + beautify(d.tot_ers * d.costumes) + `</span></li>`;
-    });
+    }
+    );
     $('#ldrbrd-list').firstElementChild.classList.add('first-place');
     if (tot.candy == Infinity) {
         tot.btgame = true;
@@ -462,7 +485,7 @@ var doaction = ()=>{
         ttt('mansion');
     }
     if (ig) {
-      new adventure('graveyard')
+        new adventure('graveyard')
     }
     draw();
 }
@@ -575,7 +598,8 @@ var draw = ()=>{
                 ttt();
                 setTimeout(()=>{
                     $('#tot-btn').classList.remove('pumplit')
-                }, 400)
+                }
+                , 400)
             }
         }
         ;
