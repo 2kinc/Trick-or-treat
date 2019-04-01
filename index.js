@@ -209,21 +209,32 @@ function adventure(what) {
             adv_display('An undead guy senses you from underneath and gets out of its grave, leaving a gap behind it.', 'Throw some candy at it.', 'RUN AWAY!');
             $('#adven-op1').addEventListener('click', ()=>{
                 tot.candy -= Math.floor(Math.random() * 70 + 20);
+                $('#hmc').innerHTML=tot.candy;
                 if (Math.random() >= 0.8) {
                     adv_display('The guy lays on the ground, dazed. The open grave stands before you.', 'Go in there.', 'RUN AWAY!');
                     $('#adven-op1').addEventListener('click', ()=>{
-                      adv_display('A ghost stands there. Says he will grant you triple the amount of candy you have.', 'Take the chance.', 'The ghost is a killer.');
-                      if (Math.random >= 0.5) {
-                        tot.candy*=3;
-                        tot.max_candy*=3;
-                        $('#hmc').innerHTML=tot.candy;
-                        adialog.close();
-                      }
+                      adv_display('A ghost stands there. Says it will grant you triple the amount of candy you have.', 'Take the chance.', 'The ghost is a killer.');
+                      $('#adven-op1').addEventListener('click',()=>{
+                        if (Math.random >= 0.5) {
+                          tot.candy*=3;
+                          tot.max_candy*=3;
+                          $('#hmc').innerHTML=tot.candy;
+                          $('#mx-candy').innerHTML='Max Candy: '+tot.max_candy;
+                          adv_display('Your wish is granted.', '', '');
+                          setTimeout(()=>adialog.close(),1000)
+                        } else {
+                          tot.candy/=3;
+                          $('#hmc').innerHTML=tot.candy;
+                          adv_display('Trickery! It takes 2/3 away from your candy.', '', '');
+                          setTimeout(()=>adialog.close(),1000);
+                        }
+                      });$('#adven-op2').addEventListener('click', ()=>adialog.close());
                     });
                     $('#adven-op2').addEventListener('click', ()=>adialog.close());
                 } else {
                     adv_display('The guy attacks back, pushing you out of the graveyard.', '', '');
                     tot.candy/=5;
+                    $('#hmc').innerHTML=tot.candy;
                     setTimeout(adialog.close, 2000)
                 }
             });
