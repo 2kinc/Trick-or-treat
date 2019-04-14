@@ -1,8 +1,10 @@
+*Change description to match new update*
+
 {
   "manifest_version": 2,
 
   "name": "Trick or Treat! ^_^",
-  "description": "Go trick or treating on your computer!",
+  "description": "New Update: Go trick or treating to different houses on your computer!",
   "version": "1.9",
   "icons": {"16":"images/pumpkin128.png","48":"images/pumpkin128.png","128":"images/pumpkin128.png"},
   "browser_action": {
