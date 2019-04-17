@@ -193,56 +193,112 @@ new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
 var adialog = new mdc.dialog.MDCDialog($('#adven-dialog'));
 new mdc.select.MDCSelect($('#increment'));
 //normal stuff
-function adv_display(text, op1, op2) {
-    $('#adven-desc').innerHTML = text;
-    $('#adven-op1').innerHTML = op1;
-    $('#adven-op2').innerHTML = op2;
+function adv(title, text, op1, op2, one) {
+  el = $('#adven-op1'),elClone = el.cloneNode(true);
+  el.parentNode.replaceChild(elClone, el);
+  $('#adven-title').innerHTML = title;
+  $('#adven-desc').innerHTML = text;
+  $('#adven-op1').innerHTML = op1;
+  $('#adven-op2').innerHTML = op2;
+  $('#adven-op1').addEventListener('click',one);
+  $('#adven-op2').addEventListener('click',()=>adialog.close());
 }
-function adventure(what) {
+function Adventure(name) {
+  var that = this;
+  this.name = name;
+  this.dialogue = new Map();
+  this.Dialogue = function (text, id, title, action, action2, branches, if_statement) {
+    var dialogueThat = this;
+    this.text = text || "Ducks are awesome. It's a true fact.";
+    this.branches = branches; //array with dialogue ids
+    this.id = id;
+    this.title = title;
+    this.if_statement = if_statement;
+    this.action = action;
+    this.forward = function (branch) {
+      that.dialogue.get(branch).display(); //branch id
+    };
+    (this.attach = function() {
+      that.dialogue.set(this.id, this);
+    })();
+    this.display = function () {
+      adialog.open();
+      adv(this.title, this.text, this.action[0], this.action[1]);
+    };
+  }
+} //book bat bhat bonster!
+var someAdventure = new Adventure('Duckland.');
+var somedialogue = new someAdventure.Dialogue('WHAT IS LOVE BABY DON"T HURT ME BECAUSE IM A DUCK yeAAAAh', 'love baby', 'd', ['d', 'non']);
+var d = new someAdventure.Dialogue('d.', 'd', 'd'); //kavin can you please go into the call i want to see
+var no = new someAdventure.Dialogue('NO!!!!!!', 'NO!', 'd');
+/*function adventure(what) {
     adialog.open();
     if (what == 'graveyard') {
-        this.adven = 'graveyard';
-        var d;
-        $('#adven-title').innerHTML = 'Graveyard';
-        adv_display('The graveyard gives a soft greenish light, with fog surrounding it.', 'Go in.', 'GET OUT!')
-        $('#adven-op1').addEventListener('click', ()=>{
-            adv_display('An undead guy senses you from underneath and gets out of its grave, leaving a gap behind it.', 'Throw some candy at it.', 'RUN AWAY!');
-            $('#adven-op1').addEventListener('click', ()=>{
-                tot.candy -= Math.floor(Math.random() * 70 + 20);
-                $('#hmc').innerHTML=tot.candy;
-                if (Math.random() >= 0.8) {
-                    adv_display('The guy lays on the ground, dazed. The open grave stands before you.', 'Go in there.', 'RUN AWAY!');
-                    $('#adven-op1').addEventListener('click', ()=>{
-                      adv_display('A ghost stands there. Says it will grant you triple the amount of candy you have.', 'Take the chance.', 'The ghost is a killer.');
-                      $('#adven-op1').addEventListener('click',()=>{
-                        if (Math.random >= 0.5) {
-                          tot.candy*=3;
-                          tot.max_candy*=3;
-                          $('#hmc').innerHTML=tot.candy;
-                          $('#mx-candy').innerHTML='Max Candy: '+tot.max_candy;
-                          adv_display('Your wish is granted.', '', '');
-                          setTimeout(()=>adialog.close(),1000)
-                        } else {
-                          tot.candy/=3;
-                          $('#hmc').innerHTML=tot.candy;
-                          adv_display('Trickery! It takes 2/3 away from your candy.', '', '');
-                          setTimeout(()=>adialog.close(),1000);
-                        }
-                      });$('#adven-op2').addEventListener('click', ()=>adialog.close());
+      this.dialogues = [ //right a new function
+        ['The graveyard glows softly in the night', 'Go in.', 'THATS CRAZY'],
+        ["The gate slowly creaked open, as if inviting you to your doom. Inside, the graves stood old and broken, all containing unreadable descriptions of their owner's deaths. Suddenly, out of one of the many graves, came a beast like human, with rotting flesh and some terribly worn pants.", "Kill it!", "Run away from this terribly clothed beast."],
+      ];
+      this.adven = 'graveyard';//KEN!! HOW ARE WE GOING TO DO THE IFS AND ELSES with pro skillz
+      $('#adven-title').innerHTML = 'Graveyard';
+      adv('The graveyard glows softly in the night', 'Go in.', 'THATS CRAZY',
+      ()=>{//typical horror movies
+        adv("The gate slowly creaked open, as if inviting you to your doom. Inside, the graves stood old and broken, all containing unreadable descriptions of their owner's deaths. Suddenly, out of one of the many graves, came a beast like human, with rotting flesh and some terribly worn pants.", "Kill it!", "Run away from this terribly clothed beast.",
+        ()=>{ //now is the only good time my dad can help me so sorry if i cant be on for 100% of the setTimeout(function () {ds
+
+        }, 10);
+          if (Math.random() >= 0.8) {
+            tot.candy+=Math.floor(Math.random()*10+1);
+            $('#hmc').innerHTML=tot.candy;
+            adv("Before you stands a tall and unforgiving looking house, windows emitting a faint yellow light. ", "Be dumb and don't go back", "Yeah, that's enough.",
+            ()=>{
+              adv("A tall and scary looking door stands before you, a door knocker sitting just within reach.", 'Knock', 'Run away from the door, doors are too dangerous',
+              ()=>{
+                adv("You knock on the door and it slides open, not a creak to be heard. Inside, you see a room lit by a fancy chandelier on the ceiling. Suddenly, from your left, a transparent looking creature emerges from behind a pair of curtains.", 'Tackle this monster of a bed sheet!', "I'm out of here, floating stuff creepy.",
+                ()=>{
+                  if (Math.random() >= 0.9) {
+                    tot.candy+=Math.floor(Math.random()*30+10);
+                    adv("You bring the floating sheet down and leave it runnning away, down a hallway.", 'Keep on going', 'Be satisfied with defeating a bed sheet and go.',
+                    ()=>{ //this is so confusing
+
+
                     });
-                    $('#adven-op2').addEventListener('click', ()=>adialog.close());
-                } else {
-                    adv_display('The guy attacks back, pushing you out of the graveyard.', '', '');
-                    tot.candy/=5;
-                    $('#hmc').innerHTML=tot.candy;
-                    setTimeout(adialog.close, 2000)
-                }
+                  } else {
+                    adv("You see a fancy-looking door standing in front of you. It shows no signs of previous use at all.", 'Go through the door!', 'One door was enough.',
+                    ()=>{
+                      adv("The room looks unused, with only a dusty bed and a table. The only other thing in it is a large, lonely box. A large padlock is attached to it.", 'Pick the lock!', 'Leave.',
+                      ()=>{
+                        adv("The lock looks like a simple door lock. You look around for a pin, and find one hiding behind the box. You wonder how it got there, but don't care. You insert the pin into the padlock, and it unlocks.","Open it","It could be a trap!",
+                        ()=>{
+                          if (Math.random() >= 0.75) {
+                            adv("The lock springs open, revealing a huge stash of candy. You reach to grab it, but suddenly a skeleton leaps out at you from underneath", 'Fight the pile of bones', 'RUN!',
+                            ()=>{
+                              if (Math.random() >= (2/3)) {
+                                adv("All that remains of the skeleton are a skull and some leg bones. You snatch the candy and get out of this creepy house.", '', '',)
+                                tot.candy+=Math.floor(Math.random()*500+1000); //reward??
+                                setTimeout(()=>adialog.close(),1000);
+                              }//i know
+                              else{
+                                adv("The skeleton brings a suprisingly powerful blow to your forehead, knocking you out cold. Ow.", "", "");
+                                setTimeout(()=>adialog.close(),1000);
+                              }
+                            }); //
+                          } else { //lets do it
+                            alert("Good job you didn't die!""); //lets start out with some constructors
+                          }
+                        });//right a new function
+                      });
+                    });
+                  }
+                })
+              });
             });
-            $('#adven-op2').addEventListener('click', ()=>adialog.close());
+          } else {
+            adv("The beast is too strong, pushing you back. You hit the ground really, really hard. The world turns black, blacker than it already was.",'','');
+            setTimeout(()=>adialog.close(),1000);
+          }
         });
-        $('#adven-op2').addEventListener('click', ()=>adialog.close());
-    }
-}
+      };
+}*/
 this.tot = JSON.parse(localStorage.getItem('tot')) || {
     candy: 0,
     max_candy: 70000,
@@ -287,7 +343,7 @@ if (tot.firsttime) {
     }
     tot.firsttime = false;
 }
-var candies = ["Snickers(stop that, will you?)", "Reese's", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)", ];
+var candies = ["Snickers(stop that, will you?)", "A rubber duck", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)", ];
 $('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers;
 $('#max-jobs').innerHTML = 'Max TOT-ers:' + tot.max_tot_ers;
 $('#farmers').innerHTML = 'Farmers: ' + tot.farmers;
@@ -658,23 +714,23 @@ var draw = ()=>{
         document.onkeyup = (e)=>{
             e.key = e.key.toLowerCase();
             if (e.key == 'w') {
-                move('n')
+                move('n');
             }
             if (e.key == 'a') {
-                move('w')
+                move('w');
             }
             if (e.key == 's') {
-                move('s')
+                move('s');
             }
             if (e.key == 'd') {
-                move('e')
+                move('e');
             }
             if (e.key == 'q') {
-                doaction()
+                doaction();
             }
         }
         tot.isAdven = true;
-        $('#status').innerHTML = 'Lets go a little dangerous.'
+        $('#status').innerHTML = 'Lets go a little dangerous.';
     }
 }
 )();
@@ -684,15 +740,15 @@ $('#cs-btn').addEventListener('click', ()=>{
         tot.candy -= 100;
         $('#hmc').innerHTML = beautify(tot.candy);
         tot.yawtth = [];
-        tot.costumes++;
+        tot.costumes++;  //OKAY INCREMENTS
         $('#multiplier').innerHTML = 'Multiplier: ' + tot.costumes;
         $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes * tot.tot_ers;
-        draw();
+        if($('#checkbox-1').checked){draw()};
     } else if (tot.costumes >= tot.maxCostumes) {
         tot.costumes = tot.maxCostumes;
-        $('#status').innerHTML = "Max amount of costumes!"
+        $('#status').innerHTML = "Max amount of costumes!"; //even its the end of the code still add a semicolon
     } else {
-        $('#status').innerHTML = "Not enough candy."
+        $('#status').innerHTML = "Not enough candy.";
     }
 }
 );
@@ -716,7 +772,7 @@ var upgrade = (what,hwmch,tf,cost,btn)=>{
         }
         localStorage.setItem('tot', JSON.stringify(tot));
     }
-    )
+  );
 }
 upgrade('a phone', 100, 'toters', 500, '#phone-btn');
 upgrade('ai', Infinity, 'toters', 99000, '#ai-btn');
