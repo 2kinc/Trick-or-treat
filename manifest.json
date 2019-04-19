@@ -4,7 +4,7 @@
   "manifest_version": 2,
 
   "name": "Trick or Treat! ^_^",
-  "description": "New Update: Go trick or treating to different houses on your computer!",
+  "description": "Trick or Treat is a game of smarts where you will have to invest candy to find a way to make more candy in a much faster way! New Update: Go trick or treating to different houses on your computer!",
   "version": "1.9",
   "icons": {"16":"images/pumpkin128.png","48":"images/pumpkin128.png","128":"images/pumpkin128.png"},
   "browser_action": {
