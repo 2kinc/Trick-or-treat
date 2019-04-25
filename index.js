@@ -1,3 +1,4 @@
+//(function () {
 var beautify = function(t) {
     var f = [{
         start: 3,
@@ -151,7 +152,9 @@ var beautify = function(t) {
     return t
 };
 var $ = (d)=>{
-    return document.querySelector(d)
+    var e = document.querySelectorAll(d);
+    e = (e.length == 1) ? e[0] : e;
+    return e;
 }
 var save = ()=>localStorage.setItem('tot', JSON.stringify(tot))
 //firebase stuff
@@ -169,14 +172,9 @@ var auth = app.auth();
 var storage = app.storage();
 var sign;
 $('#sign-in-btn').addEventListener('click', ()=>{
-    sign = auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    database.child(sign.i.user.uid).once('value').then((snapshot)=>{
-        tot = snapshot.val()
-    }
-    );
+    auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     tot.name = auth.currentUser.displayName;
-}
-);
+});
 //mdc stuff
 new mdc.ripple.MDCRipple($('#shopButton'));
 new mdc.tabBar.MDCTabBar($('.mdc-tab-bar'));
@@ -184,7 +182,9 @@ new mdc.ripple.MDCRipple($('#tot-btn'));
 var drawer = new mdc.drawer.MDCDrawer($('.mdc-drawer'));
 $('.menu').addEventListener('click', ()=>drawer.open = true);
 var sdialog = new mdc.dialog.MDCDialog($('#shop-dialog'));
-new mdc.textField.MDCTextField($('.mdc-text-field'));
+for(i=0;i<$('.mdc-text-field').length;i++) {
+  new mdc.textField.MDCTextField($('.mdc-text-field')[i]);
+}
 $('#shopButton').addEventListener('click', ()=>sdialog.open());
 var ldialog = new mdc.dialog.MDCDialog($('#ldrbrd-dialog'));
 $('#ldrbrd-btn').addEventListener('click', ()=>ldialog.open());
@@ -192,6 +192,7 @@ var ndialog = new mdc.dialog.MDCDialog($('#name-dialog'));
 new mdc.ripple.MDCRipple($('.menu')).unbounded = true;
 var adialog = new mdc.dialog.MDCDialog($('#adven-dialog'));
 new mdc.select.MDCSelect($('#increment'));
+var idialog = new mdc.dialog.MDCDialog($('#incre-dialog'));
 //normal stuff
 function adv(title, text, op1, op2, one) {
   el = $('#adven-op1'),elClone = el.cloneNode(true);
@@ -283,7 +284,7 @@ var no = new someAdventure.Dialogue('NO!!!!!!', 'NO!', 'd');
                               }
                             }); //
                           } else { //lets do it
-                            alert("Good job you didn't die!""); //lets start out with some constructors
+                            alert("Good job you didn't die!"");
                           }
                         });//right a new function
                       });
@@ -299,7 +300,7 @@ var no = new someAdventure.Dialogue('NO!!!!!!', 'NO!', 'd');
         });
       };
 }*/
-this.tot = JSON.parse(localStorage.getItem('tot')) || {
+var tot = JSON.parse(localStorage.getItem('tot')) || {
     candy: 0,
     max_candy: 70000,
     pump: 10,
@@ -332,9 +333,8 @@ if (tot.firsttime) {
     $('#nmntrbtn').addEventListener('click', ()=>{
         tot.name = $('#nmtxt').value;
         $('#name').innerHTML = 'Name: ' + tot.name;
-    }
-    );
-    document.onkeydown = (e)=>{
+    });
+    $('#nmtxt').onkeydown = (e)=>{
         if (e.key.toLowerCase() == 'enter') {
             tot.name = $('#nmtxt').value;
             $('#name').innerHTML = 'Name: ' + tot.name;
@@ -343,12 +343,32 @@ if (tot.firsttime) {
     }
     tot.firsttime = false;
 }
+var increment = Number($('#increment_value').value);
+function ninc(v) {
+	cost = v**2;
+	if (tot.candy >= cost && v > 1000 && v < 1000000000000000000) {
+		tot.candy -= cost;
+		e = document.createElement('option');
+		e.value = v;
+		e.innerHTML = v;
+		$('#increment_value').appendChild(e);
+	} else if (v > 1000 && v < 1000000000000000000) {
+    $('#status').innerHTML = "That is too high or too low!";
+  } else {
+		$('#status').innerHTML = 'Not enough candy!';
+	}
+};
+$('#ninctext').onchange = e => {
+  $('#cost').innerHTML = 'Cost: ' + beautify(Number($('#ninctext').value)**2);
+  if (e.key.toLowerCase() == 'enter') ninc(Number($('#ninctext').value));
+};
+$('#confninc').addEventListener('click',()=>ninc(Number($('#ninctext').value)));
 var candies = ["Snickers(stop that, will you?)", "A rubber duck", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)", ];
 $('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers;
 $('#max-jobs').innerHTML = 'Max TOT-ers:' + tot.max_tot_ers;
 $('#farmers').innerHTML = 'Farmers: ' + tot.farmers;
-$('#multiplier').innerHTML = 'Multiplier: ' + tot.costumes;
-$('#max-mult').innerHTML = 'Max multiplier: ' + tot.maxCostumes;
+$('#multiplier').innerHTML = 'Costumes: ' + tot.costumes;
+$('#max-mult').innerHTML = 'Max Costumes: ' + tot.maxCostumes;
 $('#max-farmers').innerHTML = 'Max Farmers: ' + tot.maxFarmers;
 $('#name').innerHTML = 'Name: ' + tot.name;
 $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes * tot.tot_ers;
@@ -387,56 +407,61 @@ $('#new-game').addEventListener('click', ()=>{
 }
 );
 $('#toters-btn').addEventListener('click', ()=>{
-    if (tot.candy >= 100 && tot.tot_ers < tot.max_tot_ers) {
-        tot.candy -= 100;
+    if (tot.candy >= 100*increment && tot.tot_ers < tot.max_tot_ers) {
+        tot.candy -= 100*increment;
         $('#hmc').innerHTML = beautify(tot.candy);
-        tot.tot_ers++;
+        tot.tot_ers+=increment;
         $('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers++;
         $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes * tot.tot_ers;
     } else if (tot.tot_ers >= tot.max_tot_ers && tot.max_tot_ers != 'Infinity') {
-        $('#status').innerHTML = 'Reached the max amount of TOT-ers';
+        $('#status').innerHTML = 'Max amount of TOT-ers!';
         tot.tot_ers = tot.max_tot_ers;
     } else {
-        $('#status').innerHTML = 'You do not have enough money.'
+        $('#status').innerHTML = 'You do not have enough candy.'
     }
-    localStorage.setItem('tot', JSON.stringify(tot));
+    save();
 }
 );
 $('#frm-btn').addEventListener('click', ()=>{
-    if (tot.pump >= 5 && tot.farmers < tot.maxFarmers) {
-        tot.pump -= 5;
+    if (tot.pump >= 5*increment && tot.farmers < tot.maxFarmers) {
+        tot.pump -= 5*increment;
         $('#hmp').innerHTML = beautify(tot.pump);
-        tot.farmers++;
-        $('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers++;
-        $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes * tot.tot_ers;
+        tot.farmers+=increment;
+        $('#farmers').innerHTML = 'Farmers: ' + tot.farmers;
     } else if (tot.farmers >= tot.maxFarmers) {
-        $('#status').innerHTML = 'Max amount of farmers';
+        $('#status').innerHTML = 'Max amount of farmers!';
         tot.farmers = tot.maxFarmers;
     } else {
-        $('#status').innerHTML = 'You do not have enough money.'
+        $('#status').innerHTML = 'You do not have enough candy.'
     }
-    localStorage.setItem('tot', JSON.stringify(tot));
+    save();
 }
 );
-document.querySelectorAll('.mdc-tab')[0].addEventListener('click', ()=>{
+$('.mdc-tab')[0].addEventListener('click', ()=>{
     $('#upgrades').classList.add("is-active");
     $('#boosts').classList.remove("is-active");
     $('#hire').classList.remove("is-active");
 }
 );
-document.querySelectorAll('.mdc-tab')[1].addEventListener('click', ()=>{
+$('.mdc-tab')[1].addEventListener('click', ()=>{
     $('#upgrades').classList.remove("is-active");
     $('#boosts').classList.add("is-active");
     $('#hire').classList.remove("is-active");
 }
 );
-document.querySelectorAll('.mdc-tab')[2].addEventListener('click', ()=>{
+$('.mdc-tab')[2].addEventListener('click', ()=>{
     $('#upgrades').classList.remove("is-active");
     $('#boosts').classList.remove("is-active");
     $('#hire').classList.add("is-active");
 }
 );
 var cint = setInterval(()=>{
+    increment = $('#increment_value').value == 'newincre' ? 'newincre' : Number($('#increment_value').value);
+    if (increment == 'newincre') {
+      idialog.open();
+      sdialog.close();
+      $('#increment_value').options.selectedIndex=1;
+    }
     add = Math.floor(Math.random() * tot.costumes + 1) * tot.tot_ers;
     if (tot.candy + add <= tot.max_candy) {
         tot.candy += add;
@@ -503,7 +528,7 @@ var pint = setInterval(()=>{
         tot.pump = tot.max_pump
     }
     $('#hmp').innerHTML = beautify(tot.pump);
-    localStorage.setItem('tot', JSON.stringify(tot));
+    save();
 }
 , 7500);
 var c = (d,l)=>{
@@ -552,7 +577,7 @@ var doaction = ()=>{
         ttt('mansion');
     }
     if (ig) {
-        new adventure('graveyard')
+        //new adventure('graveyard');
     }
     draw();
 }
@@ -607,7 +632,7 @@ var draw = ()=>{
     }
     for (i = 0; i < tot.yawtth.length; i++) {
         if (c(tot.yawtth[i].x, tot.yawtth[i].y) !== null) {
-            c(tot.yawtth[i].x, tot.yawtth[i].y).innerHTML = 'R';
+            c(tot.yawtth[i].x, tot.yawtth[i].y).innerHTML = 'h';
         }
     }
     tot.cl = c(tot.x, tot.y).innerHTML;
@@ -628,14 +653,14 @@ var draw = ()=>{
         ig = false;
         new mdc.ripple.MDCRipple($('#status-btn'));
     }
-    if (tot.cl == "R") {
-        $('#status').innerHTML = 'Looks like the people recognize you.';
+    if (tot.cl == "h") {
+        $('#status').innerHTML = "The people recognize you here.";
         ih = false;
         im = false;
         ig = false;
     }
     if (tot.cl == "G") {
-        $('#status').innerHTML = 'Huh. A foggy graveyard. <button class="mdc-button mdc-button--dense" id="status-btn">Go in</button>';
+        $('#status').innerHTML = 'Huh. A foggy graveyard. Odd.'/*+'<button class="mdc-button mdc-button--dense" id="status-btn">Go in</button>'*/;
         ih = false;
         im = false;
         ig = true;
@@ -651,7 +676,7 @@ var draw = ()=>{
     if (document.body.contains($('#status-btn'))) {
         $('#status-btn').addEventListener('click', doaction)
     }
-    localStorage.setItem('tot', JSON.stringify(tot));
+    save();
 }
 (Everything = ()=>{
     if (!$('#checkbox-1').checked) {
@@ -659,26 +684,18 @@ var draw = ()=>{
         $('#reg-div').style.display = 'block';
         $('#adven-div').style.display = 'none';
         document.onkeyup = null;
-        document.onkeydown = (e)=>{
+        document.onkeydown=e=>{
             if (e.key == ' ') {
                 $('#tot-btn').classList.add('pumplit');
                 ttt();
-                setTimeout(()=>{
-                    $('#tot-btn').classList.remove('pumplit')
-                }
-                , 400)
+                setTimeout(()=>$('#tot-btn').classList.remove('pumplit'), 400)
             }
         }
-        ;
         $('#tot-btn').addEventListener('click', ()=>{
             $('#tot-btn').classList.add('pumplit');
             ttt();
-            setTimeout(()=>{
-                $('#tot-btn').classList.remove('pumplit')
-            }
-            , 400)
-        }
-        );
+            setTimeout(()=>$('#tot-btn').classList.remove('pumplit'), 400)
+        });
         tot.isAdven = false;
     } else {
         $('#reg-div').style.display = 'none';
@@ -709,7 +726,7 @@ var draw = ()=>{
                 tot.shift.x--;
                 draw();
             }
-            localStorage.setItem('tot', JSON.stringify(tot));
+            save();
         }
         document.onkeyup = (e)=>{
             e.key = e.key.toLowerCase();
@@ -725,7 +742,7 @@ var draw = ()=>{
             if (e.key == 'd') {
                 move('e');
             }
-            if (e.key == 'q') {
+            if (e.key == 'q' || e.key == ' ') {
                 doaction();
             }
         }
@@ -736,16 +753,17 @@ var draw = ()=>{
 )();
 $('#checkbox-1').addEventListener('click', Everything);
 $('#cs-btn').addEventListener('click', ()=>{
-    if (tot.candy >= 100 && tot.costumes + 1 < tot.maxCostumes) {
-        tot.candy -= 100;
+    if (tot.candy >= 100*increment && tot.costumes + 1 < tot.maxCostumes) {
+        tot.candy -= 100*increment;
         $('#hmc').innerHTML = beautify(tot.candy);
         tot.yawtth = [];
-        tot.costumes++;  //OKAY INCREMENTS
-        $('#multiplier').innerHTML = 'Multiplier: ' + tot.costumes;
+        tot.costumes+=increment;  //OKAY INCREMENTS
+        $('#multiplier').innerHTML = 'Costumes: ' + tot.costumes;
         $('#cps').innerHTML = 'Candy Per Second: ' + tot.costumes * tot.tot_ers;
         if($('#checkbox-1').checked){draw()};
     } else if (tot.costumes >= tot.maxCostumes) {
         tot.costumes = tot.maxCostumes;
+        $('#multiplier').innerHTML = 'Costumes: ' + tot.costumes;
         $('#status').innerHTML = "Max amount of costumes!"; //even its the end of the code still add a semicolon
     } else {
         $('#status').innerHTML = "Not enough candy.";
@@ -759,18 +777,18 @@ var upgrade = (what,hwmch,tf,cost,btn)=>{
             tot.candy -= cost
             $('#status').innerHTML = 'You got ' + what + '!';
             if (tf == 'toters') {
-                tot.max_tot_ers = hwmch;
+                tot.max_tot_ers += hwmch;
                 $('#max-jobs').innerHTML = 'Max TOT-ers: ' + tot.max_tot_ers;
             } else if (tf == 'strg') {
-                tot.max_candy = hwmch;
-                tot.max_pump = hwmch / 10000;
+                tot.max_candy += hwmch;
+                tot.max_pump += hwmch / 10000;
                 $('#mx-pump').innerHTML = 'Max Pumpkins: ' + tot.max_pump;
                 $('#mx-candy').innerHTML = 'Max Candy: ' + tot.max_candy;
             }
         } else {
             $('#status').innerHTML = 'Not enough candy.';
         }
-        localStorage.setItem('tot', JSON.stringify(tot));
+        save();
     }
   );
 }
@@ -787,7 +805,7 @@ $('#bc-btn').addEventListener('click', ()=>{
         tot.pump -= 1250;
         $('#hmp').innerHTML = beautify(tot.pump);
         tot.maxCostumes *= 2;
-        $('#max-mult').innerHTML = 'Max Multiplier: ' + beautify(tot.maxCostumes);
+        $('#max-mult').innerHTML = 'Max Costumes: ' + beautify(tot.maxCostumes);
     } else {
         $('#status').innerHTML = 'Not enough candy.';
     }
@@ -839,5 +857,6 @@ window.onunload = ()=>{
     tot.pump = (tot.pump != Infinity) ? (tot.pump) : 'Infinity';
     tot.max_pump = (tot.max_pump != Infinity) ? (tot.max_pump) : 'Infinity';
     tot.max_candy = (tot.max_candy != Infinity) ? (tot.max_candy) : 'Infinity';
-    localStorage.setItem('tot', JSON.stringify(tot));
+    save();
 }
+//})();
