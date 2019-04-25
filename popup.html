@@ -27,12 +27,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
 <html>
     <head>
         <title>Trick or treat!^_^</title>
-        <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.googleapis.com https://apis.google.com; object-src 'self'; connect-src 'self' https://k-inc-232222.firebaseio.com https://www.googleapis.com wss://*.firebaseio.com/;">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto" rel="stylesheet">
-        <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+        <link href="material.css" rel="stylesheet">
         <style>
             body {
-                --mdc-theme-primary:#ff5722;background: url(images/background.png)no-repeat left bottom fixed #ff5722;
+                --mdc-theme-primary:#ff5722;
+                background:url(images/background.png)no-repeat left bottom fixed #ff5722;
                 text-align: center;
                 background-position-y: 100px;
                 background-size: 90%;
@@ -147,7 +147,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
               color:white;
             }
             .mdc-list-item {
-              left: -25px;
+              left: -10px;
             }
             #btgame {
               display:none;
@@ -176,12 +176,29 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
         </div>
         <div class="mdc-dialog__scrim"></div>
       </div>
+      <div class="mdc-dialog" id="incre-dialog">
+        <div class="mdc-dialog__container">
+          <div class="mdc-dialog__surface">
+            <h2 class="mdc-dialog__title">New Increment</h2>
+            <div class="mdc-text-field" id="ninc-val">
+              <input type="number" min="1100" value="1100" max="1000000000000000000" id="ninctext" class="mdc-text-field__input">
+              <label class="mdc-floating-label">Enter value between 1.1K and 1Q</label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            <p id="cost" style="color:black;">1210000</p>
+            <footer class="mdc-dialog__actions">
+              <button class="mdc-button" id="confninc"data-mdc-dialog-action="no">Okay!</button><button data-mdc-dialog-action="no"class="mdc-button">Cancel</button>
+            </footer>
+          </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+      </div>
       <div class="mdc-dialog" id="ldrbrd-dialog">
         <div class="mdc-dialog__container">
           <div class="mdc-dialog__surface">
             <h2 class="mdc-dialog__title">Leaderboard</h2>
             <div class="mdc-dialog__content" id="my-dialog-content" style="overflow:hidden;">
-              <ol class="mdc-list" id="ldrbrd-list" style="padding-left:0;width:500px;color:black!important;">
+              <ol class="mdc-list" id="ldrbrd-list" style="width:500px;color:black!important;height:200px;overflow-y:scroll;">
                 <li class="mdc-list-item">
                   <span class="mdc-list-item__text" style="width:25%">Name</span>
                   <span class="mdc-list-item__text" style="width:25%">Candy</span>
@@ -189,9 +206,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                   <span class="mdc-list-item__text" style="width:25%">CPS</span>
                 </li>
               </ol>
-              <button class="mdc-button" id="sign-in-btn">Sign In To Be On THE Leaderboard!</button>
             </div>
             <footer class="mdc-dialog__actions">
+              <button class="mdc-button" id="sign-in-btn">Sign In To Be On THE Leaderboard!</button>
               <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
                 <span class="mdc-button__label">Done</span>
               </button>
@@ -311,17 +328,19 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     </div>
                     <div class="js-panel" role="tabpanel" aria-hidden="false" id="hire">
                         <button class="mdc-button" id="toters-btn">Hire a Trick or Treater!</button>
-                        <p class="mdc-typography--headline5">Farmers</p>
-                        <button class="mdc-button" id="frm-btn">Hire a farmer!</button>
+                        <p class="mdc-typography--headline6">Farmers</p>
+                        <button class="mdc-button" id="frm-btn">Hire a farmer!</button><br>
+                        <button id="incre-lnd" class="mdc-button">Increase land for more farmers!</button>
                     </div>
                     <footer class="mdc-dialog__actions">
                       <div class="mdc-select" id="increment" style="left:5px;bottom:10px;position: absolute;">
                         <i class="mdc-select__dropdown-icon"></i>
                         <select class="mdc-select__native-control" id="increment_value">
-                          <option value="one">1</option>
-                          <option value="ten">10</option>
-                          <option value="hundred">100</option>
-                          <option value="thousand">1000</option>
+                          <option value="newincre">New Increment</option>
+                          <option value="1" selected>1</option>
+                          <option value="10">10</option>
+                          <option value="100">100</option>
+                          <option value="1000">1000</option>
                         </select>
                         <label class="mdc-floating-label mdc-floating-label--float-above">Increment</label>
                         <div class="mdc-line-ripple" style="transform-origin: 40.7875px center;"></div>
