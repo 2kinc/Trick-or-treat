@@ -1,5 +1,3 @@
-*Change description to match new update*
-
 {
   "manifest_version": 2,
 
@@ -18,5 +16,5 @@
     "cookies",
     "contextMenus"
   ],
-"content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.googleapis.com https://apis.google.com; object-src 'self'; connect-src 'self' https://k-inc-232222.firebaseio.com https://www.googleapis.com wss://*.firebaseio.com/;"
+"content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.googleapis.com https://apis.google.com; object-src 'self'; connect-src 'self' https://k-inc-232222.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com/;"
 }
