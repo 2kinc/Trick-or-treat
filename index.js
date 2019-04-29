@@ -153,7 +153,7 @@ var beautify = function(t) {
 };
 var $ = (d)=>{
     var e = document.querySelectorAll(d);
-    e = (e.length == 1) ? e[0] : e;
+    e = (e.length == 1) ? e[0] : e.length == 0 ? null : e;
     return e;
 }
 var save = ()=>localStorage.setItem('tot', JSON.stringify(tot))
@@ -348,6 +348,7 @@ function ninc(v) {
 	cost = v**2;
 	if (tot.candy >= cost && v > 1000 && v < 1000000000000000000) {
 		tot.candy -= cost;
+    $('#hmc').innerHTML = beautify(tot.candy);
 		e = document.createElement('option');
 		e.value = v;
 		e.innerHTML = v;
@@ -362,10 +363,21 @@ $('#ninctext').onchange = e => {
   $('#cost').innerHTML = 'Cost: ' + beautify(Number($('#ninctext').value)**2);
   if (e.key.toLowerCase() == 'enter') ninc(Number($('#ninctext').value));
 };
+$('#incre-lnd').addEventListener('click',() => {
+  var cost = tot.maxFarmers / 20;
+  if (tot.candy >= cost) {
+    tot.candy -= cost;
+    $('#hmc').innerHTML = beautify(tot.candy);
+    tot.maxFarmers *= 2;
+    $('#max-farmers').innerHTML = 'Max Farmers:' + beautify(tot.maxFarmers);
+  } else {
+    $('#status').innerHTMl = 'Not enough candy!';
+  }
+})
 $('#confninc').addEventListener('click',()=>ninc(Number($('#ninctext').value)));
 var candies = ["Snickers(stop that, will you?)", "A rubber duck", "Milky Way(the chocolate, not  the galaxy)", "Three Musketeers(the candy though)", "Kit Kat", "Kisses (the chocolate, duh)", "Smarties!", "M&M's", "Skittles", "Bubble Gum", "Gummy Bears(99.99% vegetarian)", ];
-$('#jobs').innerHTML = 'TOT-ers: ' + tot.tot_ers;
-$('#max-jobs').innerHTML = 'Max TOT-ers:' + tot.max_tot_ers;
+$('#jobs').innerHTML = 'TOT-ers: ' + beautify(tot.tot_ers);
+$('#max-jobs').innerHTML = 'Max TOT-ers:' + beautify(tot.max_tot_ers);
 $('#farmers').innerHTML = 'Farmers: ' + tot.farmers;
 $('#multiplier').innerHTML = 'Costumes: ' + tot.costumes;
 $('#max-mult').innerHTML = 'Max Costumes: ' + tot.maxCostumes;
@@ -399,7 +411,8 @@ $('#new-game').addEventListener('click', ()=>{
         farmers: 0,
         maxFarmers: 100,
         name: 'Guest ' + Math.floor(Math.random() * 10000 + 1000),
-        btgame: false
+        btgame: false,
+        increments:$('increment_value')
     }
     clearInterval(cint);
     clearInterval(pint);
@@ -673,7 +686,7 @@ var draw = ()=>{
         ig = false;
         new mdc.ripple.MDCRipple($('#status-btn'));
     }
-    if (document.body.contains($('#status-btn'))) {
+    if (document.body.contains($('#status-btn')) && ih && im && ig) {
         $('#status-btn').addEventListener('click', doaction)
     }
     save();
