@@ -71,7 +71,10 @@ function Game(T,o,t) {
     farmers: 0, // farmers
     maxFarmers: 100, //max farmers
     name: Math.floor(Math.random() * 1000000 + 10000).toString(36), // name to display
-  }
+  };
+  (this.updateElements = function() {
+    that.elems.candy = that.obj.candy;
+  })();
   this.onesecond = setInterval(function(){ //Runs every second
 
   },1000);
