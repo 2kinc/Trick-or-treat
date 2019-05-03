@@ -86,9 +86,9 @@ function Game(H,a,ll,o,w,ee,n) {
     increments:[1,10,100,1000],
   }
   this.obj = this.readSaved() || this.normalobj;
-  this.save = function() {
+  (this.save = function() {
     localStorage.setItem('TrickOrTreat', H.btoa(JSON.stringify(this.obj)));
-  };
+  })();
   this.newgame = function() {
     localStorage.TrickOrTreat = undefined; //restart game
     this.obj = this.normalobj;
