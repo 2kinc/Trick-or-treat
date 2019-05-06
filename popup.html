@@ -66,14 +66,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
           <div class="mdc-dialog__surface">
             <h2 class="mdc-dialog__title">Leaderboard</h2>
             <div class="mdc-dialog__content" id="my-dialog-content" style="overflow:hidden;">
-              <ol class="mdc-list" id="ldrbrd-list" style="width:500px;color:black!important;height:200px;overflow-y:scroll;">
-                <li class="mdc-list-item">
-                  <span class="mdc-list-item__text" style="width:25%">Name</span>
-                  <span class="mdc-list-item__text" style="width:25%">Candy</span>
-                  <span class="mdc-list-item__text" style="width:25%">Pumpkins</span>
-                  <span class="mdc-list-item__text" style="width:25%">CPS</span>
-                </li>
-              </ol>
+              <ol class="mdc-list" id="ldrbrd-list" style="width:500px;color:black!important;height:200px;overflow-y:scroll;"></ol>
             </div>
             <footer class="mdc-dialog__actions">
               <button class="mdc-button" id="sign-in-btn">Sign In To Be On THE Leaderboard!</button>
@@ -155,7 +148,16 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                                     </button>
                                     <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
                                         <span class="mdc-tab__content">
-                                            <span class="mdc-tab__text-label">Hire</span>
+                                            <span class="mdc-tab__text-label">TOT-ers</span>
+                                        </span>
+                                        <span class="mdc-tab-indicator">
+                                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                        </span>
+                                        <span class="mdc-tab__ripple"></span>
+                                    </button>
+                                    <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                                        <span class="mdc-tab__content">
+                                            <span class="mdc-tab__text-label">Farmers</span>
                                         </span>
                                         <span class="mdc-tab-indicator">
                                             <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
@@ -166,7 +168,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                             </div>
                         </div>
                     </div>
-                    <div class="js-panel is-active" role="tabpanel" aria-hidden="false" id="upgrades">
+                    <div class="js-panel is-active" role="tabpanel" aria-hidden="false">
                         <button class="mdc-button rnd-btn" id="phone-btn">Phone (Max TOT-ers is 100) 500 candies</button>
                         <button class="mdc-button rnd-btn" id="compu-btn">Computer (Max TOT-ers is 957) 5K candies</button>
                         <button class="mdc-button rnd-btn" id="ai-btn">AI (No max TOT-ers) 99K candies</button>
@@ -178,31 +180,23 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                         <button class="mdc-button rnd-btn" id="ptlstg-btn">Portal Storage (No max candy) 10O</button>
                         <br>
                     </div>
-                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="boosts">
+                    <div class="js-panel" role="tabpanel" aria-hidden="false">
+                      <div class="mdc-typography--headline6" style="padding-top: 10px;">Boosts!</div>
                         <button class="mdc-button mdc-button--raised rsd-btn" id="bc-btn">Better Tailor (Max Costumes x2): 1250 Pumpkins</button>
                         <button class="mdc-button mdc-button--raised rsd-btn" id="ce-btn">Clone Everyone (TOTers x2): 2500 Pumpkins</button>
                         <button class="mdc-button mdc-button--raised rsd-btn" id="ucc-btn">Ultimate Candy Corn!! (Candy x2): 5000 Pumpkins</button>
-                        <br>
-                        <div class="mdc-checkbox" style="color:black;">
-                            <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1">
-                            <div class="mdc-checkbox__background">
-                                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-                                </svg>
-                                <div class="mdc-checkbox__mixedmark"></div>
-                            </div>
-                            <label for="checkbox-1" style="position: absolute;left: 35px;top: 19px;">Be adventurous (beta)</label>
-                        </div>
                     </div>
-                    <div class="js-panel" role="tabpanel" aria-hidden="false" id="hire">
+                    <div class="js-panel" role="tabpanel" aria-hidden="false">
                         <p class="mdc-typography--headline6">Trick or treaters!</p>
                         <button class="mdc-button" id="toters-btn">Hire a Trick or Treater!</button>
+                    </div>
+                    <div class="js-panel" role="tabpanel" aria-hidden="false">
                         <p class="mdc-typography--headline6">Farmers</p>
                         <button class="mdc-button" id="frm-btn">Hire a farmer!</button><br>
                         <button id="incre-lnd" class="mdc-button">Increase land for more farmers!</button>
                     </div>
                     <footer class="mdc-dialog__actions">
-                      <div class="mdc-select" id="increment" style="left:5px;bottom:10px;position: absolute;">
+                      <div class="mdc-select" id="increment" style="left:5px;bottom:5px;position: absolute;">
                         <i class="mdc-select__dropdown-icon"></i>
                         <select class="mdc-select__native-control" id="increment_value">
                           <option value="newincre">New Increment</option>
