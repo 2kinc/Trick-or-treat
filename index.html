@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Trick or treat! ^_^</title>
-  </head>
-  <body>
-    <iframe width=508 height=488 src="popup.html" style="border:none;overflow:hidden;"></iframe>
-  </body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Material+Icons">
+    <link rel="stylesheet" href="material.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Trick or treat!</title>
+</head>
+
+<body>
+    <div id="tooltip">asdf</div>
+    <div id="app">
+        <header class="mdc-top-app-bar mdc-top-app-bar--fixed" style="border-bottom:1.5px solid white;">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span class="mdc-top-app-bar__title">Trick Or Treat!</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+                    <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" id="store-btn">home</button>
+                </section>
+            </div>
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span class="mdc-top-app-bar__title">Candy</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+                    <span class="mdc-top-app-bar__title" style="padding:16px;">
+                        <img src="images/CandyIcon.png" style="width:30px;height:30px;position: relative;top:10px;">
+                        <span id="candy"> {{main.candy}} </span>
+                    </span>
+                </section>
+            </div>
+        </header>
+
+        <div id="betterize-tab" class="tab-div">
+            <div class="mdc-tab-bar" role="tablist">
+                <div class="mdc-tab-scroller">
+                    <div class="mdc-tab-scroller__scroll-area">
+                        <div class="mdc-tab-scroller__scroll-content">
+                            <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0" v-on:click="upgradeTab">
+                                <span class="mdc-tab__content">
+                                    <span class="mdc-tab__text-label">Upgrades</span>
+                                </span>
+                                <span class="mdc-tab-indicator mdc-tab-bar__indicator mdc-tab-indicator--active">
+                                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"
+                                        style="background:white;height:4px;"></span>
+                                </span>
+                                <span class="mdc-tab__ripple"></span>
+                            </button>
+                            <button class="mdc-tab" role="tab" aria-selected="true" tabindex="1" v-on:click="costumeTab">
+                                <span class="mdc-tab__content">
+                                    <span class="mdc-tab__text-label">Costumes</span>
+                                </span>
+                                <span class="mdc-tab-indicator">
+                                    <span
+                                        class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                </span>
+                                <span class="mdc-tab__ripple"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdc-card mdc-elevation--z5" id="upgrades" style="overflow-y:auto;padding:16px;margin:16px 100px;height:350px;">
+                <div v-for="upgrade in upgrades">
+                    <button class="upgradebutton" v-on:click="upgradeclick(upgrade)" v-bind:tooltip='upgrade.price+ " candies"' v-bind:tooltipcolor='main.candy<upgrade.price?"red":"white"' v-bind:style="main.candy<upgrade.price?{cursor:'default',background:'#9e9e9e'}:{cursor:'pointer', background:'#ff5722',color:'white'}">
+                        <div style="position:relative;top:0;left:0;">
+                            <p style="font-size:20px;margin:8px 0;padding:0;">{{upgrade.name}}</p>
+                            <p style="margin:8px 0;padding:0;">{{upgrade.description}}</p>
+                        </div>
+                    </button>
+                    <br><br>
+                </div>
+            </div>
+            <div class="mdc-card mdc-elevation--z5" id="costumes" style="overflow-y:auto;padding:16px;margin:16px 100px;height:350px;display:none;">
+                <div v-for="wardrobe in costumes" class="wardrobe">
+                    <div class="mdc-typography--headline6"> Wardrobe {{costumes.indexOf(wardrobe) + 1}} </div> <br><br>
+                    <div v-for="costume in wardrobe">
+                        <button class="costumebutton" v-on:click="costumeclick(costumes.indexOf(wardrobe), wardrobe.indexOf(costume))" v-bind:tooltip='!costume.bought?costume.price+ " candies":"Bought"' v-bind:tooltipcolor="main.candy<costume.price&&!costume.bought?'red':costume.bought?'#81c784':'white'"
+                            v-bind:style="costume.activated?{background:'#2196F3',color:'white'}:main.candy<costume.price&&!costume.bought?{cursor:'default',background:'#9e9e9e'}:{cursor:'pointer', background:'#ff5722',color:'white'}">
+                            <div style="position:relative;top:0;left:0;">
+                                <p style="font-size:20px;margin:8px 0;padding:0;">{{costume.name}}</p>
+                                <p style="margin:8px 0;padding:0;">{{costume.description}}</p>
+                                <p style="margin:8px 0;padding:0;">{{costume.min}} - {{costume.max}} candies</p>
+                            </div>
+                        </button>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tot-tab" class="tab-div">
+            <button id="tot-btn" class="mdc-ripple-surface" v-on:click="tot" data-mdc-auto-init="MDCRipple">
+                <img src="images/pumpkinnotlit.png" style="width:180px;">
+            </button>
+        </div>
+
+        <div id="storage-tab" class="tab-div">
+            d
+        </div>
+
+        <button class="mdc-fab mdc-elevation--z1" style="position:fixed;left:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToLeft'>
+            <span class="mdc-fab__icon material-icons">keyboard_arrow_left</span>
+        </button>
+
+        <button class="mdc-fab mdc-elevation--z1" style="position:fixed;right:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToRight'>
+            <span class="mdc-fab__icon material-icons">keyboard_arrow_right</span>
+        </button>
+    </div>
+
+    <script src="material.js"></script>
+    <script src="vue.js"></script>
+    <script src="index.js"></script>
+</body>
+
 </html>
