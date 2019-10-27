@@ -1,20 +1,15 @@
 {
-  "manifest_version": 2,
-
-  "name": "Trick or Treat! ^_^",
-  "description": "Trick or Treat is a game of smarts where you will have to invest candy to find a way to make more candy in a much faster way! New Update: Go trick or treating to different houses on your computer!",
-  "version": "1.9",
-  "icons": {"16":"images/pumpkin128.png","48":"images/pumpkin128.png","128":"images/pumpkin128.png"},
-  "browser_action": {
-    "default_icon": "images/pumpkin128.png",
-    "default_popup": "popup.html"
-  },
-  "permissions": [
-    "activeTab",
-    "storage",
-    "tabs",
-    "cookies",
-    "contextMenus"
-  ],
-"content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.googleapis.com https://apis.google.com; object-src 'self'; connect-src 'self' https://k-inc-232222.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com/;"
+    "manifest_version": 2,
+    "name": "Trick or treat!",
+    "description": "A halloween cookie clicker!",
+    "version": "0.9",
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_icon": "images/pumpkin128.png"
+    },
+    "permissions": [
+        "storage",
+        "contextMenus"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
