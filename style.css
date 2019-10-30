@@ -114,6 +114,16 @@ button {
     outline: none;
 }
 
+.boostbutton {
+    width: 100%;
+    background: #ff5722;
+    border: none;
+    height: 128px;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+}
+
 .costumebutton {
     width: 100%;
     background: #ff5722;
@@ -135,6 +145,7 @@ button {
     padding: 8px;
     border-radius: 10px;
     opacity: 0;
+    display: none;
     transition: 100ms opacity ease;
 }
 
