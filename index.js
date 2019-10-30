@@ -20,6 +20,8 @@ var data = {
         activeStorage: 0,
         toters: 0,
         totersms: 0,
+        farmers: 0,
+        maxFarmers: 10,
     },
     boosts: [
         { name: 'Farm Explosion', description: 'Pumpkins x 2', affects: 'pumpkins', multiply: '2', price: '3000' },
@@ -230,6 +232,7 @@ var methods = {
         var e = setInterval(() => {
             app.percent(d);
             d = d >= 360 ? (() => {
+                d = 360;
                 clearInterval(e);
                 $('#tot-btn').disabled = false;
             })() : d + this.main.speed;
@@ -245,6 +248,9 @@ var methods = {
     },
     hireToter() {
         app.main.toters += app.main.candy >= 15 ? (() => { app.main.candy -= 15; return 1 })() : 0;
+    },
+    hireFarmer() {
+        app.main.farmers += app.main.candy >= 50 ? (() => { app.main.candy -= 50; return 1 })() : 0;
     },
 
     setTab(i) {
@@ -374,6 +380,10 @@ var oneMinFunc = function() {
 
     if (app.main.candy >= app.main.toters * 15) app.main.candy -= app.main.toters * 15;
     else app.main.toters -= random(app.main.toters / 2 - 5, app.main.toters / 2 + 5);
+    if (app.main.candy >= app.main.farmers * 50) {
+        app.main.candy -= app.main.farmers * 50
+        app.main.pumpkins += app.main.farmers;
+    }
 
 };
 
@@ -405,3 +415,9 @@ var r1 = new mdc.ripple.MDCRipple($('#store-btn'));
 r1.unbounded = true;
 var betterizeBar = new mdc.tabs.MDCTabBar(document.querySelector('.mdc-tab-bar'));
 var shopDialog = new mdc.dialog.MDCDialog($('#shopDialog'));
+
+// S A V I N G
+
+addEventListener('onunload', function() {
+
+});
