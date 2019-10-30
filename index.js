@@ -4,6 +4,12 @@ var $ = s => document.querySelectorAll(s).length == 1 ? document.querySelector(s
 var beautify = n => ((Math.log10(n) / 3 | 0) == 0) ? n : Number((n / Math.pow(10, (Math.log10(n) / 3 | 0) * 3)).toFixed(1)) + ["", "K", "M", "B", "T", "q", "Q", "s", "S", "o", "n", "D", "uD", "dD", "tD", "qD", "QD", "sD", "SD", "oD", "nD", "V", "uV", "dV", "tV", "qV", "QV", "sV", "SV", "oV", "nV", "t", "ut", "dt", "tt", "qt", "Qt", "st", "St", "ot", "nt", "qU", "uqU", "dqU", "tqU", "qqU", "QqU", "squ", "Squ", "oqu", "nqu", "Qu", "uQu", "dQu", "tQu", "qQu", "QQu", "sQu", "SQu", "oQu", "nQu", "se", "use", "dse", "tse", "qse", "Qse", "sse", "Sse", "ose", "nse", "Se", "uSe", "dSe", "tSe", "qSe", "QSe", "sSe", "SSe", "oSe", "nSe", "O", "uO", "dO", "tO", "qO", "QO", "sO", "SO", "oO", "nO", "N", "uN", "dN", "tN", "qN", "QN", "sN", "SN", "oN", "nN", "c", "."][Math.log10(n) / 3 | 0];
 var random = (n, x) => Math.floor(Math.random() * (Math.floor(x) - Math.ceil(n) + 1) + Math.ceil(n))
 
+// L O A D   D A T A
+
+addEventListener('onload', function() {
+    //localStorage.tot = JSON.stringify(app.main);
+});
+
 //  D A T A
 
 var data = {
@@ -419,5 +425,5 @@ var shopDialog = new mdc.dialog.MDCDialog($('#shopDialog'));
 // S A V I N G
 
 addEventListener('onunload', function() {
-
+    localStorage.tot = JSON.stringify(app.main);
 });
