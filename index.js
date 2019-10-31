@@ -319,8 +319,8 @@ var methods = {
             if (thing.add) this.main[thing.affects] += thing.add;
             thing.price = Math.round(thing.price * thing.pricem);
             var index = this.upgrades.indexOf(thing);
-            this.main.upgrades[0]++;
-            this.main.upgrades[1] = this.price;
+            this.main.upgrades[index][0]++;
+            this.main.upgrades[index][1] = this.price;
         }
     },
 
