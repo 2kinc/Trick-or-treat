@@ -44,7 +44,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     <h2 class="mdc-dialog__title" id="my-dialog-title">Boost Shop</h2>
                     <div class="mdc-dialog__content" id="my-dialog-content" style="overflow-y:auto;">
                         <div v-for="boost in boosts">
-                            <button class="boostbutton" v-bind:tooltip='beautify(boost.price)+ " pumpkins"'>
+                            <button class="boostbutton" v-on:click="boostclick(boost)" v-bind:tooltip='beautify(boost.price)+ " pumpkins"' v-bind:style="main.pumpkins>=boost.price?{}:{background:'#9e9e9e'}" v-bind:tooltipcolor="main.pumpkin>=boost.price?'white':'red'">
                                 <p style="font-size:20px;margin:8px 0;padding:0;">{{boost.name}}</p>
                                 <p style="margin:8px 0;padding:0;">{{boost.description}}</p>
                             </button>
@@ -164,8 +164,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 <div class="mdc-typography--subtitle1">Max Trick or Treaters: {{beautify(totersManagingStatus[main.totersms].capacity)}}
                 </div><br><br>
                 <div class="mdc-typography--headline6">Farmers</div><br>
-                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.farmers)}} <span style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-bind:tooltip="'Hire a farmer! Wage: 50 candies per minute (and they give ' +beautify(main.farmerRate) + '  pumpkin'+ (main.farmerRate>1?'s':'') +' every minute)'"
-                        v-on:click="hireFarmer">+</span></div>
+                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.farmers)}} <button style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-bind:tooltip="'Hire a farmer! Wage: 50 candies per minute (and they give ' +beautify(main.farmerRate) + '  pumpkin'+ (main.farmerRate>1?'s':'') +' every minute)'"
+                        v-on:click="hireFarmer">+</buttonS></div>
             </div>
         </div>
 
@@ -173,30 +173,30 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             <button id="tot-btn" class="mdc-ripple-surface" v-on:click="tot" data-mdc-auto-init="MDCRipple">
                 <img src="images/pumpkinnotlit.png" style="width:180px;">
             </button>
-        </div>
+                </div>
 
-        <div id="storage-tab" class="tab-div">
-            <button style="background:none;border:none;padding-top:48px;outline:none;" v-on:click="upgradeStorage" v-bind:tooltip="storage[main.activeStorage + 1] ? 'Price for ' + storage[main.activeStorage + 1].name + ': ' + beautify(storage[main.activeStorage + 1].price) + ' candies' : '.'"
-                v-bind:tooltipcolor="storage[main.activeStorage+1]&&main.candy<storage[main.activeStorage+1].price?'red':'white'">
+                <div id="storage-tab" class="tab-div">
+                    <button style="background:none;border:none;padding-top:48px;outline:none;" v-on:click="upgradeStorage" v-bind:tooltip="storage[main.activeStorage + 1] ? 'Price for ' + storage[main.activeStorage + 1].name + ': ' + beautify(storage[main.activeStorage + 1].price) + ' candies' : '.'"
+                        v-bind:tooltipcolor="storage[main.activeStorage+1]&&main.candy<storage[main.activeStorage+1].price?'red':'white'">
                 <img v-bind:src="storage[main.activeStorage].image" style="width:125px;">
             </button><br><br>
-            <div class="mdc-typography--headline5" style="color:white;">{{storage[main.activeStorage].name}}</div>
-            <br><br>
-            <div class="mdc-typography--subtitle1" style="color:white">Can hold: {{beautify(storage[main.activeStorage].storage * main.storageIncrease)}} candies</div>
-        </div>
+                    <div class="mdc-typography--headline5" style="color:white;">{{storage[main.activeStorage].name}}</div>
+                    <br><br>
+                    <div class="mdc-typography--subtitle1" style="color:white">Can hold: {{beautify(storage[main.activeStorage].storage * main.storageIncrease)}} candies</div>
+                </div>
 
-        <button class="mdc-fab mdc-elevation--z1" style="position:fixed;left:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToLeft'>
+                <button class="mdc-fab mdc-elevation--z1" style="position:fixed;left:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToLeft'>
             <span class="mdc-fab__icon material-icons">keyboard_arrow_left</span>
         </button>
 
-        <button class="mdc-fab mdc-elevation--z1" style="position:fixed;right:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToRight'>
+                <button class="mdc-fab mdc-elevation--z1" style="position:fixed;right:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToRight'>
             <span class="mdc-fab__icon material-icons">keyboard_arrow_right</span>
         </button>
-    </div>
+            </div>
 
-    <script src="material.js"></script>
-    <script src="vue.js"></script>
-    <script src="index.js"></script>
+            <script src="material.js"></script>
+            <script src="vue.js"></script>
+            <script src="index.js"></script>
 </body>
 
 </html>

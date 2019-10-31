@@ -24,18 +24,19 @@ var data = {
         farmerRate: 1,
         costumeUp: 1,
         upgrades: [
-            0,
-            0,
-            0,
-            0
-        ]
+            5,
+            15,
+            5000,
+            500
+        ],
+        boosts: [3000, 2500, 4000, 9000, 10000]
     },
     boosts: [
-        { name: 'Farm Explosion', description: 'Pumpkins x 2', affects: 'pumpkins', multiply: '2', price: '3000' },
-        { name: 'Extreme Candy Corn', description: 'Candy x 2', affects: 'candy', multiply: '2', price: '2500' },
-        { name: 'Pumpkin Apocalypse', description: 'Pumpkin x 3', affects: 'pumpkins', multiply: '3', price: '4000' },
-        { name: 'Ultimate Candy Corn', description: 'Candy x 4', affects: 'candy', multiply: '5', price: '9000' },
-        { name: 'Extreme Costumes', description: 'Costume Effect x 3', affects: 'costumeUp', multiply: '3', price: '10000' }
+        { name: 'Extreme Candy Corn', description: 'Candy x 2', affects: 'candy', multiply: '2', price: 2500 },
+        { name: 'Pumpkin Apocalypse', description: 'Farmer Rate x 3', affects: 'farmerRate', multiply: '3', price: 4000 },
+        { name: 'Ultimate Candy Corn', description: 'Candy x 4', affects: 'candy', multiply: '5', price: 9000 },
+        { name: 'Extreme Costumes', description: 'Costume Effect x 3', affects: 'costumeUp', multiply: '3', price: 10000 },
+        { name: 'Pure Sweetness', description: 'Candy x 1000', affects: 'candy', multiply: '1000', price: 100000000 },
     ],
     totersManagingStatus: [{
         name: 'You',
@@ -319,7 +320,17 @@ var methods = {
             if (thing.add) this.main[thing.affects] += thing.add;
             thing.price = Math.round(thing.price * thing.pricem); //increase price my multiplier
             var index = this.upgrades.indexOf(thing);
-            this.main.upgrades[index]++; //add to bought count
+            this.main.upgrades[index] = thing.price;
+        }
+    },
+
+    boostclick(thing) {
+        if (this.main.pumpkins >= thing.price) {
+            this.main.pumpkins -= thing.price;
+            this.main[thing.affects] *= thing.multiply;
+            thing.price = Math.round(thing.price * thing.multiply);
+            var index = this.boosts.indexOf(thing);
+            this.main.boosts[index] = thing.price;
         }
     },
 
@@ -378,8 +389,11 @@ var app = new Vue({
 if (localStorage.tot) data.main = JSON.parse(localStorage.tot);
 data.main.bought.forEach(i => data.costumes[i[0]][i[1]].bought = true);
 data.costumes[data.main.activecostume[0]][data.main.activecostume[1]].activated = true;
-data.main.upgrades.forEach(function (i, _) {
+data.main.upgrades.forEach(function(i, _) {
     data.upgrades[_].price = i;
+});
+data.main.boosts.forEach(function(i, _) {
+    data.boosts[_].price = i;
 });
 
 app.percent(360);
@@ -395,7 +409,7 @@ addEventListener('keyup', e => {
 
 // O N E   S E C O N D   I N T E R V A L
 
-var oneSecFunc = function () {
+var oneSecFunc = function() {
 
     if (app.main.candy >= app.main.toters * 15) {
         var c = app.costumes[app.main.activecostume[0]][app.main.activecostume[1]];
@@ -409,7 +423,7 @@ var oneSec = setInterval(oneSecFunc, 1000);
 
 // O N E   M I N U T E   I N T E R V A L
 
-var oneMinFunc = function () {
+var oneMinFunc = function() {
 
     if (app.main.candy >= app.main.toters * 15) app.main.candy -= app.main.toters * 15;
     else app.main.toters -= random(app.main.toters / 2 - 5, app.main.toters / 2 + 5);
@@ -451,6 +465,6 @@ var shopDialog = new mdc.dialog.MDCDialog($('#shopDialog'));
 
 // S A V I N G
 
-window.onunload = function () {
+window.onunload = function() {
     localStorage.tot = JSON.stringify(data.main);
 };
