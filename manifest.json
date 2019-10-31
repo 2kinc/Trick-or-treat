@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Trick or treat!",
     "description": "A halloween cookie clicker!",
-    "version": "0.9",
+    "version": "2.0",
     "browser_action": {
         "default_popup": "index.html",
         "default_icon": "images/pumpkin128.png"
