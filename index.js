@@ -4,12 +4,6 @@ var $ = s => document.querySelectorAll(s).length == 1 ? document.querySelector(s
 var beautify = n => ((Math.log10(n) / 3 | 0) == 0) ? n : Number((n / Math.pow(10, (Math.log10(n) / 3 | 0) * 3)).toFixed(1)) + ["", "K", "M", "B", "T", "q", "Q", "s", "S", "o", "n", "D", "uD", "dD", "tD", "qD", "QD", "sD", "SD", "oD", "nD", "V", "uV", "dV", "tV", "qV", "QV", "sV", "SV", "oV", "nV", "t", "ut", "dt", "tt", "qt", "Qt", "st", "St", "ot", "nt", "qU", "uqU", "dqU", "tqU", "qqU", "QqU", "squ", "Squ", "oqu", "nqu", "Qu", "uQu", "dQu", "tQu", "qQu", "QQu", "sQu", "SQu", "oQu", "nQu", "se", "use", "dse", "tse", "qse", "Qse", "sse", "Sse", "ose", "nse", "Se", "uSe", "dSe", "tSe", "qSe", "QSe", "sSe", "SSe", "oSe", "nSe", "O", "uO", "dO", "tO", "qO", "QO", "sO", "SO", "oO", "nO", "N", "uN", "dN", "tN", "qN", "QN", "sN", "SN", "oN", "nN", "c", "."][Math.log10(n) / 3 | 0];
 var random = (n, x) => Math.floor(Math.random() * (Math.floor(x) - Math.ceil(n) + 1) + Math.ceil(n))
 
-// L O A D   D A T A
-
-addEventListener('onload', function() {
-    //localStorage.tot = JSON.stringify(app.main);
-});
-
 //  D A T A
 
 var data = {
@@ -27,13 +21,21 @@ var data = {
         toters: 0,
         totersms: 0,
         farmers: 0,
-        maxFarmers: 10,
+        farmerRate: 1,
+        costumeUp: 1,
+        upgrades: [
+            [0, 5],
+            [0, 15]
+            [0, 5000],
+            [0, 500],
+        ]
     },
     boosts: [
         { name: 'Farm Explosion', description: 'Pumpkins x 2', affects: 'pumpkins', multiply: '2', price: '3000' },
         { name: 'Extreme Candy Corn', description: 'Candy x 2', affects: 'candy', multiply: '2', price: '2500' },
         { name: 'Pumpkin Apocalypse', description: 'Pumpkin x 3', affects: 'pumpkins', multiply: '3', price: '4000' },
-        { name: 'Ultimate Candy Corn', description: 'Candy x 4', affects: 'candy', multiply: '5', price: '9000' }
+        { name: 'Ultimate Candy Corn', description: 'Candy x 4', affects: 'candy', multiply: '5', price: '9000' },
+        { name: 'Extreme Costumes', description: 'Costume Effect x 3', affects: 'costumeUp', multiply: '3', price: '10000' }
     ],
     totersManagingStatus: [{
         name: 'You',
@@ -43,12 +45,12 @@ var data = {
         capacity: 300,
         price: 600
     }, {
-        name: 'You',
-        capacity: 10,
+        name: 'Computer',
+        capacity: 1000,
         price: 10000
     }, {
         name: 'AI',
-        capacity: 10,
+        capacity: Infinity,
         price: 30000000
     }],
     storage: [{
@@ -96,6 +98,20 @@ var data = {
         multiply: 1.1,
         price: 15,
         pricem: 1.5,
+    }, {
+        name: 'Better Fertilizer',
+        description: 'Increase farmer rate by 100%',
+        affects: 'farmerRate',
+        multiply: 2,
+        price: 5000,
+        pricem: 1000,
+    }, {
+        name: 'Expericienced Tailor',
+        description: 'Increase costume effectiveness by 50%',
+        affects: 'costumeUp',
+        multiply: 1.5,
+        price: 500,
+        pricem: 3000,
     }],
     costumes: [
         [{
@@ -104,8 +120,8 @@ var data = {
             min: 1,
             max: 2,
             price: 0,
-            bought: true,
-            activated: true,
+            bought: false,
+            activated: false,
         }, {
             name: 'Pirate',
             description: 'Arr matey, I am going to steal all your candy.',
@@ -232,7 +248,7 @@ var methods = {
 
     tot() {
         var c = this.costumes[this.main.activecostume[0]][this.main.activecostume[1]];
-        this.main.candy += random(c.min, c.max);
+        this.main.candy += random(Math.round(c.min * this.main.costumeUp), Math.round(c.max * this.main.costumeUp));
         $('#tot-btn').disabled = true;
         var d = 0;
         var e = setInterval(() => {
@@ -302,6 +318,9 @@ var methods = {
             if (thing.multiply) this.main[thing.affects] *= thing.multiply;
             if (thing.add) this.main[thing.affects] += thing.add;
             thing.price = Math.round(thing.price * thing.pricem);
+            var index = this.upgrades.indexOf(thing);
+            this.main.upgrades[0]++;
+            this.main.upgrades[1] = this.price;
         }
     },
 
@@ -349,14 +368,21 @@ var methods = {
     }
 };
 
-//  V U E   S E T U P
+//  I N I T   V U E   A N D   S A V E D   D A T A
 
 var app = new Vue({
     el: '#app',
     data: data,
     methods,
 });
+
+if (localStorage.tot) data.main = JSON.parse(localStorage.tot);
+data.main.bought.forEach(i => data.costumes[i[0]][i[1]].bought = true);
+data.costumes[data.main.activecostume[0]][data.main.activecostume[1]].activated = true;
+data.main.upgrades.forEach((i, _) => data.upgrades[_].price = i[1]);
+
 app.percent(360);
+
 
 // K E Y U P
 
@@ -374,7 +400,7 @@ var oneSecFunc = function() {
         var c = app.costumes[app.main.activecostume[0]][app.main.activecostume[1]];
         app.main.candy += Math.floor(Math.random() * (Math.floor(c.max) - Math.ceil(c.min) + 1) + Math.ceil(c.min)) * app.main.toters;
     }
-
+    if (app.main.toters >= app.totersManagingStatus[app.main.totersms].capacity) app.main.toters = app.totersManagingStatus[app.main.totersms].capacity;
     if (app.main.candy > Math.round(app.storage[app.main.activeStorage].storage * app.main.storageIncrease)) app.main.candy = Math.round(app.storage[app.main.activeStorage].storage * app.main.storageIncrease);
 };
 
@@ -388,7 +414,7 @@ var oneMinFunc = function() {
     else app.main.toters -= random(app.main.toters / 2 - 5, app.main.toters / 2 + 5);
     if (app.main.candy >= app.main.farmers * 50) {
         app.main.candy -= app.main.farmers * 50
-        app.main.pumpkins += app.main.farmers;
+        app.main.pumpkins += app.main.farmers * app.main.farmerRate;
     }
 
 };
@@ -424,6 +450,6 @@ var shopDialog = new mdc.dialog.MDCDialog($('#shopDialog'));
 
 // S A V I N G
 
-addEventListener('onunload', function() {
-    localStorage.tot = JSON.stringify(app.main);
-});
+window.onunload = function() {
+    localStorage.tot = JSON.stringify(data.main);
+};

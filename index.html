@@ -145,7 +145,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                             <div style="position:relative;top:0;left:0;">
                                 <p style="font-size:20px;margin:8px 0;padding:0;">{{costume.name}}</p>
                                 <p style="margin:8px 0;padding:0;">{{costume.description}}</p>
-                                <p style="margin:8px 0;padding:0;">{{costume.min}} - {{costume.max}} candies</p>
+                                <p style="margin:8px 0;padding:0;">{{Math.round(costume.min * main.costumeUp)}} - {{Math.round(costume.max * main.costumeUp)}} candies</p>
                             </div>
                         </button>
                         <br><br>
@@ -155,16 +155,17 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
             <div class="mdc-card mdc-elevation--z5" id="hire" style="overflow-y:auto;padding:16px;margin:16px 100px;height:350px;">
                 <div class="mdc-typography--headline6">Trick or Treaters</div><br><br>
-                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.toters)}} <span style="cursor:pointer;color:#ff5722;" v-on:click="hireToter" tooltip="Hire a trick or treater! Wage: 15 candies per minute (needed before hand or they won't work for you)">
-                        + </span></div>
+                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.toters)}} <button style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-on:click="hireToter" tooltip="Hire a trick or treater! Wage: 15 candies per minute (needed before hand or they won't work for you)">
+                        + </button>
+                </div>
                 <div class="mdc-typography--subtitle1">Managing status:
-                    <span style="cursor:pointer;color:#ff5722;" v-on:click="upgradeStatus" v-bind:tooltip="totersManagingStatus[main.totersms + 1] ? 'Price for ' + totersManagingStatus[main.totersms + 1].name + ': ' + beautify(totersManagingStatus[main.totersms + 1]).price + ' candies' : '.'">{{totersManagingStatus[main.totersms].name}}</span>
+                    <span style="cursor:pointer;color:#ff5722;" v-on:click="upgradeStatus" v-bind:tooltip="totersManagingStatus[main.totersms + 1] ? 'Price for ' + totersManagingStatus[main.totersms + 1].name + ': ' + beautify(totersManagingStatus[main.totersms + 1].price) + ' candies' : '.'">{{totersManagingStatus[main.totersms].name}}</span>
                 </div>
                 <div class="mdc-typography--subtitle1">Max Trick or Treaters: {{beautify(totersManagingStatus[main.totersms].capacity)}}
                 </div><br><br>
                 <div class="mdc-typography--headline6">Farmers</div><br>
-                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.farmers)}} <span style="cursor:pointer;color:#ff5722" tooltip="Hire a farmer! Wage: 50 candies per minute (and they give one pumpkin every minute)" v-on:click="hireFarmer">+</span></div>
-                <div class="mdc-typography--subtitle1">Max Farmers: {{beautify(main.maxFarmers)}}</div>
+                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.farmers)}} <span style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-bind:tooltip="'Hire a farmer! Wage: 50 candies per minute (and they give ' +beautify(main.farmerRate) + '  pumpkin'+ (main.farmerRate>1?'s':'') +' every minute)'"
+                        v-on:click="hireFarmer">+</span></div>
             </div>
         </div>
 
