@@ -24,10 +24,10 @@ var data = {
         farmerRate: 1,
         costumeUp: 1,
         upgrades: [
-            [0, 5],
-            [0, 15]
-            [0, 5000],
-            [0, 500],
+            0,
+            0,
+            0,
+            0
         ]
     },
     boosts: [
@@ -314,13 +314,12 @@ var methods = {
 
     upgradeclick(thing) {
         if (this.main.candy >= thing.price) {
-            this.main.candy -= thing.price;
-            if (thing.multiply) this.main[thing.affects] *= thing.multiply;
+            this.main.candy -= thing.price; //subtract price from balance
+            if (thing.multiply) this.main[thing.affects] *= thing.multiply; //apply price increase
             if (thing.add) this.main[thing.affects] += thing.add;
-            thing.price = Math.round(thing.price * thing.pricem);
+            thing.price = Math.round(thing.price * thing.pricem); //increase price my multiplier
             var index = this.upgrades.indexOf(thing);
-            this.main.upgrades[index][0]++;
-            this.main.upgrades[index][1] = this.price;
+            this.main.upgrades[index]++; //add to bought count
         }
     },
 
@@ -379,7 +378,9 @@ var app = new Vue({
 if (localStorage.tot) data.main = JSON.parse(localStorage.tot);
 data.main.bought.forEach(i => data.costumes[i[0]][i[1]].bought = true);
 data.costumes[data.main.activecostume[0]][data.main.activecostume[1]].activated = true;
-data.main.upgrades.forEach((i, _) => data.upgrades[_].price = i[1]);
+data.main.upgrades.forEach(function (i, _) {
+    data.upgrades[_].price = i;
+});
 
 app.percent(360);
 
@@ -394,7 +395,7 @@ addEventListener('keyup', e => {
 
 // O N E   S E C O N D   I N T E R V A L
 
-var oneSecFunc = function() {
+var oneSecFunc = function () {
 
     if (app.main.candy >= app.main.toters * 15) {
         var c = app.costumes[app.main.activecostume[0]][app.main.activecostume[1]];
@@ -408,7 +409,7 @@ var oneSec = setInterval(oneSecFunc, 1000);
 
 // O N E   M I N U T E   I N T E R V A L
 
-var oneMinFunc = function() {
+var oneMinFunc = function () {
 
     if (app.main.candy >= app.main.toters * 15) app.main.candy -= app.main.toters * 15;
     else app.main.toters -= random(app.main.toters / 2 - 5, app.main.toters / 2 + 5);
@@ -450,6 +451,6 @@ var shopDialog = new mdc.dialog.MDCDialog($('#shopDialog'));
 
 // S A V I N G
 
-window.onunload = function() {
+window.onunload = function () {
     localStorage.tot = JSON.stringify(data.main);
 };
