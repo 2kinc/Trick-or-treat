@@ -7,6 +7,8 @@ body {
     font-family: 'Roboto', sans-serif;
     --mdc-theme-primary: #ff5722;
     --mdc-theme-secondary: #2196F3;
+    transition: 2s background-image;
+    overflow: hidden;
 }
 
 #topbar {
@@ -21,6 +23,10 @@ body {
 
 button {
     cursor: pointer;
+}
+
+.mdc-fab--mini {
+    transition: 500ms ease-out;
 }
 
 .center {

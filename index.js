@@ -1,6 +1,7 @@
 //  R E G U L A R   F U N C T I O N S
 
 var $ = s => document.querySelectorAll(s).length == 1 ? document.querySelector(s) : document.querySelectorAll(s);
+var $$ = s => document.querySelectorAll(s);
 var beautify = n => ((Math.log10(n) / 3 | 0) == 0) ? n : Number((n / Math.pow(10, (Math.log10(n) / 3 | 0) * 3)).toFixed(1)) + ["", "K", "M", "B", "T", "q", "Q", "s", "S", "o", "n", "D", "uD", "dD", "tD", "qD", "QD", "sD", "SD", "oD", "nD", "V", "uV", "dV", "tV", "qV", "QV", "sV", "SV", "oV", "nV", "t", "ut", "dt", "tt", "qt", "Qt", "st", "St", "ot", "nt", "qU", "uqU", "dqU", "tqU", "qqU", "QqU", "squ", "Squ", "oqu", "nqu", "Qu", "uQu", "dQu", "tQu", "qQu", "QQu", "sQu", "SQu", "oQu", "nQu", "se", "use", "dse", "tse", "qse", "Qse", "sse", "Sse", "ose", "nse", "Se", "uSe", "dSe", "tSe", "qSe", "QSe", "sSe", "SSe", "oSe", "nSe", "O", "uO", "dO", "tO", "qO", "QO", "sO", "SO", "oO", "nO", "N", "uN", "dN", "tN", "qN", "QN", "sN", "SN", "oN", "nN", "c", "."][Math.log10(n) / 3 | 0];
 var random = (n, x) => Math.floor(Math.random() * (Math.floor(x) - Math.ceil(n) + 1) + Math.ceil(n))
 
@@ -9,6 +10,7 @@ var random = (n, x) => Math.floor(Math.random() * (Math.floor(x) - Math.ceil(n) 
 var data = {
     main: {
         candy: 0,
+        ulticandy: 0,
         pumpkins: 0,
         activecostume: [0, 0],
         toters: 0,
@@ -29,14 +31,16 @@ var data = {
             5000,
             500
         ],
-        boosts: [3000, 2500, 4000, 9000, 10000]
+        boosts: [3000, 100000, 2500, 4000, 9000, 10000],
+        spamSpeed: 1,
     },
     boosts: [
-        { name: 'Extreme Candy Corn', description: 'Candy x 2', affects: 'candy', multiply: '2', price: 2500 },
-        { name: 'Pumpkin Apocalypse', description: 'Farmer Rate x 3', affects: 'farmerRate', multiply: '3', price: 4000 },
-        { name: 'Ultimate Candy Corn', description: 'Candy x 4', affects: 'candy', multiply: '5', price: 9000 },
-        { name: 'Extreme Costumes', description: 'Costume Effect x 3', affects: 'costumeUp', multiply: '3', price: 10000 },
-        { name: 'Pure Sweetness', description: 'Candy x 1000', affects: 'candy', multiply: '1000', price: 100000000 },
+        { name: 'Extreme Candy Corn', description: 'Candy x 2', affects: 'candy', multiply: 2, price: 2500 },
+        { name: 'Fast Workers', description: 'Spam Speed + 3', affects: 'spamSpeed', add: 3, multiply: 1000, price: 100000 },
+        { name: 'Pumpkin Apocalypse', description: 'Farmer Rate x 3', affects: 'farmerRate', multiply: 3, price: 4000 },
+        { name: 'Ultimate Candy Corn', description: 'Candy x 4', affects: 'candy', multiply: 5, price: 9000 },
+        { name: 'Extreme Costumes', description: 'Costume Effect x 3', affects: 'costumeUp', multiply: 3, price: 10000 },
+        { name: 'Pure Sweetness', description: 'Candy x 1000', affects: 'candy', multiply: 1000, price: 100000000 },
     ],
     totersManagingStatus: [{
         name: 'You',
@@ -80,9 +84,14 @@ var data = {
         price: 70707070707070
     }, {
         name: 'Portal',
-        storage: Infinity,
-        image: 'images/skyscraper.png',
+        storage: 130130130130130130130130130130130130130130130130130130,
+        image: 'images/portal.png',
         price: 707070707070707070707070
+    }, {
+        name: 'Universe',
+        storage: Infinity,
+        image: 'images/universe.png',
+        price: 7070707007070700707007070070700700707070070077007070070
     }],
     currentTab: 1,
     upgrades: [{
@@ -253,12 +262,12 @@ var methods = {
         $('#tot-btn').disabled = true;
         var d = 0;
         var e = setInterval(() => {
+            d = d >= 360 ? 360 : d + this.main.speed;
             app.percent(d);
-            d = d >= 360 ? (() => {
-                d = 360;
+            if (d == 360) {
                 clearInterval(e);
                 $('#tot-btn').disabled = false;
-            })() : d + this.main.speed;
+            }
         }, 7);
         $('#tot-btn img').src = 'images/pumpkinlitup.png';
         setTimeout(() => $('#tot-btn img').src = 'images/pumpkinnotlit.png', 1000)
@@ -269,12 +278,8 @@ var methods = {
         else $('#tot-btn').style.backgroundImage = 'linear-gradient(' + (d - 90) + 'deg, transparent 50%, #ff5722 50%),linear-gradient(90deg, #ff8159 50%, transparent 50%)';
 
     },
-    hireToter() {
-        app.main.toters += app.main.candy >= 15 ? (() => { app.main.candy -= 15; return 1 })() : 0;
-    },
-    hireFarmer() {
-        app.main.farmers += app.main.candy >= 50 ? (() => { app.main.candy -= 50; return 1 })() : 0;
-    },
+    hireToter: () => app.main.toters += app.main.candy >= 15 ? (() => { app.main.candy -= 15; return 1 })() : 0,
+    hireFarmer: () => app.main.farmers += app.main.candy >= 50 ? (() => { app.main.candy -= 50; return 1 })() : 0,
 
     setTab(i) {
         if (i == 0) {
@@ -282,15 +287,18 @@ var methods = {
             $('#tot-tab').style.left = '100%';
             $('#storage-tab').style.left = '200%';
             this.currentTab = 0;
+            $('body').style.background = '#ff5722';
         } else if (i == 1) {
             $('#betterize-tab').style.left = '-100%';
             $('#tot-tab').style.left = 0;
             $('#storage-tab').style.left = '100%';
             this.currentTab = 1;
+            $('body').style.background = '#ff5722';
         } else if (i == 2) {
             $('#betterize-tab').style.left = '-200%';
             $('#tot-tab').style.left = '-100%';
             $('#storage-tab').style.left = 0;
+            if (this.storage[this.main.activeStorage].name == 'Universe') $('body').style.background = 'url(images/universe.png)';
             this.currentTab = 2;
         }
     },
@@ -327,7 +335,8 @@ var methods = {
     boostclick(thing) {
         if (this.main.pumpkins >= thing.price) {
             this.main.pumpkins -= thing.price;
-            this.main[thing.affects] *= thing.multiply;
+            if (thing.add) this.main[thing.affects] += thing.add;
+            if (!thing.add) this.main[thing.affects] *= thing.multiply;
             thing.price = Math.round(thing.price * thing.multiply);
             var index = this.boosts.indexOf(thing);
             this.main.boosts[index] = thing.price;
@@ -387,14 +396,12 @@ var app = new Vue({
 });
 
 if (localStorage.tot) data.main = JSON.parse(localStorage.tot);
-data.main.bought.forEach(i => data.costumes[i[0]][i[1]].bought = true);
+
+data.main.bought.forEach(i => data.costumes[i[0]][i[1]].bought = true); // load costumes
 data.costumes[data.main.activecostume[0]][data.main.activecostume[1]].activated = true;
-data.main.upgrades.forEach(function(i, _) {
-    data.upgrades[_].price = i;
-});
-data.main.boosts.forEach(function(i, _) {
-    data.boosts[_].price = i;
-});
+
+data.main.upgrades.forEach((i, _) => data.upgrades[_].price = i); //ups and boosts
+data.main.boosts.forEach((i, _) => data.boosts[_].price = i);
 
 app.percent(360);
 
@@ -405,6 +412,15 @@ addEventListener('keyup', e => {
     var key = e.key.toLowerCase();
     if (key == 'arrowright') app.tabToRight();
     if (key == 'arrowleft') app.tabToLeft();
+});
+
+[...$$('[spam]')].forEach(i => {
+    i.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        if (e.key == 'Enter') {
+            for (var d = 0; d < app.main.spamSpeed; d++) i.click();
+        }
+    });
 });
 
 // O N E   S E C O N D   I N T E R V A L
@@ -439,7 +455,7 @@ var oneMin = setInterval(oneMinFunc, 60000);
 
 // T O O L T I P
 
-[...document.querySelectorAll('[tooltip]')].forEach(i => {
+[...$$('[tooltip]')].forEach(i => {
     i.addEventListener('mousemove', e => {
         $('#tooltip').style.top = (e.clientY + 5) + 'px';
         $('#tooltip').style.left = (e.clientX + 5) + 'px';
@@ -452,6 +468,16 @@ var oneMin = setInterval(oneMinFunc, 60000);
         $('#tooltip').style.display = 'none';
         $('#tooltip').style.opacity = 0;
     });
+});
+
+// M O U s E   M O V E
+
+document.body.addEventListener('mousemove', function(e) {
+    if (e.clientX > 400 && e.clientY > 460) {
+        $$('.mdc-fab--mini').forEach(x => x.style.bottom = '16px')
+    } else {
+        $$('.mdc-fab--mini').forEach(x => x.style.bottom = '-100px')
+    }
 });
 
 //  M D C
