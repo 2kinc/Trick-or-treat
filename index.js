@@ -11,6 +11,7 @@ var data = {
     main: {
         candy: 0,
         ulticandy: 0,
+        crulticandy: 0,
         pumpkins: 0,
         activecostume: [0, 0],
         toters: 0,
@@ -91,7 +92,7 @@ var data = {
         name: 'Universe',
         storage: Infinity,
         image: 'images/universe.png',
-        price: 7070707007070700707007070070700700707070070077007070070
+        price: 70707070070707007070070700707007007070700700770070700
     }],
     currentTab: 1,
     upgrades: [{
@@ -257,6 +258,7 @@ var data = {
 var methods = {
 
     tot() {
+        if (this.main.candy == Infinity) return;
         var c = this.costumes[this.main.activecostume[0]][this.main.activecostume[1]];
         this.main.candy += random(Math.round(c.min * this.main.costumeUp), Math.round(c.max * this.main.costumeUp));
         $('#tot-btn').disabled = true;
@@ -323,7 +325,7 @@ var methods = {
 
     upgradeclick(thing) {
         if (this.main.candy >= thing.price) {
-            this.main.candy -= thing.price; //subtract price from balance
+            if (this.main.candy != Infinity && thing.price != Infinity) this.main.candy -= thing.price; //subtract price from balance
             if (thing.multiply) this.main[thing.affects] *= thing.multiply; //apply price increase
             if (thing.add) this.main[thing.affects] += thing.add;
             thing.price = Math.round(thing.price * thing.pricem); //increase price my multiplier
@@ -334,7 +336,7 @@ var methods = {
 
     boostclick(thing) {
         if (this.main.pumpkins >= thing.price) {
-            this.main.pumpkins -= thing.price;
+            if (this.main.pumpkins != Infinity && thing.price != Infinity) this.main.pumpkins -= thing.price;
             if (thing.add) this.main[thing.affects] += thing.add;
             if (!thing.add) this.main[thing.affects] *= thing.multiply;
             thing.price = Math.round(thing.price * thing.multiply);
@@ -379,6 +381,24 @@ var methods = {
     closeShop() {
         shopDialog.close()
     },
+    openMissions() {
+        missionDialog.show()
+    },
+    closeMissions() {
+        missionDialog.close()
+    },
+    openSettings() {
+        settingsDialog.show()
+    },
+    closeSettings() {
+        settingsDialog.close()
+    },
+    openUlticandy() {
+        ulticandyDialog.show()
+    },
+    closeUlticandy() {
+        ulticandyDialog.close()
+    },
     upgradeStatus() {
         if (this.main.candy >= this.totersManagingStatus[this.main.totersms + 1].price) {
             this.main.candy -= this.totersManagingStatus[this.main.totersms + 1].price;
@@ -395,7 +415,7 @@ var app = new Vue({
     methods,
 });
 
-if (localStorage.tot) data.main = JSON.parse(localStorage.tot);
+if (localStorage.tot) data.main = JSON.parse(localStorage.tot, (key, val) => val === "Infinity" ? Infinity : val);
 
 data.main.bought.forEach(i => data.costumes[i[0]][i[1]].bought = true); // load costumes
 data.costumes[data.main.activecostume[0]][data.main.activecostume[1]].activated = true;
@@ -414,13 +434,22 @@ addEventListener('keyup', e => {
     if (key == 'arrowleft') app.tabToLeft();
 });
 
+// S P A M
+
 [...$$('[spam]')].forEach(i => {
-    i.addEventListener('keydown', function(e) {
-        e.preventDefault();
-        if (e.key == 'Enter') {
-            for (var d = 0; d < app.main.spamSpeed; d++) i.click();
-        }
-    });
+    if (i.getAttribute('spam') == "true") {
+        i.addEventListener('keydown', function(e) {
+            e.preventDefault();
+            if (e.key == 'Enter') {
+                for (var d = 0; d < app.main.spamSpeed; d++) i.click();
+            }
+        });
+        var e;
+        i.addEventListener('mousedown', () => e = setInterval(function() { for (var d = 0; d < app.main.spamSpeed; d++) i.click() }, 30));
+        i.addEventListener('focusout', () => clearInterval(e));
+        i.addEventListener('contextmenu', () => clearInterval(e));
+        document.addEventListener('mouseup', () => clearInterval(e));
+    }
 });
 
 // O N E   S E C O N D   I N T E R V A L
@@ -433,6 +462,8 @@ var oneSecFunc = function() {
     }
     if (app.main.toters >= app.totersManagingStatus[app.main.totersms].capacity) app.main.toters = app.totersManagingStatus[app.main.totersms].capacity;
     if (app.main.candy > Math.round(app.storage[app.main.activeStorage].storage * app.main.storageIncrease)) app.main.candy = Math.round(app.storage[app.main.activeStorage].storage * app.main.storageIncrease);
+    if (app.main.candy != Infinity) app.main.crulticandy = Math.round(Math.log10(app.main.candy) ** 0.925);
+    else app.main.crulticandy = 200;
 };
 
 var oneSec = setInterval(oneSecFunc, 1000);
@@ -447,7 +478,8 @@ var oneMinFunc = function() {
         app.main.candy -= app.main.farmers * 50
         app.main.pumpkins += app.main.farmers * app.main.farmerRate;
     }
-
+    if (app.main.candy != Infinity) app.main.crulticandy = Math.round(Math.log10(app.main.candy) ** 0.925);
+    else app.main.crulticandy = 200;
 };
 
 var oneMin = setInterval(oneMinFunc, 60000);
@@ -470,13 +502,19 @@ var oneMin = setInterval(oneMinFunc, 60000);
     });
 });
 
-// M O U s E   M O V E
+// M O U S E   M O V E
 
 document.body.addEventListener('mousemove', function(e) {
     if (e.clientX > 400 && e.clientY > 460) {
-        $$('.mdc-fab--mini').forEach(x => x.style.bottom = '16px')
+        $$('.mdc-fab--mini').forEach(x => {
+            x.style.bottom = '16px';
+            x.style.transition = '300ms cubic-bezier(0.0, 0.0, 0.2, 1)';
+        })
     } else {
-        $$('.mdc-fab--mini').forEach(x => x.style.bottom = '-100px')
+        $$('.mdc-fab--mini').forEach(x => {
+            x.style.bottom = '-100px';
+            x.style.transition = '300ms cubic-bezier(0.4, 0.0, 1, 1)';
+        })
     }
 });
 
@@ -488,9 +526,12 @@ var r1 = new mdc.ripple.MDCRipple($('#store-btn'));
 r1.unbounded = true;
 var betterizeBar = new mdc.tabs.MDCTabBar(document.querySelector('.mdc-tab-bar'));
 var shopDialog = new mdc.dialog.MDCDialog($('#shopDialog'));
+var missionDialog = new mdc.dialog.MDCDialog($('#missionDialog'));
+var settingsDialog = new mdc.dialog.MDCDialog($('#settingsDialog'));
+var ulticandyDialog = new mdc.dialog.MDCDialog($('#ulticandyDialog'));
 
 // S A V I N G
 
 window.onunload = function() {
-    localStorage.tot = JSON.stringify(data.main);
+    localStorage.tot = JSON.stringify(data.main, (key, val) => val == Infinity ? "Infinity" : val);
 };

@@ -31,6 +31,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Material+Icons">
     <link rel="stylesheet" href="material.css">
+    <link rel="icon" href="images/pumpkin128.png">
     <link rel="stylesheet" href="style.css">
     <title>Trick or treat!</title>
 </head>
@@ -44,7 +45,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     <h2 class="mdc-dialog__title" id="my-dialog-title">Boost Shop</h2>
                     <div class="mdc-dialog__content" id="my-dialog-content" style="overflow-y:auto;">
                         <div v-for="boost in boosts">
-                            <button class="boostbutton" v-on:click="boostclick(boost)" v-bind:tooltip='beautify(boost.price)+ " pumpkins"' v-bind:style="main.pumpkins>=boost.price?{}:{background:'#9e9e9e'}" v-bind:tooltipcolor="main.pumpkin>=boost.price?'white':'red'">
+                            <button class="boostbutton" v-bind:spam="boost.name!='Fast Workers'?'true':'no'" v-on:click="boostclick(boost)" v-bind:tooltip='beautify(boost.price)+ " pumpkins"' v-bind:style="main.pumpkins>=boost.price?{}:{background:'#9e9e9e'}" v-bind:tooltipcolor="main.pumpkin>=boost.price?'white':'red'">
                                 <p style="font-size:20px;margin:8px 0;padding:0;">{{boost.name}}</p>
                                 <p style="margin:8px 0;padding:0;">{{boost.description}}</p>
                             </button>
@@ -53,6 +54,57 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                     </div>
                     <footer class="mdc-dialog__actions">
                         <button type="button" class="mdc-button mdc-dialog__button" v-on:click="closeShop">
+                            <span class="mdc-button__label">Okay</span>
+                        </button>
+                    </footer>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+        <div class="mdc-dialog" id="missionDialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface">
+                    <h2 class="mdc-dialog__title" id="my-dialog-title">Mission</h2>
+                    <div class="mdc-dialog__content" id="my-dialog-content" style="overflow-y:auto;">
+
+                    </div>
+                    <footer class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" v-on:click="closeMissions">
+                            <span class="mdc-button__label">Okay</span>
+                        </button>
+                    </footer>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+        <div class="mdc-dialog" id="ulticandyDialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface">
+                    <h2 class="mdc-dialog__title" id="my-dialog-title">Ulticandy</h2>
+                    <div class="mdc-dialog__content" id="my-dialog-content" style="overflow-y:auto;">
+                        How much you have: {{main.ulticandy}}
+                        <br> How much you can get: {{main.crulticandy}}
+                        <button class="mdc-button"></button>
+                    </div>
+                    <footer class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" v-on:click="closeUlticandy">
+                            <span class="mdc-button__label">Okay</span>
+                        </button>
+                    </footer>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+        <div class="mdc-dialog" id="settingsDialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface">
+                    <h2 class="mdc-dialog__title" id="my-dialog-title">Settings</h2>
+                    <div class="mdc-dialog__content" id="my-dialog-content" style="overflow-y:auto;">
+                        <br>
+                        <button class="mdc-button" v-on:click="closeSettings();openUlticandy();"> Ulticandy </button>
+                    </div>
+                    <footer class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" v-on:click="closeSettings">
                             <span class="mdc-button__label">Okay</span>
                         </button>
                     </footer>
@@ -127,7 +179,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
             <div class="mdc-card mdc-elevation--z5" id="upgrades" style="overflow-y:auto;padding:16px;margin:16px 100px;height:350px;">
                 <div v-for="upgrade in upgrades">
-                    <button class="upgradebutton" spam v-on:click="upgradeclick(upgrade)" v-bind:tooltip='beautify(upgrade.price)+ " candies"' v-bind:tooltipcolor='main.candy<upgrade.price?"red":"white"' v-bind:style="main.candy<upgrade.price?{cursor:'default',background:'#9e9e9e'}:{cursor:'pointer', background:'#ff5722',color:'white'}">
+                    <button class="upgradebutton" spam="true" v-on:click="upgradeclick(upgrade)" v-bind:tooltip='beautify(upgrade.price)+ " candies"' v-bind:tooltipcolor='main.candy<upgrade.price?"red":"white"' v-bind:style="main.candy<upgrade.price?{cursor:'default',background:'#9e9e9e'}:{cursor:'pointer', background:'#ff5722',color:'white'}">
                         <div style="position:relative;top:0;left:0;">
                             <p style="font-size:20px;margin:8px 0;padding:0;">{{upgrade.name}}</p>
                             <p style="margin:8px 0;padding:0;">{{upgrade.description}}</p>
@@ -156,7 +208,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
             </div>
             <div class="mdc-card mdc-elevation--z5" id="hire" style="overflow-y:auto;padding:16px;margin:16px 100px;height:350px;">
                 <div class="mdc-typography--headline6">Trick or Treaters</div><br><br>
-                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.toters)}} <button spam style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-on:click="hireToter" tooltip="Hire a trick or treater! Wage: 15 candies per minute (needed before hand or they won't work for you)">
+                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.toters)}} <button spam="true" style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-on:click="hireToter" tooltip="Hire a trick or treater! Wage: 15 candies per minute (needed before hand or they won't work for you)">
                         + </button>
                 </div>
                 <div class="mdc-typography--subtitle1">Managing status:
@@ -165,7 +217,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 <div class="mdc-typography--subtitle1">Max Trick or Treaters: {{beautify(totersManagingStatus[main.totersms].capacity)}}
                 </div><br><br>
                 <div class="mdc-typography--headline6">Farmers</div><br>
-                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.farmers)}} <button spam style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-bind:tooltip="'Hire a farmer! Wage: 50 candies per minute (and they give ' +beautify(main.farmerRate) + '  pumpkin'+ (main.farmerRate>1?'s':'') +' every minute)'"
+                <div class="mdc-typography--subtitle1">Hired: {{beautify(main.farmers)}} <button spam="true" style="cursor:pointer;color:#ff5722;background:none;border:none;display:inline;outline:none;" v-bind:tooltip="'Hire a farmer! Wage: 50 candies per minute (and they give ' +beautify(main.farmerRate) + '  pumpkin'+ (main.farmerRate>1?'s':'') +' every minute)'"
                         v-on:click="hireFarmer">+</buttonS>
                 </div>
             </div>
@@ -195,11 +247,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
                 <button class="mdc-fab mdc-elevation--z1" style="position:fixed;right:16px;top:250px;" data-mdc-auto-init="MDCRipple" v-on:click='tabToRight'>
             <span class="mdc-fab__icon material-icons">keyboard_arrow_right</span>
         </button>
-                <button class="mdc-fab mdc-fab--mini mdc-elevation--z1" style="position:fixed;right:64px;bottom:-100px;" data-mdc-auto-init="MDCRipple">
-            <span class="mdc-fab__icon material-icons">toc</span>
+                <button class="mdc-fab mdc-fab--mini mdc-elevation--z1" v-on:click="openMissions" style="position:fixed;right:76px;bottom:-100px;" data-mdc-auto-init="MDCRipple">
+            <span class="mdc-fab__icon material-icons" >toc</span>
         </button>
-                <button class="mdc-fab mdc-fab--mini mdc-elevation--z1" style="position:fixed;right:16px;bottom:-100px;" data-mdc-auto-init="MDCRipple">
-            <span class="mdc-fab__icon material-icons">settings</span>
+                <button class="mdc-fab mdc-fab--mini mdc-elevation--z1" v-on:click="openSettings" style="position:fixed;right:16px;bottom:-100px;" data-mdc-auto-init="MDCRipple">
+            <span class="mdc-fab__icon material-icons" >settings</span>
         </button>
             </div>
 
